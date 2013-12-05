@@ -1,62 +1,122 @@
-/*
-  Analog input, analog output, serial output
- 
- Reads an analog input pin, maps the result to a range from 0 to 255
- and uses the result to set the pulsewidth modulation (PWM) of an output pin.
- Also prints the results to the serial monitor.
- 
- The circuit:
- * potentiometer connected to analog pin 0.
-   Center pin of the potentiometer goes to the analog pin.
-   side pins of the potentiometer go to +5V and ground
- * LED connected from digital pin 9 to ground
- 
- created 29 Dec. 2008
- modified 9 Apr 2012
- by Tom Igoe
- 
- This example code is in the public domain.
- 
- */
+#include <Bounce.h>
 
-// These constants won't change.  They're used to give names
-// to the pins used:
-const int analogInPin = A0;  // Analog input pin that the potentiometer is attached to
-const int analogOutPin = 9; // Analog output pin that the LED is attached to
+const int CLOCKWISE = 1;
+const int COUNTER_CLOCKWISE = 0;
 
-int inputValue = 0;        // value read from the pot
+const int speedInPin = A0;
+const int rateOfSpeedChangeInPin = A1;
+const int speedOutPin = 9;
+const int onOffSwitchInPin = 7;
+const int directionSwitchInPin = 6;
+const int directionOutputPin = 5;
 
+const int switchDebounceTime = 30;
+const int minimumDelay = 5;
+const int maximumDelay = 40;
+const int minimumSpeed = 10;
+// 10K ohm potentiometers probably won't get all the way to 1024
+const int potentiometerCeiling = 1000;
 
-int targetOutputValue = 0;
-int currentOutputValue = 0;
+Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
+Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
+
+int speedTarget = 0;
+int rateOfSpeedChange = 0;
+int currentSpeed = 0;
 int delayBetweenAdjustments = 15;
+boolean powerEnabled = false;
+int directionTarget = CLOCKWISE;
+int currentDirection = CLOCKWISE;
 
-int analogInCeiling = 1000;
+int debugOutputCounter = 0;
 
-void setup() {
-  // initialize serial communications at 9600 bps:
+void setup()
+{
+  pinMode(onOffSwitchInPin, INPUT_PULLUP);
+  pinMode(directionSwitchInPin, INPUT_PULLUP);
+  pinMode(directionOutputPin, OUTPUT);
+  
+  digitalWrite(directionOutputPin, directionTarget);
+  
   Serial.begin(9600); 
 }
 
-void loop() {
-  int difference = 0;
-
-  inputValue = analogRead(analogInPin);
-  inputValue = constrain(inputValue, 0, analogInCeiling);
-  targetOutputValue = map(inputValue, 0, analogInCeiling, 0, 255);
+void loop()
+{
+  onOffSwitch.update();
+  if (onOffSwitch.fallingEdge())
+  {
+    powerEnabled = !powerEnabled;
+  }
   
-  currentOutputValue += SlewToward(currentOutputValue, targetOutputValue);
-  analogWrite(analogOutPin, currentOutputValue);           
+  if (powerEnabled)
+  {
+    speedTarget = ReadPotentiometer(speedInPin);
+    speedTarget = map(speedTarget, 0, potentiometerCeiling, minimumSpeed, 255);
+  
+    delayBetweenAdjustments = ReadPotentiometer(rateOfSpeedChangeInPin);
+    delayBetweenAdjustments = map(delayBetweenAdjustments, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+  }
+  else
+  {
+    speedTarget = 0;
+  }
 
-  // print the results to the serial monitor:
-//  Serial.print("sensor = " );                       
-//  Serial.print(inputValue);      
-//  Serial.print("\t current = ");      
-//  Serial.println(targetOutputValue);   
-//  Serial.print("\t target = ");      
-//  Serial.println(targetOutputValue);   
+  directionSwitch.update();
+  directionTarget = directionSwitch.read();
 
+  if (directionTarget == CLOCKWISE)
+  {
+    speedTarget = abs(speedTarget);
+  }
+  else
+  {
+    speedTarget = -abs(speedTarget);
+  }
+  
+  if (currentSpeed == 0 && currentDirection != directionTarget)
+  {
+    // We're at zero speed and want to switch directions.
+    // The motor spec sheet says we have to wait .5 seconds before
+    // switching.
+
+    // TODO: can we just write direction on every loop based on the sign of the speed?
+    
+    delay(500);
+    digitalWrite(directionOutputPin, directionTarget);
+    currentDirection = directionTarget;
+  }
+  
+  currentSpeed += SlewToward(currentSpeed, speedTarget);
+  analogWrite(speedOutPin, abs(currentSpeed));           
+
+//  if (debugOutputCounter++ == 20)
+//  {
+//    debugOutputCounter = 0;
+//    Serial.print("currentSpeed = " );                       
+//    Serial.print(currentSpeed);      
+//    Serial.print("\t target = ");      
+//    Serial.print(speedTarget);   
+//    Serial.print("\t delayBetweenAdjustments = ");      
+//    Serial.println(delayBetweenAdjustments);   
+//  }
+  
   delay(delayBetweenAdjustments);                     
+}
+
+boolean ReadSwitch(int pin)
+{
+  return !digitalRead(pin);
+}
+
+int ReadPotentiometer(int pin)
+{
+  int value;
+  
+  value = analogRead(pin);
+  value = constrain(value, 0, potentiometerCeiling);
+  
+  return value;
 }
 
 int SlewToward(int currentValue, int targetValue)
