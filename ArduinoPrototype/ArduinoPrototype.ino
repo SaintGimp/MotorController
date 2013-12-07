@@ -69,7 +69,7 @@ const int potentiometerCeiling = 1000;
 // For prototyping we want to avoid disabling RESET so we need to arrange
 // the circuit to keep a minimum voltage so we don't RESET the MCU.
 // For production we'll change the fuses and set this to 0.
-const int rateOfSpeedChangePotentiometerFloor = 800;
+const int rateOfSpeedChangePotentiometerFloor = 350;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
