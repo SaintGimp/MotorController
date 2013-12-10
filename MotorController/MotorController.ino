@@ -1,4 +1,5 @@
 #include <Bounce.h>
+#include <UserTimer.h>
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -11,7 +12,7 @@ const int rateOfSpeedChangeInPin = A1;
 const int speedOutPin = 9;
 const int onOffSwitchInPin = 7;
 const int directionSwitchInPin = 6;
-const int directionOutputPin = 5;
+const int directionOutPin = 5;
 
 #elif defined( __AVR_ATtinyX4__ )
 
@@ -32,7 +33,7 @@ const int rateOfSpeedChangeInPin = A1;
 const int speedOutPin = 5;
 const int onOffSwitchInPin = 7;
 const int directionSwitchInPin = 8;
-const int directionOutputPin = 6;
+const int directionOutPin = 6;
 
 #elif defined( __AVR_ATtinyX5__ )
 
@@ -44,17 +45,17 @@ const int directionOutputPin = 6;
 //                     GND  4|    |5   PB0  (D  0)        pwm0
 //                           +----+
 //
-// NOTE!!!! This requires use of the RESET pin so either RSTDISBL fuse must be set
-// which prevents normal reprogramming or the rateOfChange pot has to be used as a
-// rheostat and as R1 of a voltage divider so that the voltage on A0 never goes
-// below ~1.5V and resets the MCU.
-//
+// NOTE!!!! This requires use of the RESET pin so either RSTDISBL fuse must be set.
+// 1MHz: avrdude -c usbtiny -p attiny85 -U lfuse:w:0x62:m -U hfuse:w:0x57:m -U efuse:w:0xff:m
+// 8MHz: avrdude -c usbtiny -p attiny85 -U lfuse:w:0xE2:m -U hfuse:w:0x57:m -U efuse:w:0xff:m
+// After this is done the chip cannot be reprogrammed except by the high-voltage method
+
 const int speedInPin = A3;
 const int rateOfSpeedChangeInPin = A0;
 const int speedOutPin = 0;
 const int onOffSwitchInPin = 2;
 const int directionSwitchInPin = 1;
-const int directionOutputPin = 4;
+const int directionOutPin = 4;
 
 #endif
 
@@ -80,14 +81,30 @@ int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
 
 void setup()
-{
+{ 
+  UserTimer_SetToPowerup();
+  UserTimer_SetWaveformGenerationMode( UserTimer_(Fast_PWM_FF) );
+  UserTimer_ClockSelect( UserTimer_(Prescale_Value_1) );
+  // Fast PWM Frequency is F_CPU / (PRESCALE * 256)
+  // 1MHz / 256 = 3.9KHz
+  // 8MHz / 256 = 31.25KHz
+  
+  // 8MHz gives us a smoother filtered single for the analog input to the
+  // motor but requires ~4x the current. This may be a heat problem for the
+  // regulator since we're dropping from 24V.
+  
   pinMode(onOffSwitchInPin, INPUT_PULLUP);
   pinMode(directionSwitchInPin, INPUT_PULLUP);
-  pinMode(directionOutputPin, OUTPUT);
+  pinMode(directionOutPin, OUTPUT);
+  pinMode(speedOutPin, OUTPUT);
   // We don't have to set pin mode for analog inputs
   
-  // TODO: check startup logic to make sure this is right
-  digitalWrite(directionOutputPin, targetDirection);
+  // Figure out where the direction switch is set and initialize
+  // the motor appropriately
+  directionSwitch.update();
+  targetDirection = directionSwitch.read();
+  currentDirection = targetDirection;
+  digitalWrite(directionOutPin, targetDirection);
 }
 
 void loop()
@@ -133,7 +150,7 @@ void loop()
     // guarentee that the motor is stopped?
     
     delay(500);
-    digitalWrite(directionOutputPin, targetDirection);
+    digitalWrite(directionOutPin, targetDirection);
     currentDirection = targetDirection;
   }
   
