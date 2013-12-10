@@ -61,9 +61,9 @@ const int directionOutPin = 4;
 
 // Settings and limits
 const int switchDebounceTime = 30;
-const int minimumDelay = 5;
-const int maximumDelay = 40;
-const int minimumSpeed = 10;
+const int minimumDelay = 2;
+const int maximumDelay = 15;
+const int minimumSpeed = 26;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
