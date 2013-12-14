@@ -2031,6 +2031,8 @@ Grid 5.00 mm&lt;p&gt;
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="power" width="0.381" drill="0">
+</class>
 </classes>
 <parts>
 <part name="U1" library="_hhn_attiny25_45_85" deviceset="ATTINY85*" device="P" technology="-20"/>
@@ -2119,7 +2121,7 @@ Grid 5.00 mm&lt;p&gt;
 <wire x1="58.42" y1="45.72" x2="58.42" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="VCC" class="0">
+<net name="VCC" class="1">
 <segment>
 <pinref part="U1" gate="G$1" pin="VCC"/>
 <pinref part="IC1" gate="A1" pin="VO"/>
@@ -2134,7 +2136,7 @@ Grid 5.00 mm&lt;p&gt;
 <pinref part="C2" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="+24V" class="0">
+<net name="+24V" class="1">
 <segment>
 <pinref part="24V" gate="-1" pin="KL"/>
 <pinref part="IC1" gate="A1" pin="VI"/>
