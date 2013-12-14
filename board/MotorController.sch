@@ -2045,6 +2045,7 @@ Grid 5.00 mm&lt;p&gt;
 <part name="IO" library="con-wago-500" deviceset="W237-136" device=""/>
 <part name="X3" library="con-wago-500" deviceset="W237-102" device=""/>
 <part name="C2" library="SparkFun-Capacitors" deviceset="CAP" device="PTH" value="1uF"/>
+<part name="GND1" library="supply1" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2068,6 +2069,7 @@ Grid 5.00 mm&lt;p&gt;
 <instance part="X3" gate="-1" x="17.78" y="81.28" rot="R270"/>
 <instance part="X3" gate="-2" x="22.86" y="81.28" rot="R270"/>
 <instance part="C2" gate="G$1" x="17.78" y="55.88"/>
+<instance part="GND1" gate="1" x="-17.78" y="48.26"/>
 </instances>
 <busses>
 </busses>
@@ -2109,6 +2111,7 @@ Grid 5.00 mm&lt;p&gt;
 <wire x1="22.86" y1="76.2" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
 <junction x="22.86" y="50.8"/>
 <junction x="25.4" y="50.8"/>
+<pinref part="GND1" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="N$6" class="0">
