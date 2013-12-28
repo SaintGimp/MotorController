@@ -110,7 +110,7 @@ void setup()
 void loop()
 {
   onOffSwitch.update();
-  if (onOffSwitch.fallingEdge())
+  if (onOffSwitch.fallingEdge() && CanChangePowerState())
   {
     powerEnabled = !powerEnabled;
   }
@@ -163,6 +163,13 @@ void loop()
   // in between adjustments anyway and the input response lag even at maximum delay
   // will never be noticable to the user.
   delay(delayBetweenAdjustments);                     
+}
+
+boolean CanChangePowerState()
+{
+    // We can always turn off immediately, but we don't want to turn on unless
+    // the current speed is zero, i.e. we always complete a stop command.
+    return powerEnabled || (!powerEnabled && currentSpeed == 0);
 }
 
 int ReadPotentiometer(int pin)
