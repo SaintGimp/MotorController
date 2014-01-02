@@ -61,8 +61,8 @@ const int directionOutPin = 4;
 
 // Settings and limits
 const int switchDebounceTime = 30;
-const int minimumDelay = 2;
-const int maximumDelay = 15;
+const int minimumDelay = 10;
+const int maximumDelay = 23;
 const int minimumSpeed = 26;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
@@ -142,14 +142,8 @@ void loop()
   
   if (currentSpeed == 0 && currentDirection != targetDirection)
   {
-    // We're at zero speed and want to switch directions.
-    // The motor spec sheet says we have to wait .5 seconds before
-    // switching to make sure that the motor has come to a full stop.
-
-    // TODO: do we need to hit the run/stop control line in order to
-    // guarentee that the motor is stopped?
-    
-    delay(500);
+    // We're at zero speed and want to switch directions.   
+    delay(0);
     digitalWrite(directionOutPin, targetDirection);
     currentDirection = targetDirection;
   }
