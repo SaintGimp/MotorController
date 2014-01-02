@@ -1,20 +1,15 @@
 #include <Bounce.h>
 #include <UserTimer.h>
+#include <Adafruit_LEDBackpack.h>
+#include <Adafruit_GFX.h>
+#include <TinyWireM.h>
+
+// NOTE: Depending on the version of the Arduino IDE in use, you may
+// need to follow the instructions at https://github.com/TCWORLD/ATTinyCore/tree/master/PCREL%20Patch%20for%20GCC
+// in order to work around a bogus "relocation truncated to fit" linker error.
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
-
-#if defined(__AVR_ATmega328P__)
-
-// Arduino Pins
-const int speedInPin = A0;
-const int rateOfSpeedChangeInPin = A1;
-const int speedOutPin = 9;
-const int onOffSwitchInPin = 7;
-const int directionSwitchInPin = 6;
-const int directionOutPin = 5;
-
-#elif defined( __AVR_ATtinyX4__ )
 
 // ATMEL ATTINY84 / arduino-tiny mapping
 //
@@ -28,36 +23,17 @@ const int directionOutPin = 5;
 //  PWM  (A 6) (D  4)  PA6  7|    |8   PA5  (D  5) (A 5)   PWM
 //                           +----+
 //
+// 8MHz: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xe2:m -U hfuse:w:0xd7:m -U efuse:w:0xff:m
+
 const int speedInPin = A0;
 const int rateOfSpeedChangeInPin = A1;
 const int speedOutPin = 5;
 const int onOffSwitchInPin = 7;
 const int directionSwitchInPin = 8;
-const int directionOutPin = 6;
-
-#elif defined( __AVR_ATtinyX5__ )
-
-// ATMEL ATTINY85 / arduino-tiny mapping
-//                           +-\/-+
-//  Ain0       (D  5)  PB5  1|    |8   VCC
-//  Ain3       (D  3)  PB3  2|    |7   PB2  (D  2)  INT0  Ain1
-//  Ain2       (D  4)  PB4  3|    |6   PB1  (D  1)        pwm1
-//                     GND  4|    |5   PB0  (D  0)        pwm0
-//                           +----+
-//
-// NOTE!!!! This requires use of the RESET pin so either RSTDISBL fuse must be set.
-// 1MHz: avrdude -c usbtiny -p attiny85 -U lfuse:w:0x62:m -U hfuse:w:0x57:m -U efuse:w:0xff:m
-// 8MHz: avrdude -c usbtiny -p attiny85 -U lfuse:w:0xE2:m -U hfuse:w:0x57:m -U efuse:w:0xff:m
-// After this is done the chip cannot be reprogrammed except by the high-voltage method
-
-const int speedInPin = A3;
-const int rateOfSpeedChangeInPin = A0;
-const int speedOutPin = 0;
-const int onOffSwitchInPin = 2;
-const int directionSwitchInPin = 1;
-const int directionOutPin = 4;
-
-#endif
+const int directionOutPin = 3;
+const int rpmInPin = 2;
+// I2C SCL = PA4 (D6)
+// I2C SDA = PA6 (D4)
 
 // Settings and limits
 const int switchDebounceTime = 30;
@@ -72,6 +48,8 @@ const int potentiometerCeiling = 1000;
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
 
+Adafruit_7segment rpmDisplay = Adafruit_7segment();
+
 // State variables
 int targetSpeed = 0;
 int currentSpeed = 0;
@@ -79,6 +57,8 @@ int delayBetweenAdjustments = 15;
 boolean powerEnabled = false;
 int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
+int motorTicks = 0;
+unsigned long lastRpmDisplayTime = 0;
 
 void setup()
 { 
@@ -92,9 +72,18 @@ void setup()
   // 8MHz gives us a smoother filtered single for the analog input to the
   // motor but requires ~4x the current. This may be a heat problem for the
   // regulator since we're dropping from 24V.
+
+  // 7-segment LED display initialization
+  rpmDisplay.begin(0x70);
+  // Be careful with brightness - setting it too high will run the regulator very hot
+  rpmDisplay.setBrightness(3);
+  rpmDisplay.clear();
+  rpmDisplay.writeDisplay();
+
   
   pinMode(onOffSwitchInPin, INPUT_PULLUP);
   pinMode(directionSwitchInPin, INPUT_PULLUP);
+  pinMode(rpmInPin, INPUT_PULLUP);
   pinMode(directionOutPin, OUTPUT);
   pinMode(speedOutPin, OUTPUT);
   // We don't have to set pin mode for analog inputs
@@ -105,6 +94,8 @@ void setup()
   targetDirection = directionSwitch.read();
   currentDirection = targetDirection;
   digitalWrite(directionOutPin, targetDirection);
+  
+  attachInterrupt(0, OnMotorTick, RISING);
 }
 
 void loop()
@@ -151,6 +142,8 @@ void loop()
   currentSpeed += SlewToward(currentSpeed, targetSpeed);
   analogWrite(speedOutPin, abs(currentSpeed));           
   
+  UpdateRpmDisplay();
+  
   // Rather than trying to write a fixed-delay loop we're being lazy and using a
   // variable-deplay loop to control the rate at which we change the motor speed.
   // This should be fine because we don't have anything urgent that we need to do
@@ -190,3 +183,24 @@ int SlewToward(int currentValue, int targetValue)
   }
 }
 
+void OnMotorTick()
+{
+  motorTicks++;
+}
+
+void UpdateRpmDisplay()
+{
+  unsigned long now = millis();
+  unsigned int timeSinceLastDisplay = now - lastRpmDisplayTime;
+
+  if (timeSinceLastDisplay > 1000)
+  {
+    int totalMotorTicks = motorTicks;
+    motorTicks = 0;
+    lastRpmDisplayTime = now;
+
+    float rpm = totalMotorTicks * 60 / 5.0 * (1000.0 / timeSinceLastDisplay);
+    rpmDisplay.print((int)rpm);
+    rpmDisplay.writeDisplay();
+  }
+}
