@@ -199,7 +199,8 @@ void UpdateRpmDisplay()
     motorTicks = 0;
     lastRpmDisplayTime = now;
 
-    float rpm = totalMotorTicks * 60 / 5.0 * (1000.0 / timeSinceLastDisplay);
+    // We get one pulse every 90 deg. of rotation
+    float rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
     rpmDisplay.print((int)rpm);
     rpmDisplay.writeDisplay();
   }
