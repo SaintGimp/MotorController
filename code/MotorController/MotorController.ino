@@ -1,8 +1,13 @@
 #include <Bounce.h>
 #include <UserTimer.h>
-#include <Adafruit_LEDBackpack.h>
-#include <Adafruit_GFX.h>
-#include <TinyWireM.h>
+
+// We have to compile the TinyWire and LCDi2cNHD libraries from the local
+// directory because the Newhaven display seems to be somewhat broken and
+// can't cope with a 100K data transfer rate.  We have to change the timing
+// defines in USI_TWI_Master.h to double the time (halve the rate) so that
+// the display doesn't randomly drop characters.
+#include "TinyWireM_local.h"
+#include "LCDi2cNHD_local.h"                    
 
 // NOTE: Depending on the version of the Arduino IDE in use, you may
 // need to follow the instructions at https://github.com/TCWORLD/ATTinyCore/tree/master/PCREL%20Patch%20for%20GCC
@@ -23,7 +28,10 @@ const int COUNTER_CLOCKWISE = 0;
 //  PWM  (A 6) (D  4)  PA6  7|    |8   PA5  (D  5) (A 5)   PWM
 //                           +----+
 //
-// 8MHz: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xe2:m -U hfuse:w:0xd7:m -U efuse:w:0xff:m
+// 8MHz internal clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
+// 8MHz external clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xfd:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
+//
+// The design assumes we're running at 8Mhz with an external crystal
 
 const int speedInPin = A0;
 const int rateOfSpeedChangeInPin = A1;
@@ -43,12 +51,13 @@ const int minimumSpeed = 26;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
+const float gearRatio = 2.0;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
 
-Adafruit_7segment rpmDisplay = Adafruit_7segment();
+LCDi2cNHD lcd = LCDi2cNHD(4,20,0x50>>1,0);
 
 // State variables
 int targetSpeed = 0;
@@ -68,18 +77,9 @@ void setup()
   // Fast PWM Frequency is F_CPU / (PRESCALE * 256)
   // 1MHz / 256 = 3.9KHz
   // 8MHz / 256 = 31.25KHz
-  
-  // 8MHz gives us a smoother filtered single for the analog input to the
-  // motor but requires ~4x the current. This may be a heat problem for the
-  // regulator since we're dropping from 24V.
-
-  // 7-segment LED display initialization
-  rpmDisplay.begin(0x70);
-  // Be careful with brightness - setting it too high will run the regulator very hot
-  rpmDisplay.setBrightness(3);
-  rpmDisplay.clear();
-  rpmDisplay.writeDisplay();
-
+    
+  lcd.setBacklight(8);
+  lcd.init();
   
   pinMode(onOffSwitchInPin, INPUT_PULLUP);
   pinMode(directionSwitchInPin, INPUT_PULLUP);
@@ -137,12 +137,13 @@ void loop()
     delay(0);
     digitalWrite(directionOutPin, targetDirection);
     currentDirection = targetDirection;
+    UpdateDirectionDisplay();
   }
   
   currentSpeed += SlewToward(currentSpeed, targetSpeed);
   analogWrite(speedOutPin, abs(currentSpeed));           
   
-  UpdateRpmDisplay();
+  UpdateDisplay();
   
   // Rather than trying to write a fixed-delay loop we're being lazy and using a
   // variable-deplay loop to control the rate at which we change the motor speed.
@@ -188,20 +189,78 @@ void OnMotorTick()
   motorTicks++;
 }
 
-void UpdateRpmDisplay()
+void UpdateDisplay()
 {
   unsigned long now = millis();
   unsigned int timeSinceLastDisplay = now - lastRpmDisplayTime;
 
+  // TODO: To avoid mistakes, maybe we should have a buffer that
+  // contains boilerplate text for the whole display, then write
+  // data to it in the appropriate places, and write the whole
+  // buffer to the display.
+  
   if (timeSinceLastDisplay > 1000)
   {
-    int totalMotorTicks = motorTicks;
-    motorTicks = 0;
-    lastRpmDisplayTime = now;
-
-    // We get one pulse every 90 deg. of rotation
-    int rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
-    rpmDisplay.print(rpm);
-    rpmDisplay.writeDisplay();
+    UpdateRpmDisplay(now, timeSinceLastDisplay);
+    UpdateDirectionDisplay();
+    UpdateHoursDisplay();
   }
+}
+
+void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
+{
+  int totalMotorTicks = motorTicks;
+  motorTicks = 0;
+  lastRpmDisplayTime = now;
+
+  // We get one pulse every 90 deg. of rotation
+  float rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
+  rpm /= gearRatio;
+
+  char buffer[5];
+  lcd.home();
+  lcd.print(F("RPM: "));
+  lcd.print(rpmToString((int)rpm, buffer));
+}
+
+void UpdateDirectionDisplay()
+{
+  lcd.setCursor(0, 9);
+  if (currentDirection == CLOCKWISE) {
+    lcd.print(F("    PLY"));
+  } else {
+    lcd.print(F("   SPIN"));
+  }
+}
+
+void UpdateHoursDisplay()
+{
+  lcd.setCursor(1, 0);
+  lcd.print(F("HOURS: XXXXX.X"));
+}
+
+char* rpmToString(int value, char* result)
+{
+  char* ptr = result, *ptr1 = result, tmp_char;
+
+  // Build string reversed
+  for (int x = 0; x < 4; x++) {
+    if (x == 0 || value) {
+      *ptr++ = "0123456789" [value % 10];
+      value /= 10;
+    } else {
+      *ptr++ = ' ';
+    }
+  }
+  	
+  *ptr-- = '\0';
+  
+  // reverse string
+  while (ptr1 < ptr) {
+    tmp_char = *ptr;
+    *ptr--= *ptr1;
+    *ptr1++ = tmp_char;
+  }
+  
+  return result;
 }
