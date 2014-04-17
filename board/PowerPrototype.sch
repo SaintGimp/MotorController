@@ -9111,7 +9111,6 @@ Source: http://www.irf.com/product-info/datasheets/data/irf4905pbf.pdf</descript
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
-<part name="5VPROC" library="con-wago-500" deviceset="W237-102" device=""/>
 <part name="24VOUT" library="con-wago-500" deviceset="W237-102" device=""/>
 <part name="5VPOT" library="con-wago-500" deviceset="W237-102" device=""/>
 <part name="5VDISP" library="con-wago-500" deviceset="W237-102" device=""/>
@@ -9144,8 +9143,6 @@ Source: http://www.irf.com/product-info/datasheets/data/irf4905pbf.pdf</descript
 <instance part="GND1" gate="1" x="40.64" y="38.1"/>
 <instance part="GND4" gate="1" x="-12.7" y="20.32"/>
 <instance part="GND5" gate="1" x="38.1" y="66.04" rot="R270"/>
-<instance part="5VPROC" gate="-1" x="76.2" y="35.56" rot="R90"/>
-<instance part="5VPROC" gate="-2" x="58.42" y="35.56" rot="R90"/>
 <instance part="24VOUT" gate="-1" x="40.64" y="83.82" rot="R270"/>
 <instance part="24VOUT" gate="-2" x="48.26" y="83.82" rot="R270"/>
 <instance part="5VPOT" gate="-1" x="66.04" y="35.56" rot="R90"/>
@@ -9186,16 +9183,12 @@ Source: http://www.irf.com/product-info/datasheets/data/irf4905pbf.pdf</descript
 <wire x1="66.04" y1="45.72" x2="40.64" y2="45.72" width="0.1524" layer="91"/>
 <junction x="66.04" y="45.72"/>
 <junction x="40.64" y="45.72"/>
-<pinref part="5VPROC" gate="-2" pin="KL"/>
 <pinref part="5VDISP" gate="-2" pin="KL"/>
-<wire x1="58.42" y1="40.64" x2="53.34" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="5VPOT" gate="-2" pin="KL"/>
 <wire x1="53.34" y1="40.64" x2="48.26" y2="40.64" width="0.1524" layer="91"/>
-<junction x="53.34" y="40.64"/>
 <wire x1="48.26" y1="40.64" x2="40.64" y2="40.64" width="0.1524" layer="91"/>
 <junction x="48.26" y="40.64"/>
 <junction x="40.64" y="40.64"/>
-<junction x="58.42" y="40.64"/>
 </segment>
 <segment>
 <pinref part="C4" gate="G$1" pin="-"/>
@@ -9308,12 +9301,10 @@ Source: http://www.irf.com/product-info/datasheets/data/irf4905pbf.pdf</descript
 <pinref part="5VPOT" gate="-1" pin="KL"/>
 <pinref part="5VDISP" gate="-1" pin="KL"/>
 <wire x1="66.04" y1="40.64" x2="71.12" y2="40.64" width="0.1524" layer="91"/>
-<pinref part="5VPROC" gate="-1" pin="KL"/>
 <wire x1="71.12" y1="40.64" x2="76.2" y2="40.64" width="0.1524" layer="91"/>
 <junction x="71.12" y="40.64"/>
 <pinref part="IC1" gate="A1" pin="VO"/>
 <wire x1="76.2" y1="40.64" x2="76.2" y2="43.18" width="0.1524" layer="91"/>
-<junction x="76.2" y="40.64"/>
 <junction x="66.04" y="40.64"/>
 <junction x="76.2" y="53.34"/>
 <pinref part="C2" gate="G$1" pin="+"/>

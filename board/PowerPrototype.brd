@@ -646,12 +646,6 @@ Based on OSHPark rules.</description>
 <attribute name="MF" value="" x="6.35" y="50.8" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="OC_FARNELL" value="unknown" x="6.35" y="50.8" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="5VPROC" library="con-wago-500" package="W237-102" value="" x="43.18" y="17.78">
-<attribute name="OC_NEWARK" value="70K9898" x="33.02" y="33.02" size="1.778" layer="27" display="off"/>
-<attribute name="MPN" value="237-102" x="33.02" y="33.02" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="" x="33.02" y="33.02" size="1.778" layer="27" display="off"/>
-<attribute name="OC_FARNELL" value="unknown" x="33.02" y="33.02" size="1.778" layer="27" display="off"/>
-</element>
 <element name="24VOUT" library="con-wago-500" package="W237-102" value="" x="6.35" y="40.64" rot="R270">
 <attribute name="OC_NEWARK" value="70K9898" x="21.59" y="50.8" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="237-102" x="21.59" y="50.8" size="1.778" layer="27" rot="R270" display="off"/>
@@ -702,7 +696,6 @@ Based on OSHPark rules.</description>
 <contactref element="R3" pad="P$1"/>
 <contactref element="24VIN" pad="2"/>
 <contactref element="IC1" pad="2"/>
-<contactref element="5VPROC" pad="2"/>
 <contactref element="5VDISP" pad="2"/>
 <contactref element="5VPOT" pad="2"/>
 <contactref element="C2" pad="-"/>
@@ -722,10 +715,9 @@ Based on OSHPark rules.</description>
 <wire x1="66.04" y1="32.98" x2="68.58" y2="38.1" width="0" layer="19" extent="1-1"/>
 <wire x1="68.58" y1="31.75" x2="66.04" y2="32.98" width="0" layer="19" extent="1-1"/>
 <wire x1="60.96" y1="33.02" x2="66.04" y2="32.98" width="0" layer="19" extent="1-1"/>
-<wire x1="66" y1="16.51" x2="60.96" y2="33.02" width="0" layer="19" extent="1-1"/>
+<wire x1="66" y1="16.51" x2="68.58" y2="31.75" width="0" layer="19" extent="1-1"/>
 <wire x1="55.84" y1="16.51" x2="66" y2="16.51" width="0" layer="19" extent="1-1"/>
-<wire x1="45.68" y1="16.51" x2="55.84" y2="16.51" width="0" layer="19" extent="1-1"/>
-<wire x1="40.64" y1="33.02" x2="55.84" y2="16.51" width="0" layer="19" extent="1-1"/>
+<wire x1="40.64" y1="33.02" x2="60.96" y2="33.02" width="0" layer="19" extent="1-1"/>
 <wire x1="33.02" y1="35.56" x2="40.64" y2="33.02" width="0" layer="19" extent="1-1"/>
 <wire x1="22.86" y1="43.14" x2="33.02" y2="35.56" width="0" layer="19" extent="1-1"/>
 <wire x1="25.36" y1="45.76" x2="22.86" y2="43.14" width="0" layer="19" extent="16-16"/>
@@ -777,15 +769,13 @@ Based on OSHPark rules.</description>
 <signal name="N$9">
 <contactref element="5VPOT" pad="1"/>
 <contactref element="5VDISP" pad="1"/>
-<contactref element="5VPROC" pad="1"/>
 <contactref element="IC1" pad="3"/>
 <contactref element="C2" pad="+"/>
 <contactref element="C3" pad="1"/>
 <wire x1="66.04" y1="27.98" x2="68.58" y2="29.21" width="0" layer="19" extent="1-1"/>
 <wire x1="60.96" y1="30.48" x2="66.04" y2="27.98" width="0" layer="19" extent="1-1"/>
-<wire x1="61" y1="16.51" x2="60.96" y2="30.48" width="0" layer="19" extent="1-1"/>
+<wire x1="61" y1="16.51" x2="66.04" y2="27.98" width="0" layer="19" extent="1-1"/>
 <wire x1="50.84" y1="16.51" x2="61" y2="16.51" width="0" layer="19" extent="1-1"/>
-<wire x1="40.68" y1="16.51" x2="50.84" y2="16.51" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$1">
 <contactref element="24VOUT" pad="2"/>

@@ -1,5 +1,6 @@
 #include <Bounce.h>
 #include <UserTimer.h>
+#include <avr/eeprom.h>
 
 // We have to compile the TinyWire and LCDi2cNHD libraries from the local
 // directory because the Newhaven display seems to be somewhat broken and
@@ -28,6 +29,7 @@ const int COUNTER_CLOCKWISE = 0;
 //  PWM  (A 6) (D  4)  PA6  7|    |8   PA5  (D  5) (A 5)   PWM
 //                           +----+
 //
+// Required fuses: http://www.engbedded.com/fusecalc
 // 8MHz internal clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 // 8MHz external clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xfd:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
 //
@@ -52,6 +54,7 @@ const int minimumSpeed = 26;
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
 const float gearRatio = 2.0;
+const uint16_t eepromSize = 512;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
@@ -67,7 +70,10 @@ boolean powerEnabled = false;
 int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
 int motorTicks = 0;
-unsigned long lastRpmDisplayTime = 0;
+unsigned long lastDisplayTime = 0;
+unsigned long nextClockTick = 0;
+unsigned long secondsOfOperation = 0;
+uint32_t* nextClockBufferLocation = 0;
 
 void setup()
 { 
@@ -96,6 +102,8 @@ void setup()
   digitalWrite(directionOutPin, targetDirection);
   
   attachInterrupt(0, OnMotorTick, RISING);
+  
+  ReadClock();
 }
 
 void loop()
@@ -104,6 +112,15 @@ void loop()
   if (onOffSwitch.fallingEdge() && CanChangePowerState())
   {
     powerEnabled = !powerEnabled;
+    
+    if (powerEnabled)
+    {
+      nextClockTick = millis() + 1000;
+    }
+    else
+    {
+      WriteClock();
+    }
   }
   
   if (powerEnabled)
@@ -143,8 +160,9 @@ void loop()
   currentSpeed += SlewToward(currentSpeed, targetSpeed);
   analogWrite(speedOutPin, abs(currentSpeed));           
   
+  UpdateClock();
   UpdateDisplay();
-  
+    
   // Rather than trying to write a fixed-delay loop we're being lazy and using a
   // variable-deplay loop to control the rate at which we change the motor speed.
   // This should be fine because we don't have anything urgent that we need to do
@@ -189,10 +207,24 @@ void OnMotorTick()
   motorTicks++;
 }
 
+void UpdateClock()
+{ 
+  if (powerEnabled && millis() > nextClockTick)
+  {
+    nextClockTick += 1000;
+    secondsOfOperation++;
+    
+    if (secondsOfOperation % 60 == 0)
+    {
+      WriteClock();
+    }
+  }
+}
+
 void UpdateDisplay()
 {
   unsigned long now = millis();
-  unsigned int timeSinceLastDisplay = now - lastRpmDisplayTime;
+  unsigned int timeSinceLastDisplay = now - lastDisplayTime;
 
   // TODO: To avoid mistakes, maybe we should have a buffer that
   // contains boilerplate text for the whole display, then write
@@ -201,6 +233,8 @@ void UpdateDisplay()
   
   if (timeSinceLastDisplay > 1000)
   {
+    lastDisplayTime = now;
+
     UpdateRpmDisplay(now, timeSinceLastDisplay);
     UpdateDirectionDisplay();
     UpdateHoursDisplay();
@@ -211,7 +245,6 @@ void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
 {
   int totalMotorTicks = motorTicks;
   motorTicks = 0;
-  lastRpmDisplayTime = now;
 
   // We get one pulse every 90 deg. of rotation
   float rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
@@ -227,16 +260,22 @@ void UpdateDirectionDisplay()
 {
   lcd.setCursor(0, 9);
   if (currentDirection == CLOCKWISE) {
-    lcd.print(F("    PLY"));
-  } else {
     lcd.print(F("   SPIN"));
+  } else {
+    lcd.print(F("    PLY"));
   }
 }
 
 void UpdateHoursDisplay()
 {
+  // Truncate to one decimal place.  If we just let print() round it then it
+  // can round up and we display 0.1 after only 3 minutes which is not expected
+  float hours = secondsOfOperation / 3600.0;
+  hours = ((int)(hours * 10)) / 10.0;
+
   lcd.setCursor(1, 0);
-  lcd.print(F("HOURS: XXXXX.X"));
+  lcd.print(F("HOURS: "));
+  lcd.print(hours, 1);
 }
 
 char* rpmToString(int value, char* result)
@@ -264,3 +303,32 @@ char* rpmToString(int value, char* result)
   
   return result;
 }
+
+void ReadClock()
+{
+  secondsOfOperation = 0;
+  
+  for (nextClockBufferLocation = 0; nextClockBufferLocation < (uint32_t*)eepromSize; nextClockBufferLocation++)
+  {
+    uint32_t clockValue = eeprom_read_dword(nextClockBufferLocation);
+    if (clockValue >= secondsOfOperation && clockValue < 0xFFFFFFFF)
+    {
+      secondsOfOperation = clockValue;
+    }
+    else
+    {
+      break;
+    }
+  }
+}
+
+void WriteClock()
+{
+  eeprom_write_dword(nextClockBufferLocation, secondsOfOperation);
+  nextClockBufferLocation++;
+  if ((uint16_t)nextClockBufferLocation > eepromSize)
+  {
+    nextClockBufferLocation = 0;
+  }
+}
+
