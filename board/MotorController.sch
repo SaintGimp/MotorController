@@ -1262,6 +1262,8 @@ Source: User LBR Version 2.05</description>
 <part name="R7" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="2.2K"/>
 <part name="5V1" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="5V2" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
+<part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
+<part name="5V3" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 </parts>
 <sheets>
 <sheet>
@@ -1330,6 +1332,8 @@ Source: User LBR Version 2.05</description>
 <instance part="R7" gate="G$1" x="167.64" y="-12.7" rot="R90"/>
 <instance part="5V1" gate="VCC" x="167.64" y="10.16"/>
 <instance part="5V2" gate="VCC" x="167.64" y="-20.32" rot="R180"/>
+<instance part="R8" gate="G$1" x="83.82" y="-12.7" rot="R90"/>
+<instance part="5V3" gate="VCC" x="83.82" y="-20.32" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -1681,6 +1685,20 @@ Source: User LBR Version 2.05</description>
 <pinref part="C8" gate="G$1" pin="1"/>
 <wire x1="190.5" y1="-10.16" x2="190.5" y2="-5.08" width="0.1524" layer="91"/>
 <junction x="190.5" y="-5.08"/>
+</segment>
+</net>
+<net name="N$2" class="0">
+<segment>
+<pinref part="U1" gate="A" pin="PB3"/>
+<wire x1="101.6" y1="-2.54" x2="83.82" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="-2.54" x2="83.82" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="VCC" class="0">
+<segment>
+<pinref part="R8" gate="G$1" pin="1"/>
+<pinref part="5V3" gate="VCC" pin="VCC"/>
 </segment>
 </net>
 </nets>
