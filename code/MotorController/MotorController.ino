@@ -1,18 +1,19 @@
 #include <Bounce.h>
 #include <UserTimer.h>
 #include <avr/eeprom.h>
+#include <SoftwareSerial.h>
 
-// We have to compile the TinyWire and LCDi2cNHD libraries from the local
-// directory because the Newhaven display seems to be somewhat broken and
-// can't cope with a 100K data transfer rate.  We have to change the timing
-// defines in USI_TWI_Master.h to double the time (halve the rate) so that
-// the display doesn't randomly drop characters.
-#include "TinyWireM_local.h"
-#include "LCDi2cNHD_local.h"                    
+// Serial LCD library copied from https://github.com/scogswell/ArduinoSerLCD
+// but uses a lot of space.  Maybe try http://playground.arduino.cc/Code/SerLCD
+// if space becomes an issue.
+#include "SerLCD.h"
 
-// NOTE: Depending on the version of the Arduino IDE in use, you may
-// need to follow the instructions at https://github.com/TCWORLD/ATTinyCore/tree/master/PCREL%20Patch%20for%20GCC
-// in order to work around a bogus "relocation truncated to fit" linker error.
+// ATTiny core definitions as of Arduino IDE 1.6.3:
+// https://github.com/Coding-Badly/TinyCore1 (which is apparently a fork of https://github.com/Coding-Badly/arduino-tiny)
+// Also need to copy SoftwareSerial library per these links:
+// http://forum.arduino.cc/index.php?topic=302080.0
+// http://arduino.stackexchange.com/a/9950/1084
+// and restart IDE
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -42,8 +43,7 @@ const int onOffSwitchInPin = 7;
 const int directionSwitchInPin = 8;
 const int directionOutPin = 3;
 const int rpmInPin = 2;
-// I2C SCL = PA4 (D6)
-// I2C SDA = PA6 (D4)
+const int serialPin = 4;
 
 // Settings and limits
 const int switchDebounceTime = 30;
@@ -60,7 +60,8 @@ const uint16_t eepromSize = 512;
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
 
-LCDi2cNHD lcd = LCDi2cNHD(4,20,0x50>>1,0);
+SoftwareSerial softwareSerial(0, serialPin);
+SerLCD lcd(softwareSerial);
 
 // State variables
 int targetSpeed = 0;
@@ -76,16 +77,20 @@ unsigned long secondsOfOperation = 0;
 uint32_t* nextClockBufferLocation = 0;
 
 void setup()
-{ 
+{
+  // We set the timer to fast mode so that our motor speed control
+  // (via PWM) is as easy to smooth out as possible
   UserTimer_SetToPowerup();
   UserTimer_SetWaveformGenerationMode( UserTimer_(Fast_PWM_FF) );
   UserTimer_ClockSelect( UserTimer_(Prescale_Value_1) );
   // Fast PWM Frequency is F_CPU / (PRESCALE * 256)
   // 1MHz / 256 = 3.9KHz
   // 8MHz / 256 = 31.25KHz
-    
+
+  softwareSerial.begin(9600);    
+  lcd.begin();
+  
   lcd.setBacklight(8);
-  lcd.init();
   
   pinMode(onOffSwitchInPin, INPUT_PULLUP);
   pinMode(directionSwitchInPin, INPUT_PULLUP);
@@ -251,14 +256,14 @@ void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
   rpm /= gearRatio;
 
   char buffer[5];
-  lcd.home();
+  lcd.setPosition(0, 0);
   lcd.print(F("RPM: "));
   lcd.print(rpmToString((int)rpm, buffer));
 }
 
 void UpdateDirectionDisplay()
 {
-  lcd.setCursor(0, 9);
+  lcd.setPosition(0, 9);
   if (currentDirection == CLOCKWISE) {
     lcd.print(F("   SPIN"));
   } else {
@@ -273,7 +278,7 @@ void UpdateHoursDisplay()
   float hours = secondsOfOperation / 3600.0;
   hours = ((int)(hours * 10)) / 10.0;
 
-  lcd.setCursor(1, 0);
+  lcd.setPosition(1, 0);
   lcd.print(F("HOURS: "));
   lcd.print(hours, 1);
 }
