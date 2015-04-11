@@ -153,10 +153,13 @@ void loop()
   if (currentSpeed == 0 && currentDirection != targetDirection)
   {
     // We're at zero speed and want to switch directions.   
-    delay(0);
     digitalWrite(directionOutPin, targetDirection);
     currentDirection = targetDirection;
     UpdateDirectionDisplay();
+    
+    // We don't want to actually start moving the other direction,
+    // wait for the user to hit the power button again
+    powerEnabled = false;
   }
   
   currentSpeed += SlewToward(currentSpeed, targetSpeed);
