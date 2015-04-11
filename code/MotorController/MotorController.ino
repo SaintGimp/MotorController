@@ -3,10 +3,7 @@
 #include <avr/eeprom.h>
 #include <SoftwareSerial.h>
 
-// Serial LCD library copied from https://github.com/scogswell/ArduinoSerLCD
-// but uses a lot of space.  Maybe try http://playground.arduino.cc/Code/SerLCD
-// if space becomes an issue.
-#include "SerLCD.h"
+#include "LCDserNHD.h"
 
 // ATTiny core definitions as of Arduino IDE 1.6.3:
 // https://github.com/Coding-Badly/TinyCore1 (which is apparently a fork of https://github.com/Coding-Badly/arduino-tiny)
@@ -61,7 +58,7 @@ Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
 
 SoftwareSerial softwareSerial(0, serialPin);
-SerLCD lcd(softwareSerial);
+LCDserNHD lcd(2, 16, softwareSerial);
 
 // State variables
 int targetSpeed = 0;
@@ -88,7 +85,7 @@ void setup()
   // 8MHz / 256 = 31.25KHz
 
   softwareSerial.begin(9600);    
-  lcd.begin();
+  lcd.init();
   
   lcd.setBacklight(8);
   
@@ -256,14 +253,14 @@ void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
   rpm /= gearRatio;
 
   char buffer[5];
-  lcd.setPosition(0, 0);
+  lcd.home();
   lcd.print(F("RPM: "));
   lcd.print(rpmToString((int)rpm, buffer));
 }
 
 void UpdateDirectionDisplay()
 {
-  lcd.setPosition(0, 9);
+  lcd.setCursor(0, 9);
   if (currentDirection == CLOCKWISE) {
     lcd.print(F("   SPIN"));
   } else {
@@ -278,7 +275,7 @@ void UpdateHoursDisplay()
   float hours = secondsOfOperation / 3600.0;
   hours = ((int)(hours * 10)) / 10.0;
 
-  lcd.setPosition(1, 0);
+  lcd.setCursor(1, 0);
   lcd.print(F("HOURS: "));
   lcd.print(hours, 1);
 }
