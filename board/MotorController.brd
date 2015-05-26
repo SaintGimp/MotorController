@@ -826,15 +826,15 @@ Please make sure your boards conform to these design rules.</description>
 <element name="T1" library="SaintGimp" package="TO220BH" value="BT139X-600E" x="49.53" y="6.35" rot="R90"/>
 <element name="D2" library="SaintGimp" package="ZDIO-7.5" value="22V" x="63.5" y="10.16" rot="R180"/>
 <element name="D1" library="SaintGimp" package="ZDIO-7.5" value="27V" x="63.5" y="6.35" rot="R180"/>
-<element name="R1" library="SaintGimp" package="AXIAL-7.5MM" value="" x="63.5" y="2.54" rot="R180">
+<element name="R1" library="SaintGimp" package="AXIAL-7.5MM" value="1K" x="63.5" y="2.54" rot="R180">
 <attribute name="VALUE" value="" x="63.5" y="2.54" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 <element name="C5" library="SaintGimp" package="CAPACITOR-5MM" value="0.1uF" x="64.77" y="17.78" rot="R180"/>
-<element name="R2" library="SaintGimp" package="AXIAL-7.5MM" value="" x="63.5" y="13.97">
+<element name="R2" library="SaintGimp" package="AXIAL-7.5MM" value="1K" x="63.5" y="13.97">
 <attribute name="VALUE" value="" x="63.5" y="13.97" size="1.778" layer="27" display="off"/>
 </element>
 <element name="Q1" library="SaintGimp" package="TO220BH" value="IPP80P03P4L-04" x="29.21" y="16.51" rot="R90"/>
-<element name="R3" library="SaintGimp" package="AXIAL-7.5MM" value="" x="43.18" y="17.78" rot="R270">
+<element name="R3" library="SaintGimp" package="AXIAL-7.5MM" value="10K" x="43.18" y="17.78" rot="R270">
 <attribute name="VALUE" value="" x="43.18" y="17.78" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
 <element name="D3" library="SaintGimp" package="ZDIO-7.5" value="5.1V" x="39.37" y="17.78" rot="R270"/>
@@ -851,12 +851,12 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="VALUE" x="14.605" y="32.1056" size="2.0828" layer="27" ratio="10" rot="SR90"/>
 </element>
 <element name="C7" library="SaintGimp" package="CAPACITOR-5MM" value="0.1uF" x="15.24" y="35.56" rot="R270"/>
-<element name="R4" library="SaintGimp" package="AXIAL-7.5MM" value="" x="38.1" y="35.56" smashed="yes" rot="R90">
+<element name="R4" library="SaintGimp" package="AXIAL-7.5MM" value="220" x="38.1" y="35.56" smashed="yes" rot="R90">
 <attribute name="VALUE" value="" x="38.1" y="35.56" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="38.354" y="40.64" size="0.8128" layer="25" rot="R90"/>
 <attribute name="VALUE" x="38.608" y="33.528" size="0.8128" layer="21" ratio="10" rot="R90"/>
 </element>
-<element name="R5" library="SaintGimp" package="AXIAL-7.5MM" value="" x="43.18" y="35.56" smashed="yes" rot="R90">
+<element name="R5" library="SaintGimp" package="AXIAL-7.5MM" value="220" x="43.18" y="35.56" smashed="yes" rot="R90">
 <attribute name="VALUE" value="" x="43.18" y="35.56" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="43.434" y="40.64" size="0.8128" layer="25" rot="R90"/>
 <attribute name="VALUE" x="43.688" y="33.528" size="0.8128" layer="21" ratio="10" rot="R90"/>
@@ -873,9 +873,9 @@ Please make sure your boards conform to these design rules.</description>
 <attribute name="VALUE" x="27.94" y="29.845" size="1.016" layer="27" rot="R270"/>
 </element>
 <element name="DC1" library="SaintGimp" package="DC-CONV" value="OKI-78SR-5/1.5-W36H-C" x="67.31" y="45.72"/>
-<element name="R8" library="SaintGimp" package="AXIAL-7.5MM" value="" x="36.83" y="26.67" rot="R180"/>
+<element name="R8" library="SaintGimp" package="AXIAL-7.5MM" value="10K" x="36.83" y="26.67" rot="R180"/>
 <element name="C10" library="SaintGimp" package="CAPACITOR-5MM" value="0.1uF" x="78.74" y="34.29" rot="R270"/>
-<element name="R6" library="SaintGimp" package="AXIAL-7.5MM" value="" x="25.4" y="41.91"/>
+<element name="R6" library="SaintGimp" package="AXIAL-7.5MM" value="68" x="25.4" y="41.91"/>
 <element name="SPD" library="SaintGimp" package="SCREW-TERM-3" value="SCREW-TERM-3" x="36.83" y="48.26" rot="R180"/>
 <element name="MOTOR" library="SaintGimp" package="SCREW-TERM-3" value="SCREW-TERM-3" x="90.17" y="38.1" rot="R90"/>
 <element name="CNTRL" library="SaintGimp" package="SCREW-TERM-2" value="SCREW-TERM-2" x="7.62" y="40.64" rot="R270"/>

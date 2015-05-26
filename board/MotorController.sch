@@ -1230,11 +1230,11 @@ Source: User LBR Version 2.05</description>
 <part name="T1" library="SaintGimp" deviceset="TRIAC" device="-H" value="BT139X-600E"/>
 <part name="D2" library="SaintGimp" deviceset="ZENER" device="-7.5" value="22V"/>
 <part name="D1" library="SaintGimp" deviceset="ZENER" device="-7.5" value="27V"/>
-<part name="R1" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R1" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
 <part name="C5" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="0.1uF"/>
-<part name="R2" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R2" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
 <part name="Q1" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H" value="IPP80P03P4L-04"/>
-<part name="R3" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R3" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
 <part name="D3" library="SaintGimp" deviceset="ZENER" device="-7.5" value="5.1V"/>
 <part name="C2" library="SaintGimp" deviceset="CAP-POL" device="-2.5-5" value="47uF"/>
 <part name="GND2" library="SaintGimp" deviceset="GND" device=""/>
@@ -1244,8 +1244,8 @@ Source: User LBR Version 2.05</description>
 <part name="GND6" library="SaintGimp" deviceset="GND" device=""/>
 <part name="U1" library="SaintGimp" deviceset="ATTINY84-20PU" device=""/>
 <part name="C7" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="0.1uF"/>
-<part name="R4" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
-<part name="R5" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R4" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="220"/>
+<part name="R5" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="220"/>
 <part name="C8" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="1uF"/>
 <part name="GND7" library="SaintGimp" deviceset="GND" device=""/>
 <part name="C9" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="1uF"/>
@@ -1259,10 +1259,10 @@ Source: User LBR Version 2.05</description>
 <part name="5V2" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="5V1" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="DC1" library="SaintGimp" deviceset="DC-CONV" device="" value="OKI-78SR-5/1.5-W36H-C"/>
-<part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
 <part name="5V3" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="C10" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="0.1uF"/>
-<part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM"/>
+<part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="68"/>
 <part name="SPD" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
 <part name="MOTOR" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
 <part name="CNTRL" library="SaintGimp" deviceset="SCREW-TERM-2" device=""/>
