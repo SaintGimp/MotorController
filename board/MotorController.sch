@@ -172,6 +172,87 @@
 <wire x1="-3.556" y1="-1.27" x2="-3.81" y2="-1.016" width="0.127" layer="21" curve="-90"/>
 <wire x1="-3.81" y1="-1.016" x2="-3.81" y2="1.016" width="0.127" layer="21"/>
 </package>
+<package name="SCREW-TERM-5">
+<wire x1="-11.1506" y1="-1.016" x2="-9.144" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="-5.9944" y1="-1.0414" x2="-4.0894" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="-0.9144" y1="-0.9652" x2="0.889" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="-12.7" y1="-4.445" x2="12.7" y2="-4.445" width="0.1524" layer="21"/>
+<wire x1="12.7" y1="4.191" x2="12.7" y2="-4.445" width="0.1524" layer="21"/>
+<wire x1="12.7" y1="4.191" x2="-12.7" y2="4.191" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="-4.445" x2="-12.7" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="4.191" x2="-12.7" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="4.445" x2="12.7" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="12.7" y1="4.191" x2="12.7" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="-1.778" x2="-11.303" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-9.017" y1="-1.778" x2="-6.223" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-3.937" y1="-1.778" x2="-1.143" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="-1.778" x2="-12.7" y2="4.191" width="0.1524" layer="21"/>
+<circle x="-10.16" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="0" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="-10.16" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<circle x="0" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<circle x="-5.08" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="-5.08" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<pad name="1" x="-10.16" y="0" drill="1.3" shape="long" rot="R90"/>
+<pad name="2" x="-5.08" y="0" drill="1.3" shape="long" rot="R90"/>
+<pad name="3" x="0" y="0" drill="1.3" shape="long" rot="R90"/>
+<text x="-12.065" y="1.905" size="1.27" layer="51" ratio="10">1</text>
+<text x="-6.9342" y="1.8542" size="1.27" layer="51" ratio="10">2</text>
+<text x="-1.8542" y="1.905" size="1.27" layer="51" ratio="10">3</text>
+<text x="-11.43" y="-5.588" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
+<text x="-11.43" y="-3.81" size="0.8636" layer="25" ratio="10">&gt;NAME</text>
+<wire x1="4.1656" y1="-0.9652" x2="5.969" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="1.143" y1="-1.778" x2="3.937" y2="-1.778" width="0.1524" layer="21"/>
+<circle x="5.08" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="5.08" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<pad name="4" x="5.08" y="0" drill="1.3" shape="long" rot="R90"/>
+<text x="3.2258" y="1.905" size="1.27" layer="51" ratio="10">4</text>
+<wire x1="11.303" y1="-1.778" x2="12.7" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="9.2456" y1="-0.9652" x2="11.049" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="6.223" y1="-1.778" x2="9.017" y2="-1.778" width="0.1524" layer="21"/>
+<circle x="10.16" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="10.16" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<pad name="5" x="10.16" y="0" drill="1.3" shape="long" rot="R90"/>
+<text x="8.3058" y="1.905" size="1.27" layer="51" ratio="10">5</text>
+</package>
+<package name="SCREW-TERM-4">
+<wire x1="-8.6106" y1="-1.016" x2="-6.604" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="-3.4544" y1="-1.0414" x2="-1.5494" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="1.6256" y1="-0.9652" x2="3.429" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="-10.16" y1="-4.445" x2="10.16" y2="-4.445" width="0.1524" layer="21"/>
+<wire x1="10.16" y1="4.191" x2="10.16" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="10.16" y1="4.191" x2="-10.16" y2="4.191" width="0.1524" layer="21"/>
+<wire x1="-10.16" y1="-4.445" x2="-10.16" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-10.16" y1="4.191" x2="-10.16" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="-10.16" y1="4.445" x2="10.16" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="10.16" y1="4.191" x2="10.16" y2="4.445" width="0.1524" layer="21"/>
+<wire x1="-10.16" y1="-1.778" x2="-8.763" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-6.477" y1="-1.778" x2="-3.683" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-1.397" y1="-1.778" x2="1.397" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="8.763" y1="-1.778" x2="10.16" y2="-1.778" width="0.1524" layer="21"/>
+<wire x1="-10.16" y1="-1.778" x2="-10.16" y2="4.191" width="0.1524" layer="21"/>
+<wire x1="10.16" y1="-1.778" x2="10.16" y2="-4.445" width="0.1524" layer="21"/>
+<circle x="-7.62" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="2.54" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="-7.62" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<circle x="2.54" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<circle x="-2.54" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="-2.54" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<pad name="1" x="-7.62" y="0" drill="1.3" shape="long" rot="R90"/>
+<pad name="2" x="-2.54" y="0" drill="1.3" shape="long" rot="R90"/>
+<pad name="3" x="2.54" y="0" drill="1.3" shape="long" rot="R90"/>
+<text x="-9.525" y="1.905" size="1.27" layer="51" ratio="10">1</text>
+<text x="-4.3942" y="1.8542" size="1.27" layer="51" ratio="10">2</text>
+<text x="0.6858" y="1.905" size="1.27" layer="51" ratio="10">3</text>
+<text x="-8.89" y="-5.588" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
+<text x="-8.89" y="-3.81" size="0.8636" layer="25" ratio="10">&gt;NAME</text>
+<wire x1="6.7056" y1="-0.9652" x2="8.509" y2="0.9906" width="0.254" layer="51"/>
+<wire x1="3.683" y1="-1.778" x2="6.477" y2="-1.778" width="0.1524" layer="21"/>
+<circle x="7.62" y="0" radius="1.4986" width="0.1524" layer="51"/>
+<circle x="7.62" y="3.302" radius="0.508" width="0.1524" layer="21"/>
+<pad name="4" x="7.62" y="0" drill="1.3" shape="long" rot="R90"/>
+<text x="5.7658" y="1.905" size="1.27" layer="51" ratio="10">4</text>
+</package>
 <package name="SCREW-TERM-3">
 <description>&lt;b&gt;3-Pin Screw Terminal&lt;/b&gt;</description>
 <wire x1="-6.0706" y1="-1.016" x2="-4.064" y2="0.9906" width="0.254" layer="51"/>
@@ -930,8 +1011,8 @@ Source: User LBR Version 2.05</description>
 <deviceset name="SCREW-TERM-2" prefix="X">
 <description>&lt;b&gt;2-Pin Screw Terminal&lt;/b&gt;</description>
 <gates>
-<gate name="T1" symbol="TERMINAL" x="0" y="5.08" addlevel="always"/>
-<gate name="T2" symbol="TERMINAL" x="0" y="0"/>
+<gate name="T1" symbol="TERMINAL" x="0" y="5.08" addlevel="always" swaplevel="1"/>
+<gate name="T2" symbol="TERMINAL" x="0" y="0" swaplevel="1"/>
 </gates>
 <devices>
 <device name="" package="SCREW-TERM-2">
@@ -945,12 +1026,58 @@ Source: User LBR Version 2.05</description>
 </device>
 </devices>
 </deviceset>
+<deviceset name="SCREW-TERM-5">
+<description>5-Pin Screw Terminal</description>
+<gates>
+<gate name="T1" symbol="TERMINAL" x="0" y="12.7" swaplevel="1"/>
+<gate name="T2" symbol="TERMINAL" x="0" y="7.62" swaplevel="1"/>
+<gate name="T3" symbol="TERMINAL" x="0" y="2.54" swaplevel="1"/>
+<gate name="T4" symbol="TERMINAL" x="0" y="-2.54" swaplevel="1"/>
+<gate name="T5" symbol="TERMINAL" x="0" y="-7.62" swaplevel="1"/>
+</gates>
+<devices>
+<device name="" package="SCREW-TERM-5">
+<connects>
+<connect gate="T1" pin="KL" pad="1"/>
+<connect gate="T2" pin="KL" pad="2"/>
+<connect gate="T3" pin="KL" pad="3"/>
+<connect gate="T4" pin="KL" pad="4"/>
+<connect gate="T5" pin="KL" pad="5"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SCREW-TERM-4">
+<description>4-Pin Screw Terminal</description>
+<gates>
+<gate name="T1" symbol="TERMINAL" x="-5.08" y="10.16" swaplevel="1"/>
+<gate name="T2" symbol="TERMINAL" x="-5.08" y="5.08" swaplevel="1"/>
+<gate name="T3" symbol="TERMINAL" x="-5.08" y="0" swaplevel="1"/>
+<gate name="T4" symbol="TERMINAL" x="-5.08" y="-5.08" swaplevel="1"/>
+</gates>
+<devices>
+<device name="" package="SCREW-TERM-4">
+<connects>
+<connect gate="T1" pin="KL" pad="1"/>
+<connect gate="T2" pin="KL" pad="2"/>
+<connect gate="T3" pin="KL" pad="3"/>
+<connect gate="T4" pin="KL" pad="4"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 <deviceset name="SCREW-TERM-3" prefix="X">
 <description>&lt;b&gt;3-Pin Screw Terminal&lt;/b&gt;</description>
 <gates>
-<gate name="T1" symbol="TERMINAL" x="0" y="5.08" addlevel="always"/>
-<gate name="T2" symbol="TERMINAL" x="0" y="0" addlevel="always"/>
-<gate name="T3" symbol="TERMINAL" x="0" y="-5.08"/>
+<gate name="T1" symbol="TERMINAL" x="0" y="5.08" addlevel="always" swaplevel="1"/>
+<gate name="T2" symbol="TERMINAL" x="0" y="0" addlevel="always" swaplevel="1"/>
+<gate name="T3" symbol="TERMINAL" x="0" y="-5.08" swaplevel="1"/>
 </gates>
 <devices>
 <device name="" package="SCREW-TERM-3">
@@ -1223,8 +1350,7 @@ Source: User LBR Version 2.05</description>
 <part name="GND5" library="SaintGimp" deviceset="GND" device=""/>
 <part name="24VOUT" library="SaintGimp" deviceset="SCREW-TERM-2" device=""/>
 <part name="RAMP" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
-<part name="DISP" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
-<part name="C1" library="SaintGimp" deviceset="CAP-POL" device="-2.5-5" value="47uF"/>
+<part name="FRONT" library="SaintGimp" deviceset="SCREW-TERM-5" device=""/>
 <part name="C4" library="SaintGimp" deviceset="CAP-POL" device="-25-14" value="470uF"/>
 <part name="F1" library="SaintGimp" deviceset="FUSE" device="" value="4A"/>
 <part name="T1" library="SaintGimp" deviceset="TRIAC" device="-H" value="BT139X-600E"/>
@@ -1236,9 +1362,7 @@ Source: User LBR Version 2.05</description>
 <part name="Q1" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H" value="IPP80P03P4L-04"/>
 <part name="R3" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
 <part name="D3" library="SaintGimp" deviceset="ZENER" device="-7.5" value="5.1V"/>
-<part name="C2" library="SaintGimp" deviceset="CAP-POL" device="-2.5-5" value="47uF"/>
-<part name="GND2" library="SaintGimp" deviceset="GND" device=""/>
-<part name="C3" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="0.1uF"/>
+<part name="C3" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="10uF"/>
 <part name="GND3" library="SaintGimp" deviceset="GND" device=""/>
 <part name="C6" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="1uF"/>
 <part name="GND6" library="SaintGimp" deviceset="GND" device=""/>
@@ -1263,9 +1387,9 @@ Source: User LBR Version 2.05</description>
 <part name="5V3" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="C10" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="0.1uF"/>
 <part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="68"/>
-<part name="SPD" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
-<part name="MOTOR" library="SaintGimp" deviceset="SCREW-TERM-3" device=""/>
-<part name="CNTRL" library="SaintGimp" deviceset="SCREW-TERM-2" device=""/>
+<part name="MOTOR" library="SaintGimp" deviceset="SCREW-TERM-4" device=""/>
+<part name="MODE" library="SaintGimp" deviceset="SCREW-TERM-2" device=""/>
+<part name="C1" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="10uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -1281,9 +1405,8 @@ Source: User LBR Version 2.05</description>
 <instance part="24VOUT" gate="T2" x="71.12" y="71.12" rot="MR0"/>
 <instance part="RAMP" gate="T1" x="76.2" y="35.56" rot="R90"/>
 <instance part="RAMP" gate="T2" x="48.26" y="35.56" rot="R90"/>
-<instance part="DISP" gate="T1" x="81.28" y="35.56" rot="R90"/>
-<instance part="DISP" gate="T2" x="53.34" y="35.56" rot="R90"/>
-<instance part="C1" gate="G$1" x="40.64" y="50.8"/>
+<instance part="FRONT" gate="T1" x="81.28" y="35.56" rot="R90"/>
+<instance part="FRONT" gate="T2" x="53.34" y="35.56" rot="R90"/>
 <instance part="C4" gate="G$1" x="45.72" y="68.58" rot="MR0"/>
 <instance part="F1" gate="G$1" x="-15.24" y="53.34"/>
 <instance part="T1" gate="G$1" x="12.7" y="33.02"/>
@@ -1295,10 +1418,8 @@ Source: User LBR Version 2.05</description>
 <instance part="Q1" gate="G$1" x="22.86" y="50.8" rot="MR90"/>
 <instance part="R3" gate="G$1" x="20.32" y="30.48" rot="R90"/>
 <instance part="D3" gate="G$1" x="30.48" y="43.18" rot="R90"/>
-<instance part="C2" gate="G$1" x="88.9" y="53.34" rot="R90"/>
-<instance part="GND2" gate="1" x="96.52" y="53.34" rot="R90"/>
-<instance part="C3" gate="G$1" x="91.44" y="43.18" rot="R90"/>
-<instance part="GND3" gate="1" x="96.52" y="43.18" rot="R90"/>
+<instance part="C3" gate="G$1" x="91.44" y="48.26" rot="R90"/>
+<instance part="GND3" gate="1" x="96.52" y="48.26" rot="R90"/>
 <instance part="C6" gate="G$1" x="50.8" y="68.58" rot="MR180"/>
 <instance part="GND6" gate="1" x="33.02" y="-5.08" rot="R270"/>
 <instance part="U1" gate="A" x="53.34" y="7.62"/>
@@ -1316,7 +1437,7 @@ Source: User LBR Version 2.05</description>
 <instance part="GND11" gate="1" x="-2.54" y="15.24" rot="R270"/>
 <instance part="GND12" gate="1" x="-2.54" y="0" rot="R270"/>
 <instance part="5V2" gate="VCC" x="17.78" y="12.7" rot="R90"/>
-<instance part="5V1" gate="VCC" x="66.04" y="40.64" rot="R90"/>
+<instance part="5V1" gate="VCC" x="71.12" y="40.64" rot="R90"/>
 <instance part="DC1" gate="G$1" x="73.66" y="50.8" smashed="yes">
 <attribute name="NAME" x="76.2" y="45.72" size="1.778" layer="95"/>
 <attribute name="VALUE" x="61.976" y="58.166" size="1.778" layer="96"/>
@@ -1325,28 +1446,27 @@ Source: User LBR Version 2.05</description>
 <instance part="5V3" gate="VCC" x="15.24" y="-15.24" rot="R180"/>
 <instance part="C10" gate="G$1" x="58.42" y="68.58" rot="MR180"/>
 <instance part="R6" gate="G$1" x="106.68" y="-7.62" rot="R90"/>
-<instance part="DISP" gate="T3" x="106.68" y="-17.78" rot="R90"/>
-<instance part="SPD" gate="T3" x="88.9" y="12.7" rot="R180"/>
-<instance part="SPD" gate="T1" x="71.12" y="35.56" rot="R90"/>
-<instance part="SPD" gate="T2" x="58.42" y="35.56" rot="R90"/>
+<instance part="FRONT" gate="T3" x="106.68" y="-17.78" rot="R90"/>
 <instance part="RAMP" gate="T3" x="88.9" y="10.16" rot="R180"/>
 <instance part="MOTOR" gate="T1" x="132.08" y="0" rot="R180"/>
-<instance part="CNTRL" gate="T2" x="88.9" y="5.08" rot="R180"/>
-<instance part="CNTRL" gate="T1" x="88.9" y="7.62" rot="R180"/>
 <instance part="MOTOR" gate="T2" x="22.86" y="-5.08" rot="R90"/>
 <instance part="MOTOR" gate="T3" x="88.9" y="-5.08" rot="R180"/>
+<instance part="FRONT" gate="T4" x="88.9" y="12.7" rot="R180"/>
+<instance part="FRONT" gate="T5" x="88.9" y="5.08" rot="R180"/>
+<instance part="MODE" gate="T2" x="88.9" y="7.62" rot="R180"/>
+<instance part="MODE" gate="T1" x="58.42" y="35.56" rot="R90"/>
+<instance part="MOTOR" gate="T4" x="63.5" y="35.56" rot="R90"/>
+<instance part="C1" gate="G$1" x="40.64" y="48.26"/>
 </instances>
 <busses>
 </busses>
 <nets>
 <net name="GND" class="0">
 <segment>
-<pinref part="C1" gate="G$1" pin="-"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 <wire x1="40.64" y1="40.64" x2="40.64" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="45.72" x2="40.64" y2="45.72" width="0.1524" layer="91"/>
-<junction x="40.64" y="45.72"/>
-<pinref part="DISP" gate="T2" pin="KL"/>
+<pinref part="FRONT" gate="T2" pin="KL"/>
 <pinref part="RAMP" gate="T2" pin="KL"/>
 <wire x1="53.34" y1="40.64" x2="48.26" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="48.26" y1="40.64" x2="40.64" y2="40.64" width="0.1524" layer="91"/>
@@ -1354,9 +1474,14 @@ Source: User LBR Version 2.05</description>
 <junction x="40.64" y="40.64"/>
 <pinref part="DC1" gate="G$1" pin="GND"/>
 <junction x="73.66" y="45.72"/>
-<pinref part="SPD" gate="T2" pin="KL"/>
+<pinref part="MODE" gate="T1" pin="KL"/>
 <wire x1="58.42" y1="40.64" x2="53.34" y2="40.64" width="0.1524" layer="91"/>
 <junction x="53.34" y="40.64"/>
+<pinref part="MOTOR" gate="T4" pin="KL"/>
+<wire x1="63.5" y1="40.64" x2="58.42" y2="40.64" width="0.1524" layer="91"/>
+<junction x="58.42" y="40.64"/>
+<pinref part="C1" gate="G$1" pin="2"/>
+<junction x="40.64" y="45.72"/>
 </segment>
 <segment>
 <pinref part="C4" gate="G$1" pin="-"/>
@@ -1394,10 +1519,6 @@ Source: User LBR Version 2.05</description>
 <junction x="-12.7" y="22.86"/>
 <junction x="-20.32" y="22.86"/>
 <junction x="-5.08" y="25.4"/>
-</segment>
-<segment>
-<pinref part="C2" gate="G$1" pin="-"/>
-<pinref part="GND2" gate="1" pin="GND"/>
 </segment>
 <segment>
 <pinref part="C3" gate="G$1" pin="2"/>
@@ -1496,12 +1617,10 @@ Source: User LBR Version 2.05</description>
 </net>
 <net name="24V-PROTECTED" class="1">
 <segment>
+<wire x1="30.48" y1="53.34" x2="40.64" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="53.34" x2="66.04" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="C1" gate="G$1" pin="+"/>
 <wire x1="66.04" y1="53.34" x2="68.58" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="Q1" gate="G$1" pin="S"/>
-<wire x1="40.64" y1="53.34" x2="30.48" y2="53.34" width="0.1524" layer="91"/>
-<junction x="40.64" y="53.34"/>
 <pinref part="D3" gate="G$1" pin="C"/>
 <wire x1="30.48" y1="53.34" x2="27.94" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="45.72" x2="30.48" y2="53.34" width="0.1524" layer="91"/>
@@ -1524,6 +1643,8 @@ Source: User LBR Version 2.05</description>
 <wire x1="45.72" y1="71.12" x2="30.48" y2="71.12" width="0.1524" layer="91"/>
 <junction x="45.72" y="71.12"/>
 <wire x1="30.48" y1="71.12" x2="30.48" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="C1" gate="G$1" pin="1"/>
+<junction x="40.64" y="53.34"/>
 </segment>
 </net>
 <net name="START_IN" class="0">
@@ -1533,7 +1654,7 @@ Source: User LBR Version 2.05</description>
 <label x="73.66" y="5.08" size="1.778" layer="95"/>
 <wire x1="71.12" y1="5.08" x2="83.82" y2="5.08" width="0.1524" layer="91"/>
 <junction x="71.12" y="5.08"/>
-<pinref part="CNTRL" gate="T2" pin="KL"/>
+<pinref part="FRONT" gate="T5" pin="KL"/>
 </segment>
 </net>
 <net name="RAMP_IN" class="0">
@@ -1553,7 +1674,7 @@ Source: User LBR Version 2.05</description>
 <label x="73.66" y="7.62" size="1.778" layer="95"/>
 <wire x1="83.82" y1="7.62" x2="71.12" y2="7.62" width="0.1524" layer="91"/>
 <junction x="71.12" y="7.62"/>
-<pinref part="CNTRL" gate="T1" pin="KL"/>
+<pinref part="MODE" gate="T2" pin="KL"/>
 </segment>
 </net>
 <net name="RPM_IN" class="0">
@@ -1591,7 +1712,7 @@ Source: User LBR Version 2.05</description>
 <wire x1="71.12" y1="12.7" x2="83.82" y2="12.7" width="0.1524" layer="91"/>
 <label x="73.66" y="12.7" size="1.778" layer="95"/>
 <junction x="71.12" y="12.7"/>
-<pinref part="SPD" gate="T3" pin="KL"/>
+<pinref part="FRONT" gate="T4" pin="KL"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -1660,25 +1781,20 @@ Source: User LBR Version 2.05</description>
 </segment>
 <segment>
 <pinref part="C3" gate="G$1" pin="1"/>
-<wire x1="86.36" y1="43.18" x2="86.36" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="48.26" x2="86.36" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="RAMP" gate="T1" pin="KL"/>
-<pinref part="DISP" gate="T1" pin="KL"/>
+<pinref part="FRONT" gate="T1" pin="KL"/>
 <wire x1="81.28" y1="40.64" x2="76.2" y2="40.64" width="0.1524" layer="91"/>
 <junction x="76.2" y="40.64"/>
 <wire x1="86.36" y1="40.64" x2="81.28" y2="40.64" width="0.1524" layer="91"/>
 <junction x="81.28" y="40.64"/>
-<pinref part="C2" gate="G$1" pin="+"/>
-<wire x1="86.36" y1="43.18" x2="86.36" y2="53.34" width="0.1524" layer="91"/>
-<junction x="86.36" y="43.18"/>
+<wire x1="86.36" y1="48.26" x2="86.36" y2="53.34" width="0.1524" layer="91"/>
+<junction x="86.36" y="48.26"/>
 <pinref part="5V1" gate="VCC" pin="VCC"/>
-<wire x1="76.2" y1="40.64" x2="71.12" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="40.64" x2="73.66" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="DC1" gate="G$1" pin="OUT"/>
-<wire x1="71.12" y1="40.64" x2="68.58" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="53.34" x2="81.28" y2="53.34" width="0.1524" layer="91"/>
-<junction x="86.36" y="53.34"/>
 <junction x="81.28" y="53.34"/>
-<pinref part="SPD" gate="T1" pin="KL"/>
-<junction x="71.12" y="40.64"/>
 </segment>
 </net>
 <net name="SERIAL_TX" class="0">
@@ -1692,7 +1808,7 @@ Source: User LBR Version 2.05</description>
 <net name="N$8" class="0">
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
-<pinref part="DISP" gate="T3" pin="KL"/>
+<pinref part="FRONT" gate="T3" pin="KL"/>
 </segment>
 </net>
 </nets>
