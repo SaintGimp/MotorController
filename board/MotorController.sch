@@ -1448,15 +1448,15 @@ Source: User LBR Version 2.05</description>
 <instance part="R6" gate="G$1" x="106.68" y="-7.62" rot="R90"/>
 <instance part="FRONT" gate="T3" x="106.68" y="-17.78" rot="R90"/>
 <instance part="RAMP" gate="T3" x="88.9" y="10.16" rot="R180"/>
-<instance part="MOTOR" gate="T1" x="132.08" y="0" rot="R180"/>
-<instance part="MOTOR" gate="T2" x="22.86" y="-5.08" rot="R90"/>
-<instance part="MOTOR" gate="T3" x="88.9" y="-5.08" rot="R180"/>
 <instance part="FRONT" gate="T4" x="88.9" y="12.7" rot="R180"/>
 <instance part="FRONT" gate="T5" x="88.9" y="5.08" rot="R180"/>
 <instance part="MODE" gate="T2" x="88.9" y="7.62" rot="R180"/>
 <instance part="MODE" gate="T1" x="58.42" y="35.56" rot="R90"/>
 <instance part="MOTOR" gate="T4" x="63.5" y="35.56" rot="R90"/>
 <instance part="C1" gate="G$1" x="40.64" y="48.26"/>
+<instance part="MOTOR" gate="T1" x="22.86" y="-5.08" rot="R90"/>
+<instance part="MOTOR" gate="T2" x="88.9" y="-5.08" rot="R180"/>
+<instance part="MOTOR" gate="T3" x="132.08" y="0" rot="R180"/>
 </instances>
 <busses>
 </busses>
@@ -1684,7 +1684,7 @@ Source: User LBR Version 2.05</description>
 <wire x1="35.56" y1="0" x2="22.86" y2="0" width="0.1524" layer="91"/>
 <junction x="35.56" y="0"/>
 <label x="25.4" y="0" size="1.778" layer="95"/>
-<pinref part="MOTOR" gate="T2" pin="KL"/>
+<pinref part="MOTOR" gate="T1" pin="KL"/>
 </segment>
 </net>
 <net name="SPD_OUT" class="0">
@@ -1703,7 +1703,7 @@ Source: User LBR Version 2.05</description>
 <wire x1="71.12" y1="-5.08" x2="83.82" y2="-5.08" width="0.1524" layer="91"/>
 <label x="73.66" y="-5.08" size="1.778" layer="95"/>
 <junction x="71.12" y="-5.08"/>
-<pinref part="MOTOR" gate="T3" pin="KL"/>
+<pinref part="MOTOR" gate="T2" pin="KL"/>
 </segment>
 </net>
 <net name="SPD_IN" class="0">
@@ -1720,7 +1720,7 @@ Source: User LBR Version 2.05</description>
 <pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="C9" gate="G$1" pin="1"/>
 <wire x1="127" y1="-5.08" x2="127" y2="0" width="0.1524" layer="91"/>
-<pinref part="MOTOR" gate="T1" pin="KL"/>
+<pinref part="MOTOR" gate="T3" pin="KL"/>
 <junction x="127" y="0"/>
 </segment>
 </net>
@@ -1757,7 +1757,7 @@ Source: User LBR Version 2.05</description>
 <junction x="116.84" y="0"/>
 </segment>
 </net>
-<net name="N$2" class="0">
+<net name="RESET" class="0">
 <segment>
 <pinref part="U1" gate="A" pin="PB3"/>
 <wire x1="35.56" y1="2.54" x2="15.24" y2="2.54" width="0.1524" layer="91"/>
