@@ -931,7 +931,10 @@ Please make sure your boards conform to these design rules.</description>
 <element name="R3" library="SaintGimp" package="AXIAL-7.5MM" value="10K" x="63.5" y="7.62" rot="R270">
 <attribute name="VALUE" value="" x="63.5" y="7.62" size="1.778" layer="27" rot="R270" display="off"/>
 </element>
-<element name="D3" library="SaintGimp" package="ZDIO-7.5" value="5.1V" x="60.96" y="7.62" rot="R270"/>
+<element name="D3" library="SaintGimp" package="ZDIO-7.5" value="5.1V" x="60.96" y="7.62" smashed="yes" rot="R270">
+<attribute name="NAME" x="58.5978" y="8.3312" size="0.8128" layer="25" ratio="10" rot="R270"/>
+<attribute name="VALUE" x="58.547" y="10.16" size="0.8128" layer="27" ratio="10" rot="R270"/>
+</element>
 <element name="C3" library="SaintGimp" package="CAPACITOR-5MM" value="10uF" x="62.23" y="50.8" rot="R90"/>
 <element name="C6" library="SaintGimp" package="CAPACITOR-5MM" value="1uF" x="80.01" y="35.56" rot="R270"/>
 <element name="U1" library="SaintGimp" package="DIP14" value="ATTINY84-20PU" x="34.29" y="39.37" smashed="yes" rot="R90">
