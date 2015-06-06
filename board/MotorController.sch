@@ -1353,7 +1353,7 @@ Source: User LBR Version 2.05</description>
 <part name="FRONT" library="SaintGimp" deviceset="SCREW-TERM-5" device=""/>
 <part name="C4" library="SaintGimp" deviceset="CAP-POL" device="-25-14" value="470uF"/>
 <part name="F1" library="SaintGimp" deviceset="FUSE" device="" value="4A"/>
-<part name="T1" library="SaintGimp" deviceset="TRIAC" device="-H" value="BT139X-600E"/>
+<part name="T1" library="SaintGimp" deviceset="TRIAC" device="-H" value="BT137-600E"/>
 <part name="D2" library="SaintGimp" deviceset="ZENER" device="-7.5" value="22V"/>
 <part name="D1" library="SaintGimp" deviceset="ZENER" device="-7.5" value="27V"/>
 <part name="R1" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
