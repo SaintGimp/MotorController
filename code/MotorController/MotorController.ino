@@ -185,7 +185,15 @@ boolean CanChangePowerState()
 
 int ReadPotentiometer(int pin)
 {
-  int value = analogRead(pin);
+  const int numberOfSamples = 5;
+  
+  int valueAccumulator = 0;
+  for (int x = 0; x < numberOfSamples; x++)
+  {
+    valueAccumulator += analogRead(pin);
+  }
+  
+  int value = valueAccumulator / numberOfSamples;
   value = constrain(value, 0, potentiometerCeiling);
   
   return value;
