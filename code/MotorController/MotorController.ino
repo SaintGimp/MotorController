@@ -45,7 +45,7 @@ const int serialPin = 4;
 // Settings and limits
 const int switchDebounceTime = 30;
 const int minimumDelay = 10;
-const int maximumDelay = 23;
+const int maximumDelay = 46;
 const int minimumSpeed = 26;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
