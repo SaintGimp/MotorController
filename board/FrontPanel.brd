@@ -148,8 +148,8 @@
 <wire x1="67.31" y1="22.225" x2="70.485" y2="25.4" width="0" layer="20" curve="-90"/>
 <wire x1="70.485" y1="25.4" x2="73.025" y2="25.4" width="0" layer="20"/>
 <wire x1="73.025" y1="25.4" x2="76.2" y2="28.575" width="0" layer="20" curve="90"/>
-<text x="72.39" y="33.02" size="1.016" layer="121" align="bottom-center">RUN/STOP</text>
-<text x="72.39" y="26.67" size="1.016" layer="121" align="bottom-center">GND</text>
+<text x="71.12" y="33.02" size="1.016" layer="121" align="bottom-center">RUN/STOP</text>
+<text x="71.12" y="26.67" size="1.016" layer="121" align="bottom-center">GND</text>
 <text x="30.48" y="25.4" size="1.778" layer="121" align="top-center">Woolee Ann
 Front Panel
 Ver. 1.0.0</text>
@@ -406,7 +406,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="S2" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="16.51" y="12.7" rot="R180"/>
 <element name="S3" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="62.23" y="31.75"/>
 <element name="S4" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="30.48" y="31.75"/>
-<element name="J1" library="SaintGimp" package="1X02-BIG" value="PINHD-1X2BIG" x="72.39" y="30.48" smashed="yes" rot="R270"/>
+<element name="J1" library="SaintGimp" package="1X02-BIG" value="PINHD-1X2BIG" x="71.12" y="30.48" smashed="yes" rot="R270"/>
 <element name="U$1" library="holes" package="3,2" value="" x="4.445" y="4.445"/>
 <element name="U$2" library="holes" package="3,2" value="" x="62.865" y="4.445"/>
 <element name="U$3" library="holes" package="3,2" value="" x="27.305" y="40.005"/>
@@ -424,7 +424,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="S3" pad="2"/>
 <contactref element="S4" pad="1"/>
 <contactref element="S4" pad="2"/>
-<wire x1="72.39" y1="31.75" x2="67.8733125" y2="31.75" width="0.254" layer="1"/>
+<wire x1="71.12" y1="31.75" x2="67.8733125" y2="31.75" width="0.254" layer="1"/>
 <wire x1="67.8733125" y1="31.75" x2="67.64880625" y2="31.84299375" width="0.254" layer="1" curve="-45"/>
 <wire x1="67.64880625" y1="31.84299375" x2="65.4812" y2="34.0106" width="0.254" layer="1"/>
 <wire x1="65.4812" y1="34.0106" x2="58.9788" y2="34.0106" width="0.254" layer="1"/>
@@ -450,7 +450,7 @@ Please make sure your boards conform to these design rules.</description>
 <contactref element="S1" pad="4"/>
 <contactref element="S1" pad="3"/>
 <contactref element="J1" pad="2"/>
-<wire x1="72.39" y1="29.21" x2="65.8921125" y2="29.21" width="0.254" layer="1"/>
+<wire x1="71.12" y1="29.21" x2="65.8921125" y2="29.21" width="0.254" layer="1"/>
 <wire x1="65.8921125" y1="29.21" x2="65.66760625" y2="29.30299375" width="0.254" layer="1" curve="-45"/>
 <wire x1="65.66760625" y1="29.30299375" x2="65.4812" y2="29.4894" width="0.254" layer="1"/>
 <wire x1="65.4812" y1="29.4894" x2="58.9788" y2="29.4894" width="0.254" layer="1"/>
