@@ -152,7 +152,7 @@
 <text x="71.12" y="27.94" size="1.016" layer="122" rot="MR0" align="bottom-center">GND</text>
 <text x="30.48" y="25.4" size="1.778" layer="121" align="top-center">Woolee Ann
 Front Panel
-Ver. 1.0.0</text>
+Ver. 1.0.1</text>
 </plain>
 <libraries>
 <library name="SaintGimp">
@@ -403,7 +403,7 @@ Please make sure your boards conform to these design rules.</description>
 </autorouter>
 <elements>
 <element name="S1" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="63.5" y="12.7" rot="R180"/>
-<element name="S2" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="13.97" y="12.7" rot="R180"/>
+<element name="S2" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="12.7" y="12.7" rot="R180"/>
 <element name="S3" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="63.5" y="31.75"/>
 <element name="S4" library="SaintGimp" package="TACTILE-SWITCH-6MM" value="SWITCH-MOMENTARY-6MM" x="27.94" y="31.75"/>
 <element name="J1" library="SaintGimp" package="1X02-BIG" value="PINHD-1X2BIG" x="71.12" y="31.75" smashed="yes" rot="R270"/>
@@ -427,15 +427,16 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="66.7512" y1="34.0106" x2="60.2488" y2="34.0106" width="0.254" layer="1"/>
 <wire x1="60.2488" y1="34.0106" x2="31.1912" y2="34.0106" width="0.254" layer="1"/>
 <wire x1="31.1912" y1="34.0106" x2="24.6888" y2="34.0106" width="0.254" layer="1"/>
-<wire x1="8.89" y1="18.2118" x2="8.89" y2="12.3997125" width="0.254" layer="1"/>
-<wire x1="8.89" y1="12.3997125" x2="8.98299375" y2="12.17520625" width="0.254" layer="1" curve="45"/>
-<wire x1="8.98299375" y1="12.17520625" x2="10.7188" y2="10.4394" width="0.254" layer="1"/>
-<wire x1="10.7188" y1="10.4394" x2="17.2212" y2="10.4394" width="0.254" layer="1"/>
-<wire x1="60.2488" y1="10.4394" x2="17.2212" y2="10.4394" width="0.254" layer="1"/>
+<wire x1="7.62" y1="18.2118" x2="7.62" y2="12.3997125" width="0.254" layer="1"/>
+<wire x1="7.62" y1="12.3997125" x2="7.71299375" y2="12.17520625" width="0.254" layer="1" curve="45"/>
+<wire x1="7.71299375" y1="12.17520625" x2="9.4488" y2="10.4394" width="0.254" layer="1"/>
+<wire x1="9.4488" y1="10.4394" x2="15.9512" y2="10.4394" width="0.254" layer="1"/>
+<wire x1="60.2488" y1="10.4394" x2="15.9512" y2="10.4394" width="0.254" layer="1"/>
 <wire x1="60.2488" y1="10.4394" x2="66.7512" y2="10.4394" width="0.254" layer="1"/>
 <wire x1="71.12" y1="33.02" x2="67.7418" y2="33.02" width="0.254" layer="1"/>
 <wire x1="67.7418" y1="33.02" x2="66.7512" y2="34.0106" width="0.254" layer="1"/>
-<wire x1="24.6888" y1="34.0106" x2="8.89" y2="18.2118" width="0.254" layer="1"/>
+<wire x1="24.6888" y1="34.0106" x2="23.4188" y2="34.0106" width="0.254" layer="1"/>
+<wire x1="23.4188" y1="34.0106" x2="7.62" y2="18.2118" width="0.254" layer="1"/>
 </signal>
 <signal name="N$2">
 <contactref element="S4" pad="4"/>
@@ -450,15 +451,15 @@ Please make sure your boards conform to these design rules.</description>
 <wire x1="66.7512" y1="29.4894" x2="60.2488" y2="29.4894" width="0.254" layer="1"/>
 <wire x1="60.2488" y1="29.4894" x2="31.1912" y2="29.4894" width="0.254" layer="1"/>
 <wire x1="31.1912" y1="29.4894" x2="24.6888" y2="29.4894" width="0.254" layer="1"/>
-<wire x1="10.7188" y1="14.9606" x2="17.2212" y2="14.9606" width="0.254" layer="1"/>
-<wire x1="60.2488" y1="14.9606" x2="17.2212" y2="14.9606" width="0.254" layer="1"/>
+<wire x1="9.4488" y1="14.9606" x2="15.9512" y2="14.9606" width="0.254" layer="1"/>
+<wire x1="60.2488" y1="14.9606" x2="15.9512" y2="14.9606" width="0.254" layer="1"/>
 <wire x1="60.2488" y1="14.9606" x2="66.7512" y2="14.9606" width="0.254" layer="1"/>
-<wire x1="10.795" y1="15.0368" x2="10.7188" y2="14.9606" width="0.254" layer="1"/>
+<wire x1="9.525" y1="15.0368" x2="9.4488" y2="14.9606" width="0.254" layer="1"/>
 <wire x1="71.12" y1="30.48" x2="67.7418" y2="30.48" width="0.254" layer="1"/>
 <wire x1="67.7418" y1="30.48" x2="66.7512" y2="29.4894" width="0.254" layer="1"/>
-<wire x1="24.6888" y1="29.4894" x2="23.1394" y2="29.4894" width="0.254" layer="1"/>
-<wire x1="23.1394" y1="29.4894" x2="10.7188" y2="17.0688" width="0.254" layer="1"/>
-<wire x1="10.7188" y1="17.0688" x2="10.7188" y2="14.9606" width="0.254" layer="1"/>
+<wire x1="24.6888" y1="29.4894" x2="21.8694" y2="29.4894" width="0.254" layer="1"/>
+<wire x1="9.4488" y1="17.0688" x2="9.4488" y2="14.9606" width="0.254" layer="1"/>
+<wire x1="21.8694" y1="29.4894" x2="9.4488" y2="17.0688" width="0.254" layer="1"/>
 </signal>
 </signals>
 </board>
