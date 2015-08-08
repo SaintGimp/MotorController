@@ -936,6 +936,38 @@ Source: User LBR Version 2.05</description>
 <pad name="7" x="7.62" y="0" drill="1" rot="R90"/>
 <rectangle x1="7.366" y1="-0.254" x2="7.874" y2="0.254" layer="51"/>
 </package>
+<package name="TO220BH-NO-HOLE">
+<wire x1="-5.207" y1="-1.27" x2="5.207" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="14.605" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="-1.27" x2="5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="12.7" x2="5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="-5.207" y1="-1.27" x2="-5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="-5.207" y1="12.7" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="-4.572" y1="-0.635" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
+<wire x1="4.572" y1="7.62" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
+<wire x1="4.572" y1="7.62" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
+<wire x1="-4.572" y1="-0.635" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
+<pad name="P1" x="-2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
+<pad name="P2" x="0" y="-6.35" drill="1" shape="long" rot="R90"/>
+<pad name="P3" x="2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
+<text x="-3.81" y="5.207" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
+<text x="-3.937" y="2.54" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
+<rectangle x1="2.159" y1="-4.5212" x2="2.921" y2="-4.064" layer="21"/>
+<rectangle x1="-0.381" y1="-4.5212" x2="0.381" y2="-4.064" layer="21"/>
+<rectangle x1="-2.921" y1="-4.5212" x2="-2.159" y2="-4.064" layer="21"/>
+<rectangle x1="-3.175" y1="-4.064" x2="-1.905" y2="-1.27" layer="21"/>
+<rectangle x1="-0.635" y1="-4.064" x2="0.635" y2="-1.27" layer="21"/>
+<rectangle x1="1.905" y1="-4.064" x2="3.175" y2="-1.27" layer="21"/>
+<rectangle x1="-2.921" y1="-6.604" x2="-2.159" y2="-4.5212" layer="51"/>
+<rectangle x1="-0.381" y1="-6.604" x2="0.381" y2="-4.5212" layer="51"/>
+<rectangle x1="2.159" y1="-6.604" x2="2.921" y2="-4.5212" layer="51"/>
+<wire x1="-4.318" y1="12.7" x2="-5.207" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="-4.318" y1="11.176" x2="-5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="-4.318" y1="12.7" x2="-4.318" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="4.318" y1="11.176" x2="5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="4.318" y1="12.7" x2="5.207" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="4.318" y1="11.176" x2="4.318" y2="12.7" width="0.1524" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="RESISTOR">
@@ -986,54 +1018,11 @@ Source: User LBR Version 2.05</description>
 <wire x1="0" y1="0" x2="0" y2="0.508" width="0.1524" layer="94"/>
 <text x="3.81" y="2.54" size="1.778" layer="95">&gt;NAME</text>
 <text x="3.81" y="0" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="A2" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-<pin name="A1" x="0" y="-2.54" visible="off" length="short" direction="pas" rot="R90"/>
+<pin name="A2" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
+<pin name="A1" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 <pin name="G" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
 </symbol>
 <symbol name="P-MOSFET">
-<wire x1="3.81" y1="1.905" x2="2.54" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="3.81" y1="1.905" x2="3.81" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="3.81" y1="0.762" x2="3.81" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="3.81" y1="0.762" x2="4.445" y2="-0.635" width="0.1524" layer="94"/>
-<wire x1="4.445" y1="-0.635" x2="3.175" y2="-0.635" width="0.1524" layer="94"/>
-<wire x1="3.175" y1="-0.635" x2="3.81" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="4.445" y1="0.762" x2="3.81" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="3.81" y1="0.762" x2="3.175" y2="0.762" width="0.1524" layer="94"/>
-<wire x1="3.175" y1="0.762" x2="2.921" y2="1.016" width="0.1524" layer="94"/>
-<wire x1="4.445" y1="0.762" x2="4.699" y2="0.508" width="0.1524" layer="94"/>
-<wire x1="-1.016" y1="-2.54" x2="-1.016" y2="2.54" width="0.254" layer="94"/>
-<wire x1="3.81" y1="-1.905" x2="2.54" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-1.905" x2="0.5334" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.54" x2="2.54" y2="-1.905" width="0.1524" layer="94"/>
-<wire x1="2.2352" y1="0" x2="2.286" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.286" y1="0" x2="2.54" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="2.54" x2="2.54" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="1.905" x2="0.508" y2="1.905" width="0.1524" layer="94"/>
-<wire x1="-1.016" y1="-2.54" x2="-2.54" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="2.286" y1="0" x2="1.016" y2="-0.508" width="0.1524" layer="94"/>
-<wire x1="1.016" y1="-0.508" x2="1.016" y2="0.508" width="0.1524" layer="94"/>
-<wire x1="1.016" y1="0.508" x2="2.286" y2="0" width="0.1524" layer="94"/>
-<wire x1="1.143" y1="0" x2="0.254" y2="0" width="0.1524" layer="94"/>
-<wire x1="1.143" y1="0.254" x2="2.032" y2="0" width="0.3048" layer="94"/>
-<wire x1="2.032" y1="0" x2="1.143" y2="-0.254" width="0.3048" layer="94"/>
-<wire x1="1.143" y1="-0.254" x2="1.143" y2="0" width="0.3048" layer="94"/>
-<wire x1="1.143" y1="0" x2="1.397" y2="0" width="0.3048" layer="94"/>
-<wire x1="2.54" y1="0" x2="2.54" y2="1.905" width="0.1524" layer="94"/>
-<circle x="2.54" y="-1.905" radius="0.127" width="0.4064" layer="94"/>
-<circle x="2.54" y="1.905" radius="0.127" width="0.4064" layer="94"/>
-<text x="5.08" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<text x="5.08" y="0" size="1.778" layer="96">&gt;VALUE</text>
-<text x="1.524" y="-3.302" size="0.8128" layer="93">D</text>
-<text x="1.524" y="2.54" size="0.8128" layer="93">S</text>
-<text x="-2.54" y="-2.032" size="0.8128" layer="93">G</text>
-<rectangle x1="-0.254" y1="1.27" x2="0.508" y2="2.54" layer="94"/>
-<rectangle x1="-0.254" y1="-2.54" x2="0.508" y2="-1.27" layer="94"/>
-<rectangle x1="-0.254" y1="-0.889" x2="0.508" y2="0.889" layer="94"/>
-<pin name="G" x="-5.08" y="-2.54" visible="off" length="short" direction="pas"/>
-<pin name="D" x="2.54" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
-<pin name="S" x="2.54" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
-</symbol>
-<symbol name="MFPD">
 <wire x1="3.81" y1="1.905" x2="2.54" y2="1.905" width="0.1524" layer="94"/>
 <wire x1="3.81" y1="1.905" x2="3.81" y2="0.762" width="0.1524" layer="94"/>
 <wire x1="3.81" y1="0.762" x2="3.81" y2="-1.905" width="0.1524" layer="94"/>
@@ -1411,6 +1400,16 @@ Source: User LBR Version 2.05</description>
 <technology name=""/>
 </technologies>
 </device>
+<device name="-H-NH" package="TO220BH-NO-HOLE">
+<connects>
+<connect gate="G$1" pin="A1" pad="P1"/>
+<connect gate="G$1" pin="A2" pad="P2"/>
+<connect gate="G$1" pin="G" pad="P3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
 </devices>
 </deviceset>
 <deviceset name="SUP75P03-07" prefix="Q">
@@ -1429,12 +1428,22 @@ Source: User LBR Version 2.05</description>
 <technology name=""/>
 </technologies>
 </device>
+<device name="-H-NH" package="TO220BH-NO-HOLE">
+<connects>
+<connect gate="G$1" pin="D" pad="P2"/>
+<connect gate="G$1" pin="G" pad="P1"/>
+<connect gate="G$1" pin="S" pad="P3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
 </devices>
 </deviceset>
 <deviceset name="IPP80P03P4L-04" prefix="Q">
 <description>&lt;b&gt;P-Channel MOSFET&lt;/b&gt;&lt;p&gt;</description>
 <gates>
-<gate name="G$1" symbol="MFPD" x="0" y="0"/>
+<gate name="G$1" symbol="P-MOSFET" x="0" y="0"/>
 </gates>
 <devices>
 <device name="-H" package="TO220BH">
@@ -1448,6 +1457,16 @@ Source: User LBR Version 2.05</description>
 </technologies>
 </device>
 <device name="-V" package="TO220BV">
+<connects>
+<connect gate="G$1" pin="D" pad="P2"/>
+<connect gate="G$1" pin="G" pad="P1"/>
+<connect gate="G$1" pin="S" pad="P3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="-H-NH" package="TO220BH-NO-HOLE">
 <connects>
 <connect gate="G$1" pin="D" pad="P2"/>
 <connect gate="G$1" pin="G" pad="P1"/>
@@ -1701,13 +1720,13 @@ Standard 6 pin header for ICSP programming</description>
 <part name="FRONT" library="SaintGimp" deviceset="PINHD-1X7" device="BIG" value="PINHD-1X7BIG"/>
 <part name="C11" library="SaintGimp" deviceset="CAP-POL" device="-25-14" value="1000uF"/>
 <part name="F1" library="SaintGimp" deviceset="FUSE" device="" value="4A"/>
-<part name="T1" library="SaintGimp" deviceset="TRIAC" device="-H" value="BT137-600E"/>
+<part name="Q1" library="SaintGimp" deviceset="TRIAC" device="-H-NH" value="BT137-600E"/>
 <part name="D1" library="SaintGimp" deviceset="ZENER" device="-7.5" value="22V"/>
 <part name="D2" library="SaintGimp" deviceset="ZENER" device="-7.5" value="27V"/>
 <part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
 <part name="C7" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="0.1uF"/>
 <part name="R5" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
-<part name="Q1" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H" value="IPP80P03P4L-04"/>
+<part name="Q2" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H-NH" value="IPP80P03P4L-04"/>
 <part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
 <part name="D3" library="SaintGimp" deviceset="ZENER" device="-7.5" value="10V"/>
 <part name="C9" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="10uF"/>
@@ -1752,7 +1771,7 @@ Standard 6 pin header for ICSP programming</description>
 <part name="SIDE_EXP" library="SaintGimp" deviceset="PINHD-1X3" device="BIG"/>
 <part name="5V7" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="GND18" library="SaintGimp" deviceset="GND" device=""/>
-<part name="Q2" library="SaintGimp" deviceset="SUP75P03-07" device="-H"/>
+<part name="Q3" library="SaintGimp" deviceset="SUP75P03-07" device="-H-NH" value="SUP75P03-07-H-NH"/>
 <part name="R7" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="576K"/>
 <part name="GND19" library="SaintGimp" deviceset="GND" device=""/>
 <part name="D4" library="SaintGimp" deviceset="ZENER" device="-7.5" value="10V"/>
@@ -1776,14 +1795,14 @@ Standard 6 pin header for ICSP programming</description>
 <instance part="FRONT" gate="2" x="55.88" y="5.08" rot="R180"/>
 <instance part="C11" gate="G$1" x="40.64" y="68.58" rot="MR0"/>
 <instance part="F1" gate="G$1" x="-43.18" y="53.34"/>
-<instance part="T1" gate="G$1" x="-15.24" y="33.02"/>
-<instance part="D1" gate="G$1" x="-33.02" y="35.56" rot="R270"/>
-<instance part="D2" gate="G$1" x="-33.02" y="40.64" rot="R90"/>
-<instance part="R6" gate="G$1" x="-33.02" y="48.26" rot="R90"/>
-<instance part="C7" gate="G$1" x="-33.02" y="27.94"/>
-<instance part="R5" gate="G$1" x="-20.32" y="27.94" rot="R90"/>
-<instance part="Q1" gate="G$1" x="-5.08" y="50.8" rot="MR90"/>
-<instance part="R8" gate="G$1" x="-7.62" y="30.48" rot="R90"/>
+<instance part="Q1" gate="G$1" x="-35.56" y="33.02" rot="R180"/>
+<instance part="D1" gate="G$1" x="-25.4" y="35.56" rot="R270"/>
+<instance part="D2" gate="G$1" x="-25.4" y="40.64" rot="R90"/>
+<instance part="R6" gate="G$1" x="-25.4" y="48.26" rot="R90"/>
+<instance part="C7" gate="G$1" x="-25.4" y="27.94"/>
+<instance part="R5" gate="G$1" x="-12.7" y="27.94" rot="R90"/>
+<instance part="Q2" gate="G$1" x="-5.08" y="50.8" rot="MR90"/>
+<instance part="R8" gate="G$1" x="-7.62" y="33.02" rot="R90"/>
 <instance part="D3" gate="G$1" x="2.54" y="43.18" rot="R90"/>
 <instance part="C9" gate="G$1" x="68.58" y="48.26"/>
 <instance part="GND3" gate="1" x="68.58" y="43.18"/>
@@ -1843,7 +1862,7 @@ Standard 6 pin header for ICSP programming</description>
 <instance part="GND18" gate="1" x="91.44" y="60.96" rot="R270"/>
 <instance part="FRONT" gate="4" x="55.88" y="-5.08" rot="R180"/>
 <instance part="FRONT" gate="3" x="55.88" y="0" rot="R180"/>
-<instance part="Q2" gate="G$1" x="25.4" y="50.8" rot="R90"/>
+<instance part="Q3" gate="G$1" x="25.4" y="50.8" rot="R90"/>
 <instance part="R7" gate="G$1" x="27.94" y="38.1" rot="R90"/>
 <instance part="GND19" gate="1" x="27.94" y="30.48"/>
 <instance part="D4" gate="G$1" x="10.16" y="48.26" rot="R90"/>
@@ -1870,27 +1889,28 @@ Standard 6 pin header for ICSP programming</description>
 <wire x1="45.72" y1="63.5" x2="40.64" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="T1" gate="G$1" pin="A1"/>
-<wire x1="-15.24" y1="30.48" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="A2"/>
+<wire x1="-35.56" y1="27.94" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="-15.24" y1="22.86" x2="-20.32" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-20.32" y1="22.86" x2="-33.02" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-20.32" y="22.86"/>
+<wire x1="-35.56" y1="22.86" x2="-12.7" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-12.7" y1="22.86" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-12.7" y="22.86"/>
 <pinref part="C7" gate="G$1" pin="2"/>
-<wire x1="-33.02" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="22.86" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-35.56" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="22.86" x2="-48.26" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-33.02" y1="25.4" x2="-33.02" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-33.02" y="22.86"/>
+<wire x1="-25.4" y1="25.4" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-25.4" y="22.86"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="-7.62" y1="25.4" x2="-7.62" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="22.86" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-15.24" y="22.86"/>
+<wire x1="-7.62" y1="27.94" x2="-7.62" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="22.86" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-35.56" y="22.86"/>
 <pinref part="24VIN" gate="1" pin="KL"/>
-<junction x="-15.24" y="30.48"/>
+<junction x="-35.56" y="27.94"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <junction x="-40.64" y="22.86"/>
 <junction x="-48.26" y="22.86"/>
-<junction x="-33.02" y="25.4"/>
+<junction x="-25.4" y="25.4"/>
 </segment>
 <segment>
 <pinref part="C9" gate="G$1" pin="2"/>
@@ -1975,51 +1995,51 @@ Standard 6 pin header for ICSP programming</description>
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
 <pinref part="D2" gate="G$1" pin="C"/>
-<junction x="-33.02" y="43.18"/>
+<junction x="-25.4" y="43.18"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
 <pinref part="D2" gate="G$1" pin="A"/>
 <pinref part="D1" gate="G$1" pin="A"/>
-<junction x="-33.02" y="38.1"/>
+<junction x="-25.4" y="38.1"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
-<pinref part="T1" gate="G$1" pin="G"/>
+<pinref part="Q1" gate="G$1" pin="G"/>
 <pinref part="D1" gate="G$1" pin="C"/>
-<wire x1="-20.32" y1="33.02" x2="-33.02" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="33.02" x2="-25.4" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="1"/>
-<junction x="-33.02" y="33.02"/>
+<junction x="-25.4" y="33.02"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<junction x="-20.32" y="33.02"/>
+<junction x="-30.48" y="33.02"/>
+<wire x1="-30.48" y1="33.02" x2="-12.7" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="24V" class="1">
 <segment>
 <pinref part="F1" gate="G$1" pin="2"/>
 <pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="-33.02" y1="53.34" x2="-38.1" y2="53.34" width="0.1524" layer="91"/>
-<junction x="-33.02" y="53.34"/>
-<wire x1="-33.02" y1="53.34" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="T1" gate="G$1" pin="A2"/>
-<wire x1="-15.24" y1="38.1" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="Q1" gate="G$1" pin="D"/>
-<wire x1="-10.16" y1="53.34" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
-<junction x="-15.24" y="53.34"/>
+<junction x="-25.4" y="53.34"/>
+<wire x1="-35.56" y1="53.34" x2="-38.1" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="-25.4" y1="53.34" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="A1"/>
+<wire x1="-35.56" y1="35.56" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="Q2" gate="G$1" pin="D"/>
+<wire x1="-10.16" y1="53.34" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
+<junction x="-35.56" y="53.34"/>
 <junction x="-10.16" y="53.34"/>
-<junction x="-15.24" y="38.1"/>
+<junction x="-35.56" y="35.56"/>
 <junction x="-38.1" y="53.34"/>
 </segment>
 </net>
 <net name="N$4" class="0">
 <segment>
-<pinref part="Q1" gate="G$1" pin="G"/>
+<pinref part="Q2" gate="G$1" pin="G"/>
 <pinref part="R8" gate="G$1" pin="2"/>
 <wire x1="-7.62" y1="45.72" x2="-7.62" y2="38.1" width="0.1524" layer="91"/>
 <pinref part="D3" gate="G$1" pin="A"/>
-<wire x1="-7.62" y1="38.1" x2="-7.62" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="40.64" x2="2.54" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="38.1" x2="-7.62" y2="38.1" width="0.1524" layer="91"/>
 <junction x="-7.62" y="38.1"/>
@@ -2043,7 +2063,7 @@ Standard 6 pin header for ICSP programming</description>
 <junction x="48.26" y="53.34"/>
 <pinref part="C8" gate="G$1" pin="1"/>
 <junction x="43.18" y="53.34"/>
-<pinref part="Q2" gate="G$1" pin="D"/>
+<pinref part="Q3" gate="G$1" pin="D"/>
 <junction x="30.48" y="53.34"/>
 <pinref part="C11" gate="G$1" pin="+"/>
 <pinref part="24VOUT" gate="1" pin="KL"/>
@@ -2352,9 +2372,9 @@ Standard 6 pin header for ICSP programming</description>
 </net>
 <net name="N$9" class="1">
 <segment>
-<pinref part="Q1" gate="G$1" pin="S"/>
-<junction x="0" y="53.34"/>
 <pinref part="Q2" gate="G$1" pin="S"/>
+<junction x="0" y="53.34"/>
+<pinref part="Q3" gate="G$1" pin="S"/>
 <wire x1="2.54" y1="53.34" x2="10.16" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="10.16" y1="53.34" x2="17.78" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="53.34" x2="20.32" y2="53.34" width="0.1524" layer="91"/>
@@ -2373,7 +2393,7 @@ Standard 6 pin header for ICSP programming</description>
 <net name="N$11" class="0">
 <segment>
 <pinref part="R7" gate="G$1" pin="2"/>
-<pinref part="Q2" gate="G$1" pin="G"/>
+<pinref part="Q3" gate="G$1" pin="G"/>
 <wire x1="27.94" y1="43.18" x2="27.94" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="C10" gate="G$1" pin="2"/>
 <wire x1="27.94" y1="45.72" x2="17.78" y2="45.72" width="0.1524" layer="91"/>
