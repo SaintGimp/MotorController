@@ -1724,7 +1724,7 @@ Standard 6 pin header for ICSP programming</description>
 <part name="D1" library="SaintGimp" deviceset="ZENER" device="-7.5" value="22V"/>
 <part name="D2" library="SaintGimp" deviceset="ZENER" device="-7.5" value="27V"/>
 <part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
-<part name="C7" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="0.1uF"/>
+<part name="C5" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="0.1uF"/>
 <part name="R5" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
 <part name="Q2" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H-NH" value="IPP80P03P4L-04"/>
 <part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
@@ -1735,14 +1735,14 @@ Standard 6 pin header for ICSP programming</description>
 <part name="C1" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="0.1uF"/>
 <part name="R3" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="220"/>
 <part name="R4" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="220"/>
-<part name="C4" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="1uF"/>
+<part name="C6" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="1uF"/>
 <part name="GND7" library="SaintGimp" deviceset="GND" device=""/>
-<part name="C5" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="1uF"/>
+<part name="C7" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="1uF"/>
 <part name="GND8" library="SaintGimp" deviceset="GND" device=""/>
 <part name="Y1" library="SaintGimp" deviceset="CRYSTAL" device="-V" value="16Mhz"/>
 <part name="GND10" library="SaintGimp" deviceset="GND" device=""/>
 <part name="C3" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="20pF"/>
-<part name="C6" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="20pF"/>
+<part name="C4" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="20pF"/>
 <part name="GND11" library="SaintGimp" deviceset="GND" device=""/>
 <part name="GND12" library="SaintGimp" deviceset="GND" device=""/>
 <part name="5V2" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
@@ -1799,7 +1799,7 @@ Standard 6 pin header for ICSP programming</description>
 <instance part="D1" gate="G$1" x="-25.4" y="35.56" rot="R270"/>
 <instance part="D2" gate="G$1" x="-25.4" y="40.64" rot="R90"/>
 <instance part="R6" gate="G$1" x="-25.4" y="48.26" rot="R90"/>
-<instance part="C7" gate="G$1" x="-25.4" y="27.94"/>
+<instance part="C5" gate="G$1" x="-25.4" y="27.94"/>
 <instance part="R5" gate="G$1" x="-12.7" y="27.94" rot="R90"/>
 <instance part="Q2" gate="G$1" x="-5.08" y="50.8" rot="MR90"/>
 <instance part="R8" gate="G$1" x="-7.62" y="33.02" rot="R90"/>
@@ -1810,14 +1810,14 @@ Standard 6 pin header for ICSP programming</description>
 <instance part="C1" gate="G$1" x="-30.48" y="5.08"/>
 <instance part="R3" gate="G$1" x="114.3" y="17.78" rot="R180"/>
 <instance part="R4" gate="G$1" x="124.46" y="17.78"/>
-<instance part="C4" gate="G$1" x="119.38" y="7.62"/>
+<instance part="C6" gate="G$1" x="119.38" y="7.62"/>
 <instance part="GND7" gate="1" x="119.38" y="2.54"/>
-<instance part="C5" gate="G$1" x="129.54" y="7.62"/>
+<instance part="C7" gate="G$1" x="129.54" y="7.62"/>
 <instance part="GND8" gate="1" x="129.54" y="2.54"/>
 <instance part="Y1" gate="G$1" x="127" y="38.1" rot="R270"/>
 <instance part="GND10" gate="1" x="-30.48" y="12.7" rot="R180"/>
 <instance part="C3" gate="G$1" x="137.16" y="30.48" rot="R90"/>
-<instance part="C6" gate="G$1" x="137.16" y="45.72" rot="R90"/>
+<instance part="C4" gate="G$1" x="137.16" y="45.72" rot="R90"/>
 <instance part="GND11" gate="1" x="142.24" y="30.48" rot="R90"/>
 <instance part="GND12" gate="1" x="142.24" y="45.72" rot="R90"/>
 <instance part="5V2" gate="VCC" x="-48.26" y="2.54" rot="R90"/>
@@ -1895,7 +1895,7 @@ Standard 6 pin header for ICSP programming</description>
 <wire x1="-35.56" y1="22.86" x2="-12.7" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-12.7" y1="22.86" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
 <junction x="-12.7" y="22.86"/>
-<pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="-25.4" y1="22.86" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-35.56" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="22.86" x2="-48.26" y2="22.86" width="0.1524" layer="91"/>
@@ -1917,7 +1917,7 @@ Standard 6 pin header for ICSP programming</description>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C5" gate="G$1" pin="2"/>
+<pinref part="C7" gate="G$1" pin="2"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <junction x="129.54" y="5.08"/>
 </segment>
@@ -1930,12 +1930,12 @@ Standard 6 pin header for ICSP programming</description>
 <pinref part="GND11" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C6" gate="G$1" pin="2"/>
+<pinref part="C4" gate="G$1" pin="2"/>
 <pinref part="GND12" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C4" gate="G$1" pin="2"/>
-<pinref part="C4" gate="G$1" pin="2"/>
+<pinref part="C6" gate="G$1" pin="2"/>
+<pinref part="C6" gate="G$1" pin="2"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 <junction x="119.38" y="5.08"/>
 </segment>
@@ -2010,7 +2010,7 @@ Standard 6 pin header for ICSP programming</description>
 <pinref part="Q1" gate="G$1" pin="G"/>
 <pinref part="D1" gate="G$1" pin="C"/>
 <wire x1="-30.48" y1="33.02" x2="-25.4" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="C5" gate="G$1" pin="1"/>
 <junction x="-25.4" y="33.02"/>
 <pinref part="R5" gate="G$1" pin="2"/>
 <junction x="-30.48" y="33.02"/>
@@ -2167,7 +2167,7 @@ Standard 6 pin header for ICSP programming</description>
 <net name="N$10" class="0">
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
-<pinref part="C5" gate="G$1" pin="1"/>
+<pinref part="C7" gate="G$1" pin="1"/>
 <wire x1="129.54" y1="12.7" x2="129.54" y2="17.78" width="0.1524" layer="91"/>
 <pinref part="MOTOR" gate="3" pin="KL"/>
 <junction x="129.54" y="17.78"/>
@@ -2176,7 +2176,7 @@ Standard 6 pin header for ICSP programming</description>
 <net name="CRYSTAL2" class="0">
 <segment>
 <pinref part="Y1" gate="G$1" pin="1"/>
-<pinref part="C6" gate="G$1" pin="1"/>
+<pinref part="C4" gate="G$1" pin="1"/>
 <wire x1="132.08" y1="45.72" x2="127" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="127" y1="45.72" x2="127" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="127" y1="40.64" x2="109.22" y2="40.64" width="0.1524" layer="91"/>
@@ -2209,7 +2209,7 @@ Standard 6 pin header for ICSP programming</description>
 <segment>
 <pinref part="R3" gate="G$1" pin="1"/>
 <pinref part="R4" gate="G$1" pin="1"/>
-<pinref part="C4" gate="G$1" pin="1"/>
+<pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="119.38" y1="12.7" x2="119.38" y2="17.78" width="0.1524" layer="91"/>
 <junction x="119.38" y="17.78"/>
 </segment>
