@@ -1,11 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////////
 // Newhaven Displays Library for the Arduino
 // From the Arduino LCD API 1.0 page http://arduino.cc/playground/Code/LCDAPI
-// Base library is LCDserNHD
-// Modifed to use serial connection
+// Base library is LCDi2cNHD
+// Modifed to use hardware serial connection
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include "SoftwareSerial.h"
 #include <inttypes.h>
 
 #if ARDUINO >= 100
@@ -33,11 +32,10 @@ int g_charDelay = 0;
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 //--------------------------------------------------------
 
-LCDserNHD::LCDserNHD (uint8_t num_rows,uint8_t num_columns,SoftwareSerial &softwareSerial){
+LCDserNHD::LCDserNHD (uint8_t num_rows,uint8_t num_columns){
 	
 	rows = num_rows;
 	columns = num_columns;
-	serial = &softwareSerial;
 }
 
 // [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -85,8 +83,8 @@ void LCDserNHD::setDelay (int cmdDelay,int charDelay) {
 
 void LCDserNHD::command(uint8_t value) {
 
-  serial->write(0xFE);
-  serial->write(value);
+  Serial.write(0xFE);
+  Serial.write(value);
   delay(g_cmdDelay);
 }
 
@@ -101,7 +99,7 @@ void LCDserNHD::command(uint8_t value) {
 
 size_t LCDserNHD::write(uint8_t value) {
 
-  serial->write(value);
+  Serial.write(value);
   delay(g_charDelay);
 
 }
@@ -228,9 +226,9 @@ void LCDserNHD::setCursor(uint8_t line_num, uint8_t x){
           base = 0x14;
       if (line_num == 3)
           base = 0x54;
-      serial->write(0xFE);
-      serial->write(0x45);
-      serial->write(base + x);
+      Serial.write(0xFE);
+      Serial.write(0x45);
+      Serial.write(base + x);
       delay(g_cmdDelay*2);
 
 }
@@ -270,11 +268,11 @@ void LCDserNHD::load_custom_character(uint8_t char_num, uint8_t *rows)
 {
 
 
-	serial->write(0xFE);
-	serial->write(0x54);
-	serial->write(char_num);
+	Serial.write(0xFE);
+	Serial.write(0x54);
+	Serial.write(char_num);
 	for (uint8_t i = 0 ; i < 8 ; i++)
-		serial->write(rows[i]);
+		Serial.write(rows[i]);
 	delay(g_cmdDelay);
 }
 
@@ -284,9 +282,9 @@ void LCDserNHD::load_custom_character(uint8_t char_num, uint8_t *rows)
 void LCDserNHD::setBacklight(uint8_t new_val)
 {
 	
-	serial->write(0xFE);
-	serial->write(0x53);
-	serial->write(new_val);
+	Serial.write(0xFE);
+	Serial.write(0x53);
+	Serial.write(new_val);
 	delay(g_cmdDelay);
 
 }
@@ -295,9 +293,9 @@ void LCDserNHD::setBacklight(uint8_t new_val)
 void LCDserNHD::setContrast(uint8_t new_val)
 {
 	
-	serial->write(0xFE);
-	serial->write(0x52);
-	serial->write(new_val);
+	Serial.write(0xFE);
+	Serial.write(0x52);
+	Serial.write(new_val);
 	delay(g_cmdDelay);
 }
 

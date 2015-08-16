@@ -1,8 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////////
 // Newhaven Displays Library for the Arduino
 // From the Arduino LCD API 1.0 page http://arduino.cc/playground/Code/LCDAPI
-// Base library is LCDserNHD
-// Modifed to use serial connection
+// Base library is LCDi2cNHD
+// Modifed to use hardware serial connection
 ////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef LCDserNHD_h
@@ -15,7 +15,7 @@
 class LCDserNHD : public Print 
 {
 public: 
-	LCDserNHD(uint8_t num_rows, uint8_t num_columns, SoftwareSerial &softwareSerial);
+	LCDserNHD(uint8_t num_rows, uint8_t num_columns);
 	void command(uint8_t value);
 	void init();
 	void setDelay(int,int);
@@ -44,7 +44,6 @@ public:
 #endif
 
 private:
-	SoftwareSerial *serial; 
 	int columns, rows; 
 };
 

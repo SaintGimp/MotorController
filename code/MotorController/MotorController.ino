@@ -1,64 +1,41 @@
 #include <Bounce.h>
-#include <UserTimer.h>
 #include <avr/eeprom.h>
-#include <SoftwareSerial.h>
-
 #include "LCDserNHD.h"
 
-// ATTiny core definitions as of Arduino IDE 1.6.3:
-// https://github.com/Coding-Badly/TinyCore1 (which is apparently a fork of https://github.com/Coding-Badly/arduino-tiny)
-// Also need to copy SoftwareSerial library per these links:
-// http://forum.arduino.cc/index.php?topic=302080.0
-// http://arduino.stackexchange.com/a/9950/1084
-// and restart IDE
+const char* versionString = "3.0.0";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
 
-// ATMEL ATTINY84 / arduino-tiny mapping
-//
-//                           +-\/-+
-//                     VCC  1|    |14  GND
-//             (D  0)  PB0  2|    |13  AREF (D 10) (A 0)
-//             (D  1)  PB1  3|    |12  PA1  (D  9) (A 1)
-//       RESET         PB3  4|    |11  PA2  (D  8) (A 2)
-//  PWM  INT0  (D  2)  PB2  5|    |10  PA3  (D  7) (A 3)
-//  PWM  (A 7) (D  3)  PA7  6|    |9   PA4  (D  6) (A 4)
-//  PWM  (A 6) (D  4)  PA6  7|    |8   PA5  (D  5) (A 5)   PWM
-//                           +----+
-//
 // Required fuses: http://www.engbedded.com/fusecalc
-// 8MHz internal clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
-// 8MHz external clock: avrdude -c usbtiny -p attiny84 -U lfuse:w:0xfd:m -U hfuse:w:0xdd:m -U efuse:w:0xff:m
-//
-// The design assumes we're running at 8Mhz with an external crystal
+// 16MHz external clock: avrdude -c usbtiny -p m328p -U lfuse:w:0xFF:m -U hfuse:w:0xDE:m -U efuse:w:0x05:m
 
-const int speedInPin = A0;
-const int rateOfSpeedChangeInPin = A1;
-const int speedOutPin = 5;
-const int onOffSwitchInPin = 7;
-const int directionSwitchInPin = 8;
-const int directionOutPin = 3;
-const int rpmInPin = 2;
-const int serialPin = 4;
+const int speedInPin = A2;
+const int rateOfSpeedChangeInPin = A5;
+const int speedOutPin = 9;
+const int onOffSwitchInPin = 17;
+const int directionSwitchInPin = 2;
+const int directionOutPin = 10;
+const int rpmInPin = 3;
+const int serialPin = 1;
 
 // Settings and limits
 const int switchDebounceTime = 30;
 const int minimumDelay = 10;
 const int maximumDelay = 46;
 const int minimumSpeed = 26;
+const int startOfStopDamping = 100;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
 const float gearRatio = 2.0;
-const uint16_t eepromSize = 512;
+const uint16_t eepromSize = 1024;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
 
-SoftwareSerial softwareSerial(0, serialPin);
-LCDserNHD lcd(2, 16, softwareSerial);
+LCDserNHD lcd(2, 16);
 
 // State variables
 int targetSpeed = 0;
@@ -67,7 +44,7 @@ int delayBetweenAdjustments = 15;
 boolean powerEnabled = false;
 int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
-int motorTicks = 0;
+volatile int motorTicks = 0;
 unsigned long lastDisplayTime = 0;
 unsigned long nextClockTick = 0;
 unsigned long secondsOfOperation = 0;
@@ -77,14 +54,15 @@ void setup()
 {
   // We set the timer to fast mode so that our motor speed control
   // (via PWM) is as easy to smooth out as possible
-  UserTimer_SetToPowerup();
-  UserTimer_SetWaveformGenerationMode( UserTimer_(Fast_PWM_FF) );
-  UserTimer_ClockSelect( UserTimer_(Prescale_Value_1) );
-  // Fast PWM Frequency is F_CPU / (PRESCALE * 256)
-  // 1MHz / 256 = 3.9KHz
-  // 8MHz / 256 = 31.25KHz
-
-  softwareSerial.begin(9600);    
+  // http://playground.arduino.cc/Main/TimerPWMCheatsheet
+  // http://playground.arduino.cc/Code/PwmFrequency
+  // This sets pin 9 and 10 to run with a divisor of 1 which
+  // gives us 31372 Hz. This would break the Servo library
+  // if we were using it but should leave delay() and millis() working
+  // normally. 
+  TCCR1B = TCCR1B & 0b11111000 | 0x01;
+  
+  Serial.begin(9600);    
   lcd.init();
   
   lcd.setBacklight(8);
@@ -103,9 +81,18 @@ void setup()
   currentDirection = targetDirection;
   digitalWrite(directionOutPin, targetDirection);
   
-  attachInterrupt(0, OnMotorTick, RISING);
+  attachInterrupt(1, OnMotorTick, RISING);
+  motorTicks = 0;
   
   ReadClock();
+  
+  lcd.home();
+  lcd.print(F("WooLee Ann"));
+  lcd.setCursor(1, 0);
+  lcd.print(F("Firmware "));
+  lcd.print(versionString);
+  delay(2000);
+  lcd.clear();
 }
 
 void loop()
@@ -124,32 +111,36 @@ void loop()
       WriteClock();
     }
   }
-  
+
+  directionSwitch.update();
+  targetDirection = directionSwitch.read();
+
   if (powerEnabled)
   {
     targetSpeed = ReadPotentiometer(speedInPin);
     targetSpeed = map(targetSpeed, 0, potentiometerCeiling, minimumSpeed, 255);
-  
-    delayBetweenAdjustments = ReadPotentiometer(rateOfSpeedChangeInPin);
-    delayBetweenAdjustments = map(delayBetweenAdjustments, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+    if (targetDirection == COUNTER_CLOCKWISE)
+    {
+      targetSpeed = -targetSpeed;
+    }
   }
   else
   {
     targetSpeed = 0;
   }
 
-  directionSwitch.update();
-  targetDirection = directionSwitch.read();
+  delayBetweenAdjustments = ReadPotentiometer(rateOfSpeedChangeInPin);
+  delayBetweenAdjustments = map(delayBetweenAdjustments, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+  int absoluteCurrentSpeed = abs(currentSpeed);
+  if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < startOfStopDamping)
+  {
+    // We want to feather the lower end of the stop curve because the mag brake
+    // doesn't work as well at low speed and we don't the bobbin to run ahead of
+    // the flyer. So at the low end we start raising the delay toward max regardless
+    // of what it's actually set to.
+    delayBetweenAdjustments = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, delayBetweenAdjustments);
+  }
 
-  if (targetDirection == CLOCKWISE)
-  {
-    targetSpeed = abs(targetSpeed);
-  }
-  else
-  {
-    targetSpeed = -abs(targetSpeed);
-  }
-  
   if (currentSpeed == 0 && currentDirection != targetDirection)
   {
     // We're at zero speed and want to switch directions.   
@@ -295,6 +286,9 @@ char* rpmToString(int value, char* result)
 {
   char* ptr = result, *ptr1 = result, tmp_char;
 
+  // TODO: we were doing string conversion ourselves when we were
+  // running on the ATTiny. Is it still necessary?
+  
   // Build string reversed
   for (int x = 0; x < 4; x++) {
     if (x == 0 || value) {
