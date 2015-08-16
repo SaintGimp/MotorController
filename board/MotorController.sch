@@ -75,6 +75,7 @@
 <layer number="112" name="tSilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="113" name="IDFDebug" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="116" name="Patch_BOT" color="9" fill="4" visible="yes" active="yes"/>
+<layer number="118" name="Rect_Pads" color="7" fill="1" visible="no" active="no"/>
 <layer number="121" name="_tsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="122" name="_bsilk" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="123" name="tTestmark" color="7" fill="1" visible="no" active="yes"/>
@@ -125,6 +126,8 @@
 <layer number="229" name="229bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="230" name="230bmp" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="231" name="231bmp" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="232" name="Eagle3D_PG2" color="7" fill="1" visible="no" active="no"/>
+<layer number="233" name="Eagle3D_PG3" color="7" fill="1" visible="no" active="no"/>
 <layer number="248" name="Housing" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="249" name="Edge" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="250" name="Descript" color="3" fill="1" visible="no" active="no"/>
@@ -412,8 +415,8 @@ grid 5 mm, diameter 14 mm</description>
 <wire x1="-9.525" y1="1.905" x2="-9.525" y2="0.762" width="0.1524" layer="21"/>
 <wire x1="-16.51" y1="-2.54" x2="-16.002" y2="-2.54" width="0.762" layer="51"/>
 <wire x1="-16.51" y1="2.54" x2="-16.002" y2="2.54" width="0.762" layer="51"/>
-<pad name="+" x="-17.78" y="2.54" drill="0.9"/>
-<pad name="-" x="-17.78" y="-2.54" drill="0.9" shape="octagon"/>
+<pad name="+" x="-17.78" y="2.54" drill="1"/>
+<pad name="-" x="-17.78" y="-2.54" drill="1" shape="octagon"/>
 <text x="-4.699" y="1.651" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
 <text x="-4.8006" y="-3.1242" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
 <rectangle x1="-9.779" y1="-2.032" x2="-9.271" y2="1.016" layer="21" rot="R270"/>
@@ -2119,9 +2122,9 @@ Standard 6 pin header for ICSP programming</description>
 <label x="83.82" y="27.94" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="IC1" gate="A" pin="PB0"/>
-<wire x1="-22.86" y1="-10.16" x2="-35.56" y2="-10.16" width="0.1524" layer="91"/>
-<label x="-35.56" y="-10.16" size="1.778" layer="95"/>
+<pinref part="IC1" gate="A" pin="PD3"/>
+<wire x1="12.7" y1="-5.08" x2="27.94" y2="-5.08" width="0.1524" layer="91"/>
+<label x="15.24" y="-5.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SPD_OUT" class="0">
