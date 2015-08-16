@@ -1795,14 +1795,14 @@ Standard 6 pin header for ICSP programming</description>
 <instance part="FRONT" gate="2" x="55.88" y="5.08" rot="R180"/>
 <instance part="C11" gate="G$1" x="40.64" y="68.58" rot="MR0"/>
 <instance part="F1" gate="G$1" x="-43.18" y="53.34"/>
-<instance part="Q1" gate="G$1" x="-35.56" y="33.02" rot="R180"/>
-<instance part="D1" gate="G$1" x="-25.4" y="35.56" rot="R270"/>
-<instance part="D2" gate="G$1" x="-25.4" y="40.64" rot="R90"/>
-<instance part="R6" gate="G$1" x="-25.4" y="48.26" rot="R90"/>
-<instance part="C5" gate="G$1" x="-25.4" y="27.94"/>
-<instance part="R5" gate="G$1" x="-12.7" y="27.94" rot="R90"/>
+<instance part="Q1" gate="G$1" x="-15.24" y="33.02"/>
+<instance part="D1" gate="G$1" x="-33.02" y="35.56" rot="R270"/>
+<instance part="D2" gate="G$1" x="-33.02" y="40.64" rot="R90"/>
+<instance part="R6" gate="G$1" x="-33.02" y="48.26" rot="R90"/>
+<instance part="C5" gate="G$1" x="-33.02" y="27.94"/>
+<instance part="R5" gate="G$1" x="-20.32" y="27.94" rot="R90"/>
 <instance part="Q2" gate="G$1" x="-5.08" y="50.8" rot="MR90"/>
-<instance part="R8" gate="G$1" x="-7.62" y="33.02" rot="R90"/>
+<instance part="R8" gate="G$1" x="-7.62" y="27.94" rot="R90"/>
 <instance part="D3" gate="G$1" x="2.54" y="43.18" rot="R90"/>
 <instance part="C9" gate="G$1" x="68.58" y="48.26"/>
 <instance part="GND3" gate="1" x="68.58" y="43.18"/>
@@ -1889,28 +1889,26 @@ Standard 6 pin header for ICSP programming</description>
 <wire x1="45.72" y1="63.5" x2="40.64" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="Q1" gate="G$1" pin="A2"/>
-<wire x1="-35.56" y1="27.94" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="A1"/>
+<wire x1="-15.24" y1="30.48" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
 <pinref part="R5" gate="G$1" pin="1"/>
-<wire x1="-35.56" y1="22.86" x2="-12.7" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-12.7" y1="22.86" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-12.7" y="22.86"/>
+<wire x1="-20.32" y1="22.86" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-20.32" y="22.86"/>
 <pinref part="C5" gate="G$1" pin="2"/>
-<wire x1="-25.4" y1="22.86" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-35.56" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="22.86" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="22.86" x2="-48.26" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-25.4" y1="25.4" x2="-25.4" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-25.4" y="22.86"/>
+<wire x1="-33.02" y1="25.4" x2="-33.02" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-33.02" y="22.86"/>
 <pinref part="R8" gate="G$1" pin="1"/>
-<wire x1="-7.62" y1="27.94" x2="-7.62" y2="22.86" width="0.1524" layer="91"/>
-<wire x1="-7.62" y1="22.86" x2="-35.56" y2="22.86" width="0.1524" layer="91"/>
-<junction x="-35.56" y="22.86"/>
+<wire x1="-7.62" y1="22.86" x2="-15.24" y2="22.86" width="0.1524" layer="91"/>
+<junction x="-15.24" y="22.86"/>
 <pinref part="24VIN" gate="1" pin="KL"/>
-<junction x="-35.56" y="27.94"/>
+<junction x="-15.24" y="30.48"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <junction x="-40.64" y="22.86"/>
 <junction x="-48.26" y="22.86"/>
-<junction x="-25.4" y="25.4"/>
+<junction x="-33.02" y="25.4"/>
 </segment>
 <segment>
 <pinref part="C9" gate="G$1" pin="2"/>
@@ -1995,42 +1993,39 @@ Standard 6 pin header for ICSP programming</description>
 <segment>
 <pinref part="R6" gate="G$1" pin="1"/>
 <pinref part="D2" gate="G$1" pin="C"/>
-<junction x="-25.4" y="43.18"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
 <pinref part="D2" gate="G$1" pin="A"/>
 <pinref part="D1" gate="G$1" pin="A"/>
-<junction x="-25.4" y="38.1"/>
 </segment>
 </net>
 <net name="N$7" class="0">
 <segment>
 <pinref part="Q1" gate="G$1" pin="G"/>
 <pinref part="D1" gate="G$1" pin="C"/>
-<wire x1="-30.48" y1="33.02" x2="-25.4" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="33.02" x2="-33.02" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="1"/>
-<junction x="-25.4" y="33.02"/>
+<junction x="-33.02" y="33.02"/>
 <pinref part="R5" gate="G$1" pin="2"/>
-<junction x="-30.48" y="33.02"/>
-<wire x1="-30.48" y1="33.02" x2="-12.7" y2="33.02" width="0.1524" layer="91"/>
+<junction x="-20.32" y="33.02"/>
 </segment>
 </net>
 <net name="24V" class="1">
 <segment>
 <pinref part="F1" gate="G$1" pin="2"/>
 <pinref part="R6" gate="G$1" pin="2"/>
-<junction x="-25.4" y="53.34"/>
-<wire x1="-35.56" y1="53.34" x2="-38.1" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="-25.4" y1="53.34" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="Q1" gate="G$1" pin="A1"/>
-<wire x1="-35.56" y1="35.56" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
+<junction x="-33.02" y="53.34"/>
+<wire x1="-15.24" y1="53.34" x2="-38.1" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="53.34" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="A2"/>
+<wire x1="-15.24" y1="38.1" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="Q2" gate="G$1" pin="D"/>
-<wire x1="-10.16" y1="53.34" x2="-35.56" y2="53.34" width="0.1524" layer="91"/>
-<junction x="-35.56" y="53.34"/>
+<wire x1="-10.16" y1="53.34" x2="-15.24" y2="53.34" width="0.1524" layer="91"/>
+<junction x="-15.24" y="53.34"/>
 <junction x="-10.16" y="53.34"/>
-<junction x="-35.56" y="35.56"/>
+<junction x="-15.24" y="38.1"/>
 <junction x="-38.1" y="53.34"/>
 </segment>
 </net>
@@ -2038,11 +2033,12 @@ Standard 6 pin header for ICSP programming</description>
 <segment>
 <pinref part="Q2" gate="G$1" pin="G"/>
 <pinref part="R8" gate="G$1" pin="2"/>
-<wire x1="-7.62" y1="45.72" x2="-7.62" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="45.72" x2="-7.62" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="D3" gate="G$1" pin="A"/>
 <wire x1="2.54" y1="40.64" x2="2.54" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="38.1" x2="-7.62" y2="38.1" width="0.1524" layer="91"/>
-<junction x="-7.62" y="38.1"/>
+<wire x1="-7.62" y1="38.1" x2="-7.62" y2="33.02" width="0.1524" layer="91"/>
+<junction x="-7.62" y="33.02"/>
 <junction x="-7.62" y="45.72"/>
 <junction x="2.54" y="40.64"/>
 </segment>
