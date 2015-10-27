@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.3.0">
+<eagle version="7.4.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -50,6 +50,8 @@
 <layer number="54" name="bGND_GNDA" color="1" fill="9" visible="no" active="no"/>
 <layer number="56" name="wert" color="7" fill="1" visible="no" active="no"/>
 <layer number="57" name="tCAD" color="7" fill="1" visible="no" active="no"/>
+<layer number="59" name="tCarbon" color="7" fill="1" visible="no" active="no"/>
+<layer number="60" name="bCarbon" color="7" fill="1" visible="no" active="no"/>
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
@@ -84,6 +86,7 @@
 <layer number="126" name="_bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="127" name="_tValues" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="128" name="_bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="129" name="Mask" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="131" name="tAdjust" color="7" fill="1" visible="no" active="yes"/>
 <layer number="132" name="bAdjust" color="7" fill="1" visible="no" active="yes"/>
 <layer number="144" name="Drill_legend" color="7" fill="1" visible="yes" active="yes"/>
@@ -248,44 +251,6 @@
 <rectangle x1="-0.254" y1="-0.254" x2="0.254" y2="0.254" layer="51"/>
 <rectangle x1="-2.794" y1="-0.254" x2="-2.286" y2="0.254" layer="51"/>
 <rectangle x1="2.286" y1="-0.254" x2="2.794" y2="0.254" layer="51"/>
-</package>
-<package name="TO220BH">
-<description>&lt;b&gt;Molded Package&lt;/b&gt;&lt;p&gt;
-grid 2.54 mm</description>
-<wire x1="-5.207" y1="-1.27" x2="5.207" y2="-1.27" width="0.1524" layer="21"/>
-<wire x1="5.207" y1="14.605" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
-<wire x1="5.207" y1="-1.27" x2="5.207" y2="11.176" width="0.1524" layer="21"/>
-<wire x1="5.207" y1="11.176" x2="4.318" y2="11.176" width="0.1524" layer="21"/>
-<wire x1="4.318" y1="11.176" x2="4.318" y2="12.7" width="0.1524" layer="21"/>
-<wire x1="4.318" y1="12.7" x2="5.207" y2="12.7" width="0.1524" layer="21"/>
-<wire x1="5.207" y1="12.7" x2="5.207" y2="14.605" width="0.1524" layer="21"/>
-<wire x1="-5.207" y1="-1.27" x2="-5.207" y2="11.176" width="0.1524" layer="21"/>
-<wire x1="-5.207" y1="11.176" x2="-4.318" y2="11.176" width="0.1524" layer="21"/>
-<wire x1="-4.318" y1="11.176" x2="-4.318" y2="12.7" width="0.1524" layer="21"/>
-<wire x1="-4.318" y1="12.7" x2="-5.207" y2="12.7" width="0.1524" layer="21"/>
-<wire x1="-5.207" y1="12.7" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
-<wire x1="-4.572" y1="-0.635" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
-<wire x1="4.572" y1="7.62" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
-<wire x1="4.572" y1="7.62" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
-<wire x1="-4.572" y1="-0.635" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
-<circle x="0" y="11.176" radius="1.8034" width="0.1524" layer="21"/>
-<circle x="0" y="11.176" radius="4.191" width="0" layer="42"/>
-<circle x="0" y="11.176" radius="4.191" width="0" layer="43"/>
-<pad name="P1" x="-2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
-<pad name="P2" x="0" y="-6.35" drill="1" shape="long" rot="R90"/>
-<pad name="P3" x="2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
-<text x="-3.81" y="5.207" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
-<text x="-3.937" y="2.54" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
-<rectangle x1="2.159" y1="-4.5212" x2="2.921" y2="-4.064" layer="21"/>
-<rectangle x1="-0.381" y1="-4.5212" x2="0.381" y2="-4.064" layer="21"/>
-<rectangle x1="-2.921" y1="-4.5212" x2="-2.159" y2="-4.064" layer="21"/>
-<rectangle x1="-3.175" y1="-4.064" x2="-1.905" y2="-1.27" layer="21"/>
-<rectangle x1="-0.635" y1="-4.064" x2="0.635" y2="-1.27" layer="21"/>
-<rectangle x1="1.905" y1="-4.064" x2="3.175" y2="-1.27" layer="21"/>
-<rectangle x1="-2.921" y1="-6.604" x2="-2.159" y2="-4.5212" layer="51"/>
-<rectangle x1="-0.381" y1="-6.604" x2="0.381" y2="-4.5212" layer="51"/>
-<rectangle x1="2.159" y1="-6.604" x2="2.921" y2="-4.5212" layer="51"/>
-<hole x="0" y="11.176" drill="3.302"/>
 </package>
 <package name="ZDIO-7.5">
 <description>&lt;b&gt;Z DIODE&lt;/b&gt;</description>
@@ -955,9 +920,9 @@ Source: User LBR Version 2.05</description>
 <pad name="P3" x="2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
 <text x="-3.81" y="5.207" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
 <text x="-3.937" y="2.54" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
-<rectangle x1="2.159" y1="-4.5212" x2="2.921" y2="-4.064" layer="21"/>
-<rectangle x1="-0.381" y1="-4.5212" x2="0.381" y2="-4.064" layer="21"/>
-<rectangle x1="-2.921" y1="-4.5212" x2="-2.159" y2="-4.064" layer="21"/>
+<rectangle x1="2.159" y1="-4.5212" x2="2.921" y2="-4.064" layer="51"/>
+<rectangle x1="-0.381" y1="-4.5212" x2="0.381" y2="-4.064" layer="51"/>
+<rectangle x1="-2.921" y1="-4.5212" x2="-2.159" y2="-4.064" layer="51"/>
 <rectangle x1="-3.175" y1="-4.064" x2="-1.905" y2="-1.27" layer="21"/>
 <rectangle x1="-0.635" y1="-4.064" x2="0.635" y2="-1.27" layer="21"/>
 <rectangle x1="1.905" y1="-4.064" x2="3.175" y2="-1.27" layer="21"/>
@@ -970,6 +935,58 @@ Source: User LBR Version 2.05</description>
 <wire x1="4.318" y1="11.176" x2="5.207" y2="11.176" width="0.1524" layer="21"/>
 <wire x1="4.318" y1="12.7" x2="5.207" y2="12.7" width="0.1524" layer="21"/>
 <wire x1="4.318" y1="11.176" x2="4.318" y2="12.7" width="0.1524" layer="21"/>
+</package>
+<package name="RESISTOR-0805">
+<wire x1="-0.41" y1="0.635" x2="0.41" y2="0.635" width="0.1524" layer="51"/>
+<wire x1="-0.41" y1="-0.635" x2="0.41" y2="-0.635" width="0.1524" layer="51"/>
+<wire x1="-1.973" y1="0.983" x2="1.973" y2="0.983" width="0.0508" layer="39"/>
+<wire x1="1.973" y1="0.983" x2="1.973" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="1.973" y1="-0.983" x2="-1.973" y2="-0.983" width="0.0508" layer="39"/>
+<wire x1="-1.973" y1="-0.983" x2="-1.973" y2="0.983" width="0.0508" layer="39"/>
+<smd name="1" x="-1" y="0" dx="1.1" dy="1.4" layer="1"/>
+<smd name="2" x="1" y="0" dx="1.1" dy="1.4" layer="1"/>
+<text x="-0.762" y="1.016" size="1.27" layer="25">&gt;NAME</text>
+<text x="-0.762" y="-2.286" size="1.27" layer="27">&gt;VALUE</text>
+<rectangle x1="0.4064" y1="-0.6985" x2="1.0564" y2="0.7015" layer="21"/>
+<rectangle x1="-1.0668" y1="-0.6985" x2="-0.4168" y2="0.7015" layer="21"/>
+</package>
+<package name="TO220BH">
+<description>&lt;b&gt;Molded Package&lt;/b&gt;&lt;p&gt;
+grid 2.54 mm</description>
+<wire x1="-5.207" y1="-1.27" x2="5.207" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="14.605" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="-1.27" x2="5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="11.176" x2="4.318" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="4.318" y1="11.176" x2="4.318" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="4.318" y1="12.7" x2="5.207" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="5.207" y1="12.7" x2="5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="-5.207" y1="-1.27" x2="-5.207" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="-5.207" y1="11.176" x2="-4.318" y2="11.176" width="0.1524" layer="21"/>
+<wire x1="-4.318" y1="11.176" x2="-4.318" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="-4.318" y1="12.7" x2="-5.207" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="-5.207" y1="12.7" x2="-5.207" y2="14.605" width="0.1524" layer="21"/>
+<wire x1="-4.572" y1="-0.635" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
+<wire x1="4.572" y1="7.62" x2="4.572" y2="-0.635" width="0.0508" layer="21"/>
+<wire x1="4.572" y1="7.62" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
+<wire x1="-4.572" y1="-0.635" x2="-4.572" y2="7.62" width="0.0508" layer="21"/>
+<circle x="0" y="11.176" radius="1.8034" width="0.1524" layer="21"/>
+<circle x="0" y="11.176" radius="4.191" width="0" layer="42"/>
+<circle x="0" y="11.176" radius="4.191" width="0" layer="43"/>
+<pad name="P1" x="-2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
+<pad name="P2" x="0" y="-6.35" drill="1" shape="long" rot="R90"/>
+<pad name="P3" x="2.54" y="-6.35" drill="1" shape="long" rot="R90"/>
+<text x="-3.81" y="5.207" size="0.8128" layer="25" ratio="10">&gt;NAME</text>
+<text x="-3.937" y="2.54" size="0.8128" layer="27" ratio="10">&gt;VALUE</text>
+<rectangle x1="2.159" y1="-4.5212" x2="2.921" y2="-4.064" layer="51"/>
+<rectangle x1="-0.381" y1="-4.5212" x2="0.381" y2="-4.064" layer="51"/>
+<rectangle x1="-2.921" y1="-4.5212" x2="-2.159" y2="-4.064" layer="51"/>
+<rectangle x1="-3.175" y1="-4.064" x2="-1.905" y2="-1.27" layer="21"/>
+<rectangle x1="-0.635" y1="-4.064" x2="0.635" y2="-1.27" layer="21"/>
+<rectangle x1="1.905" y1="-4.064" x2="3.175" y2="-1.27" layer="21"/>
+<rectangle x1="-2.921" y1="-6.604" x2="-2.159" y2="-4.5212" layer="51"/>
+<rectangle x1="-0.381" y1="-6.604" x2="0.381" y2="-4.5212" layer="51"/>
+<rectangle x1="2.159" y1="-6.604" x2="2.921" y2="-4.5212" layer="51"/>
+<hole x="0" y="11.176" drill="3.302"/>
 </package>
 </packages>
 <symbols>
@@ -1212,6 +1229,15 @@ Source: User LBR Version 2.05</description>
 </technologies>
 </device>
 <device name="OFFBOARD" package="SCREW-TERM-2">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+<device name="0805" package="RESISTOR-0805">
 <connects>
 <connect gate="G$1" pin="1" pad="1"/>
 <connect gate="G$1" pin="2" pad="2"/>
