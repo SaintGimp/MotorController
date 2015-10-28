@@ -1441,51 +1441,13 @@ grid 2.54 mm</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="SUP75P03-07" prefix="Q">
+<deviceset name="SUP53P06-20">
 <description>P-Channel MOSFET</description>
 <gates>
 <gate name="G$1" symbol="P-MOSFET" x="-2.54" y="0"/>
 </gates>
 <devices>
 <device name="-H" package="TO220BH">
-<connects>
-<connect gate="G$1" pin="D" pad="P2"/>
-<connect gate="G$1" pin="G" pad="P1"/>
-<connect gate="G$1" pin="S" pad="P3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="-H-NH" package="TO220BH-NO-HOLE">
-<connects>
-<connect gate="G$1" pin="D" pad="P2"/>
-<connect gate="G$1" pin="G" pad="P1"/>
-<connect gate="G$1" pin="S" pad="P3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="IPP80P03P4L-04" prefix="Q">
-<description>&lt;b&gt;P-Channel MOSFET&lt;/b&gt;&lt;p&gt;</description>
-<gates>
-<gate name="G$1" symbol="P-MOSFET" x="0" y="0"/>
-</gates>
-<devices>
-<device name="-H" package="TO220BH">
-<connects>
-<connect gate="G$1" pin="D" pad="P2"/>
-<connect gate="G$1" pin="G" pad="P1"/>
-<connect gate="G$1" pin="S" pad="P3"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-<device name="-V" package="TO220BV">
 <connects>
 <connect gate="G$1" pin="D" pad="P2"/>
 <connect gate="G$1" pin="G" pad="P1"/>
@@ -1755,7 +1717,7 @@ Standard 6 pin header for ICSP programming</description>
 <part name="R6" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
 <part name="C5" library="SaintGimp" deviceset="CAPACITOR-*" device="2.5MM" value="0.1uF"/>
 <part name="R5" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="1K"/>
-<part name="Q2" library="SaintGimp" deviceset="IPP80P03P4L-04" device="-H-NH" value="IPP80P03P4L-04"/>
+<part name="Q2" library="SaintGimp" deviceset="SUP53P06-20" device="-H-NH" value="IPP80P03P4L-04"/>
 <part name="R8" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="10K"/>
 <part name="D3" library="SaintGimp" deviceset="ZENER" device="-7.5" value="10V"/>
 <part name="C9" library="SaintGimp" deviceset="CAPACITOR-*" device="5MM" value="10uF"/>
@@ -1800,7 +1762,7 @@ Standard 6 pin header for ICSP programming</description>
 <part name="SIDE_EXP" library="SaintGimp" deviceset="PINHD-1X3" device="BIG"/>
 <part name="5V7" library="SaintGimp" deviceset="VCC" device="" value="5V"/>
 <part name="GND18" library="SaintGimp" deviceset="GND" device=""/>
-<part name="Q3" library="SaintGimp" deviceset="SUP75P03-07" device="-H-NH" value="SUP75P03-07-H-NH"/>
+<part name="Q3" library="SaintGimp" deviceset="SUP53P06-20" device="-H-NH" value="SUP53P06-20-H-NH"/>
 <part name="R7" library="SaintGimp" deviceset="RESISTOR-*" device="7.5MM" value="576K"/>
 <part name="GND19" library="SaintGimp" deviceset="GND" device=""/>
 <part name="D4" library="SaintGimp" deviceset="ZENER" device="-7.5" value="10V"/>

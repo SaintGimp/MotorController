@@ -1039,7 +1039,7 @@ Please make sure your boards conform to these design rules.</description>
 <element name="SIDE_EXP" library="SaintGimp" package="1X03-BIG" value="PINHD-1X3BIG" x="7.62" y="21.59" smashed="yes" rot="R90">
 <attribute name="VALUE" x="10.2448375" y="17.78" size="0.8128" layer="27" rot="R90"/>
 </element>
-<element name="Q3" library="SaintGimp" package="TO220BH-NO-HOLE" value="SUP75P03-07-H-NH" x="66.04" y="15.112503125" rot="R180"/>
+<element name="Q3" library="SaintGimp" package="TO220BH-NO-HOLE" value="SUP53P06-20-H-NH" x="66.04" y="15.112503125" rot="R180"/>
 <element name="R7" library="SaintGimp" package="AXIAL-7.5MM" value="576K" x="58.42" y="27.305" smashed="yes">
 <attribute name="NAME" x="52.07" y="27.051" size="0.8128" layer="25"/>
 <attribute name="VALUE" x="56.388" y="26.797" size="0.8128" layer="21" ratio="10"/>
