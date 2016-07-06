@@ -2,7 +2,7 @@
 #include <avr/eeprom.h>
 #include "LCDserNHD.h"
 
-const char* versionString = "3.0.0";
+const char* versionString = "3.1.0";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -18,6 +18,8 @@ const int directionSwitchInPin = 2;
 const int directionOutPin = 10;
 const int rpmInPin = 3;
 const int serialPin = 1;
+const int clockResetInPin = 14;
+const int debugDisplayInPin = 15;
 
 // Settings and limits
 const int switchDebounceTime = 30;
@@ -29,11 +31,14 @@ const int startOfStopDamping = 100;
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
 const float gearRatio = 2.0;
-const uint16_t eepromSize = 1024;
+// ATMega328P has 1024 bytes of EEPROM and we're addressing it as DWORDS
+const uint32_t* maximumEepromAddress = (uint32_t*)1024 - 1;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
 Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
+Bounce clockResetSwitch = Bounce(clockResetInPin, switchDebounceTime);
+Bounce debugDisplaySwitch = Bounce(debugDisplayInPin, switchDebounceTime);
 
 LCDserNHD lcd(2, 16);
 
@@ -49,6 +54,7 @@ unsigned long lastDisplayTime = 0;
 unsigned long nextClockTick = 0;
 unsigned long secondsOfOperation = 0;
 uint32_t* nextClockBufferLocation = 0;
+boolean showDebugDisplay = false;
 
 void setup()
 {
@@ -63,15 +69,14 @@ void setup()
   TCCR1B = TCCR1B & 0b11111000 | 0x01;
   
   Serial.begin(9600);    
-  lcd.init();
-  
-  lcd.setBacklight(8);
   
   pinMode(onOffSwitchInPin, INPUT_PULLUP);
   pinMode(directionSwitchInPin, INPUT_PULLUP);
   pinMode(rpmInPin, INPUT_PULLUP);
   pinMode(directionOutPin, OUTPUT);
   pinMode(speedOutPin, OUTPUT);
+  pinMode(clockResetInPin, INPUT_PULLUP);
+  pinMode(debugDisplayInPin, INPUT_PULLUP);
   // We don't have to set pin mode for analog inputs
   
   // Figure out where the direction switch is set and initialize
@@ -86,6 +91,10 @@ void setup()
   
   ReadClock();
   
+  // Need to give the LCD a bit of time to boot
+  delay(100);
+  lcd.init();
+  lcd.setBacklight(8);
   lcd.home();
   lcd.print(F("WooLee Ann"));
   lcd.setCursor(1, 0);
@@ -97,6 +106,19 @@ void setup()
 
 void loop()
 {
+  clockResetSwitch.update();
+  if (clockResetSwitch.fallingEdge())
+  {
+    ResetClock();
+  }
+
+  debugDisplaySwitch.update();
+  if (debugDisplaySwitch.fallingEdge())
+  {
+    showDebugDisplay = !showDebugDisplay;
+    lcd.clear();
+  }
+
   onOffSwitch.update();
   if (onOffSwitch.fallingEdge() && CanChangePowerState())
   {
@@ -212,7 +234,7 @@ void OnMotorTick()
 }
 
 void UpdateClock()
-{ 
+{   
   if (powerEnabled && millis() > nextClockTick)
   {
     nextClockTick += 1000;
@@ -239,9 +261,16 @@ void UpdateDisplay()
   {
     lastDisplayTime = now;
 
-    UpdateRpmDisplay(now, timeSinceLastDisplay);
-    UpdateDirectionDisplay();
-    UpdateHoursDisplay();
+    if (showDebugDisplay)
+    {
+      UpdateDebugDisplay();
+    }
+    else
+    {
+      UpdateRpmDisplay(now, timeSinceLastDisplay);
+      UpdateDirectionDisplay();
+      UpdateHoursDisplay();
+    }
   }
 }
 
@@ -282,6 +311,17 @@ void UpdateHoursDisplay()
   lcd.print(hours, 1);
 }
 
+void UpdateDebugDisplay()
+{
+  lcd.home();
+  lcd.print(F("SEC: "));
+  lcd.print(secondsOfOperation);
+  
+  lcd.setCursor(1, 0);
+  lcd.print(F("LOC: "));
+  lcd.print((uint32_t)nextClockBufferLocation);
+}
+
 char* rpmToString(int value, char* result)
 {
   char* ptr = result, *ptr1 = result, tmp_char;
@@ -314,10 +354,11 @@ char* rpmToString(int value, char* result)
 void ReadClock()
 {
   secondsOfOperation = 0;
+  uint32_t clockValue = 0;
   
-  for (nextClockBufferLocation = 0; nextClockBufferLocation < (uint32_t*)eepromSize; nextClockBufferLocation++)
+  for (nextClockBufferLocation = 0; nextClockBufferLocation <= maximumEepromAddress; nextClockBufferLocation++)
   {
-    uint32_t clockValue = eeprom_read_dword(nextClockBufferLocation);
+    clockValue = eeprom_read_dword(nextClockBufferLocation);
     if (clockValue >= secondsOfOperation && clockValue < 0xFFFFFFFF)
     {
       secondsOfOperation = clockValue;
@@ -327,15 +368,38 @@ void ReadClock()
       break;
     }
   }
+
+  // If the final value we read was an actual clock value, we want to
+  // write the next clock value in the next available slot, otherwise
+  // we want to overwrite this uninitialized slot
+  if (clockValue < 0xFFFFFFFF)
+  {
+    nextClockBufferLocation++;
+    if (nextClockBufferLocation > maximumEepromAddress)
+    {
+      nextClockBufferLocation = 0;
+    }
+  }
 }
 
 void WriteClock()
 {
   eeprom_write_dword(nextClockBufferLocation, secondsOfOperation);
   nextClockBufferLocation++;
-  if ((uint16_t)nextClockBufferLocation > eepromSize)
+  if (nextClockBufferLocation > maximumEepromAddress)
   {
     nextClockBufferLocation = 0;
   }
+}
+
+void ResetClock()
+{
+  for (uint32_t* x = 0; x <= maximumEepromAddress; x++)
+  {
+    eeprom_write_dword(x, 0xFFFFFFFF);
+  }
+
+  nextClockBufferLocation = 0;
+  secondsOfOperation = 0;
 }
 
