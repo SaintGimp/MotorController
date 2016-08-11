@@ -1,3 +1,7 @@
+// Installed via library manager, https://github.com/ivanseidel/ArduinoThread
+#include <Thread.h>
+#include <ThreadController.h>
+
 // Installed via library manager, https://github.com/thomasfredericks/Bounce2
 #include <Bounce2.h>
 
@@ -48,16 +52,19 @@ LCDserNHD lcd(2, 16);
 int targetSpeed = 0;
 int currentSpeed = 0;
 int delayBetweenMotorUpdates = 15;
-unsigned long lastMotorUpdateTime = 0;
 boolean powerEnabled = false;
 int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
 volatile int motorTicks = 0;
-unsigned long lastClockTickTime = 0;
-unsigned long lastDisplayTime = 0;
 unsigned long secondsOfOperation = 0;
 uint32_t* nextClockBufferLocation = 0;
 boolean showDebugDisplay = false;
+unsigned long lastDisplayTime = 0;
+
+Thread motorUpdateTask = Thread();
+Thread displayUpdateTask = Thread();
+Thread clockUpdateTask = Thread();
+ThreadController taskController = ThreadController();
 
 void setup()
 {  
@@ -114,16 +121,27 @@ void setup()
   lcd.print(versionString);
   delay(2000);
   lcd.clear();
+
+  motorUpdateTask.setInterval(delayBetweenMotorUpdates);
+  motorUpdateTask.onRun(SetMotorState);
+  motorUpdateTask.enabled = true;
+  taskController.add(&motorUpdateTask);
+
+  displayUpdateTask.setInterval(1000);
+  displayUpdateTask.onRun(UpdateDisplay);
+  displayUpdateTask.enabled = true;
+  taskController.add(&displayUpdateTask);
+
+  clockUpdateTask.setInterval(1000);
+  clockUpdateTask.onRun(UpdateClock);
+  clockUpdateTask.enabled = true;
+  taskController.add(&clockUpdateTask);  
 }
 
 void loop()
 {
   HandleInputs();
-  
-  SetMotorState();
-    
-  UpdateClock();
-  UpdateDisplay();
+  taskController.run();  
 }
 
 void HandleInputs()
@@ -168,8 +186,8 @@ void HandleInputs()
     targetSpeed = 0;
   }
 
-  delayBetweenMotorUpdates = ReadPotentiometer(rateOfSpeedChangeInPin);
-  delayBetweenMotorUpdates = map(delayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+  int newDelayBetweenMotorUpdates = ReadPotentiometer(rateOfSpeedChangeInPin);
+  newDelayBetweenMotorUpdates = map(newDelayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelay, maximumDelay);
   int absoluteCurrentSpeed = abs(currentSpeed);
   if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < startOfStopDamping)
   {
@@ -177,34 +195,32 @@ void HandleInputs()
     // doesn't work as well at low speed and we don't the bobbin to run ahead of
     // the flyer. So at the low end we start raising the delay toward max regardless
     // of what it's actually set to.
-    delayBetweenMotorUpdates = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, delayBetweenMotorUpdates);
+    newDelayBetweenMotorUpdates = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, newDelayBetweenMotorUpdates);
+  }
+
+  if (newDelayBetweenMotorUpdates != delayBetweenMotorUpdates)
+  {
+    delayBetweenMotorUpdates = newDelayBetweenMotorUpdates;
+    motorUpdateTask.setInterval(delayBetweenMotorUpdates);
   }
 }
 
 void SetMotorState()
 {
-  unsigned long now = millis();
-  unsigned int timeSinceLastMotorUpdate = now - lastMotorUpdateTime;
-
-  if (timeSinceLastMotorUpdate > delayBetweenMotorUpdates)
+  if (currentSpeed == 0 && currentDirection != targetDirection)
   {
-    lastMotorUpdateTime = now;
-
-    if (currentSpeed == 0 && currentDirection != targetDirection)
-    {
-      // We're at zero speed and want to switch directions.   
-      digitalWrite(directionOutPin, targetDirection);
-      currentDirection = targetDirection;
-      UpdateDirectionDisplay();
-      
-      // We don't want to actually start moving the other direction,
-      // wait for the user to hit the power button again
-      powerEnabled = false;
-    }
+    // We're at zero speed and want to switch directions.   
+    digitalWrite(directionOutPin, targetDirection);
+    currentDirection = targetDirection;
+    UpdateDirectionDisplay();
     
-    currentSpeed += SlewToward(currentSpeed, targetSpeed);
-    analogWrite(speedOutPin, abs(currentSpeed));
-  }           
+    // We don't want to actually start moving the other direction,
+    // wait for the user to hit the power button again
+    powerEnabled = false;
+  }
+  
+  currentSpeed += SlewToward(currentSpeed, targetSpeed);
+  analogWrite(speedOutPin, abs(currentSpeed));
 }
 
 boolean CanChangePowerState()
@@ -253,57 +269,43 @@ void OnMotorTick()
 
 void UpdateClock()
 {   
-  unsigned long now = millis();
-  unsigned int timeSinceLastClockTick = now - lastClockTickTime;
-
-  if (timeSinceLastClockTick > 1000)
+  if (powerEnabled)
   {
-    lastClockTickTime = now;
+    secondsOfOperation++;
     
-    if (powerEnabled)
+    if (secondsOfOperation % 60 == 0)
     {
-      secondsOfOperation++;
-      
-      if (secondsOfOperation % 60 == 0)
-      {
-        WriteClock();
-      }
+      WriteClock();
     }
   }
 }
 
 void UpdateDisplay()
 {
-  unsigned long now = millis();
-  unsigned int timeSinceLastDisplay = now - lastDisplayTime;
-
   // TODO: To avoid mistakes, maybe we should have a buffer that
   // contains boilerplate text for the whole display, then write
   // data to it in the appropriate places, and write the whole
   // buffer to the display.
   
-  if (timeSinceLastDisplay > 1000)
+  if (showDebugDisplay)
   {
-    lastDisplayTime = now;
-
-    if (showDebugDisplay)
-    {
-      UpdateDebugDisplay();
-    }
-    else
-    {
-      UpdateRpmDisplay(now, timeSinceLastDisplay);
-      UpdateDirectionDisplay();
-      UpdateHoursDisplay();
-    }
+    UpdateDebugDisplay();
+  }
+  else
+  {
+    UpdateRpmDisplay();
+    UpdateDirectionDisplay();
+    UpdateHoursDisplay();
   }
 }
 
-void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
+void UpdateRpmDisplay()
 {
+  unsigned long now = millis();
   int totalMotorTicks = motorTicks;
   motorTicks = 0;
-
+  unsigned int timeSinceLastDisplay = now - lastDisplayTime;
+  
   // We get one pulse every 90 deg. of rotation
   float rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
   rpm /= gearRatio;
@@ -312,6 +314,8 @@ void UpdateRpmDisplay(unsigned long now, unsigned int timeSinceLastDisplay)
   lcd.home();
   lcd.print(F("RPM: "));
   lcd.print(rpmToString((int)rpm, buffer));
+
+  lastDisplayTime = now;
 }
 
 void UpdateDirectionDisplay()
