@@ -37,23 +37,24 @@ const float gearRatio = 2.0;
 const uint32_t* maximumEepromAddress = (uint32_t*)1024 - 1;
 
 // Switches using the Bounce library for debouncing
-Bounce onOffSwitch = Bounce(onOffSwitchInPin, switchDebounceTime);
-Bounce directionSwitch = Bounce(directionSwitchInPin, switchDebounceTime);
-Bounce clockResetSwitch = Bounce(clockResetInPin, switchDebounceTime);
-Bounce debugDisplaySwitch = Bounce(debugDisplayInPin, switchDebounceTime);
+Bounce onOffSwitch = Bounce();
+Bounce directionSwitch = Bounce();
+Bounce clockResetSwitch = Bounce();
+Bounce debugDisplaySwitch = Bounce();
 
 LCDserNHD lcd(2, 16);
 
 // State variables
 int targetSpeed = 0;
 int currentSpeed = 0;
-int delayBetweenAdjustments = 15;
+int delayBetweenMotorUpdates = 15;
+unsigned long lastMotorUpdateTime = 0;
 boolean powerEnabled = false;
 int targetDirection = CLOCKWISE;
 int currentDirection = CLOCKWISE;
 volatile int motorTicks = 0;
+unsigned long lastClockTickTime = 0;
 unsigned long lastDisplayTime = 0;
-unsigned long nextClockTick = 0;
 unsigned long secondsOfOperation = 0;
 uint32_t* nextClockBufferLocation = 0;
 boolean showDebugDisplay = false;
@@ -81,7 +82,7 @@ void setup()
   pinMode(debugDisplayInPin, INPUT_PULLUP);
   // We don't have to set pin mode for analog inputs
   
-   onOffSwitch.attach(onOffSwitchInPin);
+  onOffSwitch.attach(onOffSwitchInPin);
   onOffSwitch.interval(switchDebounceTime);
   directionSwitch.attach(directionSwitchInPin);
   directionSwitch.interval(switchDebounceTime);
@@ -117,6 +118,16 @@ void setup()
 
 void loop()
 {
+  HandleInputs();
+  
+  SetMotorState();
+    
+  UpdateClock();
+  UpdateDisplay();
+}
+
+void HandleInputs()
+{
   clockResetSwitch.update();
   if (clockResetSwitch.fell())
   {
@@ -134,11 +145,7 @@ void loop()
   {
     powerEnabled = !powerEnabled;
     
-    if (powerEnabled)
-    {
-      nextClockTick = millis() + 1000;
-    }
-    else
+    if (!powerEnabled)
     {
       WriteClock();
     }
@@ -161,8 +168,8 @@ void loop()
     targetSpeed = 0;
   }
 
-  delayBetweenAdjustments = ReadPotentiometer(rateOfSpeedChangeInPin);
-  delayBetweenAdjustments = map(delayBetweenAdjustments, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+  delayBetweenMotorUpdates = ReadPotentiometer(rateOfSpeedChangeInPin);
+  delayBetweenMotorUpdates = map(delayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelay, maximumDelay);
   int absoluteCurrentSpeed = abs(currentSpeed);
   if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < startOfStopDamping)
   {
@@ -170,33 +177,34 @@ void loop()
     // doesn't work as well at low speed and we don't the bobbin to run ahead of
     // the flyer. So at the low end we start raising the delay toward max regardless
     // of what it's actually set to.
-    delayBetweenAdjustments = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, delayBetweenAdjustments);
+    delayBetweenMotorUpdates = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, delayBetweenMotorUpdates);
   }
+}
 
-  if (currentSpeed == 0 && currentDirection != targetDirection)
+void SetMotorState()
+{
+  unsigned long now = millis();
+  unsigned int timeSinceLastMotorUpdate = now - lastMotorUpdateTime;
+
+  if (timeSinceLastMotorUpdate > delayBetweenMotorUpdates)
   {
-    // We're at zero speed and want to switch directions.   
-    digitalWrite(directionOutPin, targetDirection);
-    currentDirection = targetDirection;
-    UpdateDirectionDisplay();
+    lastMotorUpdateTime = now;
+
+    if (currentSpeed == 0 && currentDirection != targetDirection)
+    {
+      // We're at zero speed and want to switch directions.   
+      digitalWrite(directionOutPin, targetDirection);
+      currentDirection = targetDirection;
+      UpdateDirectionDisplay();
+      
+      // We don't want to actually start moving the other direction,
+      // wait for the user to hit the power button again
+      powerEnabled = false;
+    }
     
-    // We don't want to actually start moving the other direction,
-    // wait for the user to hit the power button again
-    powerEnabled = false;
-  }
-  
-  currentSpeed += SlewToward(currentSpeed, targetSpeed);
-  analogWrite(speedOutPin, abs(currentSpeed));           
-  
-  UpdateClock();
-  UpdateDisplay();
-    
-  // Rather than trying to write a fixed-delay loop we're being lazy and using a
-  // variable-deplay loop to control the rate at which we change the motor speed.
-  // This should be fine because we don't have anything urgent that we need to do
-  // in between adjustments anyway and the input response lag even at maximum delay
-  // will never be noticable to the user.
-  delay(delayBetweenAdjustments);                     
+    currentSpeed += SlewToward(currentSpeed, targetSpeed);
+    analogWrite(speedOutPin, abs(currentSpeed));
+  }           
 }
 
 boolean CanChangePowerState()
@@ -245,14 +253,21 @@ void OnMotorTick()
 
 void UpdateClock()
 {   
-  if (powerEnabled && millis() > nextClockTick)
+  unsigned long now = millis();
+  unsigned int timeSinceLastClockTick = now - lastClockTickTime;
+
+  if (timeSinceLastClockTick > 1000)
   {
-    nextClockTick += 1000;
-    secondsOfOperation++;
+    lastClockTickTime = now;
     
-    if (secondsOfOperation % 60 == 0)
+    if (powerEnabled)
     {
-      WriteClock();
+      secondsOfOperation++;
+      
+      if (secondsOfOperation % 60 == 0)
+      {
+        WriteClock();
+      }
     }
   }
 }
