@@ -1,8 +1,10 @@
-#include <Bounce.h>
+// Installed via library manager, https://github.com/thomasfredericks/Bounce2
+#include <Bounce2.h>
+
 #include <avr/eeprom.h>
 #include "LCDserNHD.h"
 
-const char* versionString = "3.1.0";
+const char* versionString = "3.1.1";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -57,7 +59,7 @@ uint32_t* nextClockBufferLocation = 0;
 boolean showDebugDisplay = false;
 
 void setup()
-{
+{  
   // We set the timer to fast mode so that our motor speed control
   // (via PWM) is as easy to smooth out as possible
   // http://playground.arduino.cc/Main/TimerPWMCheatsheet
@@ -79,6 +81,15 @@ void setup()
   pinMode(debugDisplayInPin, INPUT_PULLUP);
   // We don't have to set pin mode for analog inputs
   
+   onOffSwitch.attach(onOffSwitchInPin);
+  onOffSwitch.interval(switchDebounceTime);
+  directionSwitch.attach(directionSwitchInPin);
+  directionSwitch.interval(switchDebounceTime);
+  clockResetSwitch.attach(clockResetInPin);
+  clockResetSwitch.interval(switchDebounceTime);
+  debugDisplaySwitch.attach(debugDisplayInPin);
+  debugDisplaySwitch.interval(switchDebounceTime);
+
   // Figure out where the direction switch is set and initialize
   // the motor appropriately
   directionSwitch.update();
@@ -92,7 +103,7 @@ void setup()
   ReadClock();
   
   // Need to give the LCD a bit of time to boot
-  delay(100);
+  delay(200);
   lcd.init();
   lcd.setBacklight(8);
   lcd.home();
@@ -107,20 +118,19 @@ void setup()
 void loop()
 {
   clockResetSwitch.update();
-  if (clockResetSwitch.fallingEdge())
+  if (clockResetSwitch.fell())
   {
     ResetClock();
   }
 
   debugDisplaySwitch.update();
-  if (debugDisplaySwitch.fallingEdge())
+  if (debugDisplaySwitch.fell())
   {
     showDebugDisplay = !showDebugDisplay;
-    lcd.clear();
   }
 
   onOffSwitch.update();
-  if (onOffSwitch.fallingEdge() && CanChangePowerState())
+  if (onOffSwitch.fell() && CanChangePowerState())
   {
     powerEnabled = !powerEnabled;
     
@@ -313,6 +323,7 @@ void UpdateHoursDisplay()
 
 void UpdateDebugDisplay()
 {
+  lcd.clear();
   lcd.home();
   lcd.print(F("SEC: "));
   lcd.print(secondsOfOperation);
