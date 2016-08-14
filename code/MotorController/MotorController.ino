@@ -1,11 +1,15 @@
-// Installed via library manager, https://github.com/ivanseidel/ArduinoThread
-#include <Thread.h>
-#include <ThreadController.h>
-
-// Installed via library manager, https://github.com/thomasfredericks/Bounce2
-#include <Bounce2.h>
-
 #include <avr/eeprom.h>
+
+// https://github.com/ivanseidel/ArduinoThread
+// Version 2.0.3 from Library Manager
+#include "Thread.h"
+#include "ThreadController.h"
+
+// https://github.com/thomasfredericks/Bounce2
+// Version 2.2.0 from Library Manager
+#include "Bounce2.h"
+
+// Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
 const char* versionString = "3.1.1";
