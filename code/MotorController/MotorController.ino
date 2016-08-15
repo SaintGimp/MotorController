@@ -30,9 +30,10 @@ const int rpmInPin = 3;
 const int serialPin = 1;
 const int clockResetInPin = 14;
 const int debugDisplayInPin = 15;
+const int exp1Pin = 18;
 
 // Settings and limits
-const int switchDebounceTime = 30;
+const int switchDebounceTime = 20;
 const int minimumDelay = 10;
 const int maximumDelay = 46;
 const int minimumSpeed = 26;
@@ -91,6 +92,7 @@ void setup()
   pinMode(speedOutPin, OUTPUT);
   pinMode(clockResetInPin, INPUT_PULLUP);
   pinMode(debugDisplayInPin, INPUT_PULLUP);
+  pinMode(exp1Pin, OUTPUT);
   // We don't have to set pin mode for analog inputs
   
   onOffSwitch.attach(onOffSwitchInPin);
@@ -178,7 +180,12 @@ void HandleInputs()
 
   if (powerEnabled)
   {
-    targetSpeed = ReadPotentiometer(speedInPin);
+    // Motor speed is actually pretty sensitive to the exact value that we read
+    // here.  It's pretty easy to hear it wander up and down by a few steps.
+    // We do a multisampled read here (even though it takes a while) to reduce
+    // the jitter that is often present.  If we want to tighten the loop time
+    // we could instead do a rolling window average of single readings over time.
+    targetSpeed = analogReadMultisampled(speedInPin);
     targetSpeed = map(targetSpeed, 0, potentiometerCeiling, minimumSpeed, 255);
     if (targetDirection == COUNTER_CLOCKWISE)
     {
@@ -190,7 +197,7 @@ void HandleInputs()
     targetSpeed = 0;
   }
 
-  int newDelayBetweenMotorUpdates = ReadPotentiometer(rateOfSpeedChangeInPin);
+  int newDelayBetweenMotorUpdates = analogRead(rateOfSpeedChangeInPin);
   newDelayBetweenMotorUpdates = map(newDelayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelay, maximumDelay);
   int absoluteCurrentSpeed = abs(currentSpeed);
   if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < startOfStopDamping)
@@ -234,7 +241,7 @@ boolean CanChangePowerState()
     return powerEnabled || (!powerEnabled && currentSpeed == 0);
 }
 
-int ReadPotentiometer(int pin)
+int analogReadMultisampled(int pin)
 {
   const int numberOfSamples = 5;
   
