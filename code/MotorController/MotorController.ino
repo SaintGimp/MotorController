@@ -12,7 +12,7 @@
 // Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
-const char* versionString = "3.1.1";
+const char* versionString = "DEBUG.1";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -114,7 +114,6 @@ void setup()
   attachInterrupt(1, OnMotorTick, RISING);
   motorTicks = 0;
   
-  ReadClock();
   
   // Need to give the LCD a bit of time to boot
   delay(200);
@@ -128,6 +127,8 @@ void setup()
   delay(2000);
   lcd.clear();
 
+  ReadClock();
+
   motorUpdateTask.setInterval(delayBetweenMotorUpdates);
   motorUpdateTask.onRun(SetMotorState);
   motorUpdateTask.enabled = true;
@@ -136,7 +137,7 @@ void setup()
   displayUpdateTask.setInterval(1000);
   displayUpdateTask.onRun(UpdateDisplay);
   displayUpdateTask.enabled = true;
-  taskController.add(&displayUpdateTask);
+  //taskController.add(&displayUpdateTask);
 
   clockUpdateTask.setInterval(1000);
   clockUpdateTask.onRun(UpdateClock);
@@ -410,6 +411,16 @@ void ReadClock()
     }
   }
 
+  lcd.clear();
+  lcd.home();
+  lcd.print(F("LV:"));
+  lcd.print(secondsOfOperation);
+  lcd.print(F(" LL:"));
+  lcd.print((uint32_t)nextClockBufferLocation);
+  lcd.setCursor(1, 0);
+  lcd.print(F("SV:"));
+  lcd.print(clockValue);
+
   // If the final value we read was an actual clock value, we want to
   // write the next clock value in the next available slot, otherwise
   // we want to overwrite this uninitialized slot
@@ -426,6 +437,39 @@ void ReadClock()
 void WriteClock()
 {
   eeprom_write_dword(nextClockBufferLocation, secondsOfOperation);
+
+  lcd.clear();
+  lcd.home();
+  lcd.print(F("SEC:"));
+  lcd.print(secondsOfOperation);
+  
+  lcd.setCursor(1, 0);
+  lcd.print(F("LOC:"));
+  lcd.print((uint32_t)nextClockBufferLocation);
+
+  uint32_t clockValue = 0;
+  clockValue = eeprom_read_dword(nextClockBufferLocation);
+  if (clockValue != secondsOfOperation)
+  {
+    while (1)
+    {
+      lcd.setCursor(1, 0);
+      lcd.print(F("                "));
+      lcd.setCursor(1, 0);
+      lcd.print(F("!ERR:"));
+      lcd.print(clockValue);
+      delay(1000);
+      
+      lcd.setCursor(1, 0);
+      lcd.print(F("                "));
+      lcd.setCursor(1, 0);
+      lcd.print(F("LOC:"));
+      lcd.print((uint32_t)nextClockBufferLocation);
+      delay(1000);
+
+    }
+  }
+
   nextClockBufferLocation++;
   if (nextClockBufferLocation > maximumEepromAddress)
   {
