@@ -43,7 +43,7 @@ const int startOfStopDamping = 100;
 const int potentiometerCeiling = 1000;
 const float gearRatio = 2.0;
 // ATMega328P has 1024 bytes of EEPROM and we're addressing it as DWORDS
-const uint32_t* maximumEepromAddress = (uint32_t*)1024 - 1;
+const uint32_t* EepromSize = (uint32_t*)1024;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce();
@@ -398,7 +398,7 @@ void ReadClock()
   secondsOfOperation = 0;
   uint32_t clockValue = 0;
   
-  for (nextClockBufferLocation = 0; nextClockBufferLocation <= maximumEepromAddress; nextClockBufferLocation++)
+  for (nextClockBufferLocation = 0; nextClockBufferLocation < EepromSize; nextClockBufferLocation++)
   {
     clockValue = eeprom_read_dword(nextClockBufferLocation);
     if (clockValue >= secondsOfOperation && clockValue < 0xFFFFFFFF)
@@ -416,22 +416,16 @@ void ReadClock()
   lcd.print(F("LV:"));
   lcd.print(secondsOfOperation);
   lcd.print(F(" LL:"));
-  lcd.print((uint32_t)nextClockBufferLocation);
+  lcd.print((uint32_t)(nextClockBufferLocation - 1));
   lcd.setCursor(1, 0);
   lcd.print(F("SV:"));
   lcd.print(clockValue);
 
-  // If the final value we read was an actual clock value, we want to
-  // write the next clock value in the next available slot, otherwise
-  // we want to overwrite this uninitialized slot
-  if (clockValue < 0xFFFFFFFF)
+  if (nextClockBufferLocation >= EepromSize)
   {
-    nextClockBufferLocation++;
-    if (nextClockBufferLocation > maximumEepromAddress)
-    {
-      nextClockBufferLocation = 0;
-    }
+    nextClockBufferLocation = 0;
   }
+
 }
 
 void WriteClock()
@@ -471,7 +465,7 @@ void WriteClock()
   }
 
   nextClockBufferLocation++;
-  if (nextClockBufferLocation > maximumEepromAddress)
+  if (nextClockBufferLocation >= EepromSize)
   {
     nextClockBufferLocation = 0;
   }
@@ -479,7 +473,7 @@ void WriteClock()
 
 void ResetClock()
 {
-  for (uint32_t* x = 0; x <= maximumEepromAddress; x++)
+  for (uint32_t* x = 0; x < EepromSize; x++)
   {
     eeprom_write_dword(x, 0xFFFFFFFF);
   }
