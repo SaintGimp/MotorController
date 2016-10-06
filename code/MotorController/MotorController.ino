@@ -12,7 +12,7 @@
 // Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
-const char* versionString = "3.1.1";
+const char* versionString = "3.1.2";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -43,7 +43,7 @@ const int startOfStopDamping = 100;
 const int potentiometerCeiling = 1000;
 const float gearRatio = 2.0;
 // ATMega328P has 1024 bytes of EEPROM and we're addressing it as DWORDS
-const uint32_t* maximumEepromAddress = (uint32_t*)1024 - 1;
+const uint32_t* eepromSize = (uint32_t*)1024;
 
 // Switches using the Bounce library for debouncing
 Bounce onOffSwitch = Bounce();
@@ -359,7 +359,7 @@ void UpdateDebugDisplay()
   lcd.print(secondsOfOperation);
   
   lcd.setCursor(1, 0);
-  lcd.print(F("LOC: "));
+  lcd.print(F("NEXT LOC: "));
   lcd.print((uint32_t)nextClockBufferLocation);
 }
 
@@ -396,8 +396,10 @@ void ReadClock()
 {
   secondsOfOperation = 0;
   uint32_t clockValue = 0;
-  
-  for (nextClockBufferLocation = 0; nextClockBufferLocation <= maximumEepromAddress; nextClockBufferLocation++)
+
+  // Read through the EEPROM buffer looking for a place where either we read a value smaller than
+  // the previous one we read or we read an uninitialized value or we get to the end of the EEPROM
+  for (nextClockBufferLocation = 0; nextClockBufferLocation < eepromSize; nextClockBufferLocation++)
   {
     clockValue = eeprom_read_dword(nextClockBufferLocation);
     if (clockValue >= secondsOfOperation && clockValue < 0xFFFFFFFF)
@@ -410,16 +412,13 @@ void ReadClock()
     }
   }
 
-  // If the final value we read was an actual clock value, we want to
-  // write the next clock value in the next available slot, otherwise
-  // we want to overwrite this uninitialized slot
-  if (clockValue < 0xFFFFFFFF)
+  // If we stopped because we read a smaller value or an uninitialized
+  // value, then the write pointer is already set to the next place we
+  // want to write to. If we stopped because we ran out of EEPROM then
+  // wrap the write pointer back around to the beginning.
+  if (nextClockBufferLocation >= eepromSize)
   {
-    nextClockBufferLocation++;
-    if (nextClockBufferLocation > maximumEepromAddress)
-    {
-      nextClockBufferLocation = 0;
-    }
+    nextClockBufferLocation = 0;
   }
 }
 
@@ -427,7 +426,7 @@ void WriteClock()
 {
   eeprom_write_dword(nextClockBufferLocation, secondsOfOperation);
   nextClockBufferLocation++;
-  if (nextClockBufferLocation > maximumEepromAddress)
+  if (nextClockBufferLocation >= eepromSize)
   {
     nextClockBufferLocation = 0;
   }
@@ -435,7 +434,7 @@ void WriteClock()
 
 void ResetClock()
 {
-  for (uint32_t* x = 0; x <= maximumEepromAddress; x++)
+  for (uint32_t* x = 0; x < eepromSize; x++)
   {
     eeprom_write_dword(x, 0xFFFFFFFF);
   }
