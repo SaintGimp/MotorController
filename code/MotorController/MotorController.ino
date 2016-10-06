@@ -12,7 +12,7 @@
 // Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
-const char* versionString = "DEBUG.1";
+const char* versionString = "DEBUG.2";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -438,31 +438,8 @@ void WriteClock()
   lcd.print(secondsOfOperation);
   
   lcd.setCursor(1, 0);
-  lcd.print(F("LOC:"));
+  lcd.print(F("WROTE LOC:"));
   lcd.print((uint32_t)nextClockBufferLocation);
-
-  uint32_t clockValue = 0;
-  clockValue = eeprom_read_dword(nextClockBufferLocation);
-  if (clockValue != secondsOfOperation)
-  {
-    while (1)
-    {
-      lcd.setCursor(1, 0);
-      lcd.print(F("                "));
-      lcd.setCursor(1, 0);
-      lcd.print(F("!ERR:"));
-      lcd.print(clockValue);
-      delay(1000);
-      
-      lcd.setCursor(1, 0);
-      lcd.print(F("                "));
-      lcd.setCursor(1, 0);
-      lcd.print(F("LOC:"));
-      lcd.print((uint32_t)nextClockBufferLocation);
-      delay(1000);
-
-    }
-  }
 
   nextClockBufferLocation++;
   if (nextClockBufferLocation >= EepromSize)
