@@ -3,3 +3,4 @@
 ~$*.xlsx
 ~$*.docx
 *.pro
+.DS_Store
