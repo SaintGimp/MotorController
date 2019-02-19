@@ -1,1 +1,0 @@
-These installation files are intended for the Windows platform.
