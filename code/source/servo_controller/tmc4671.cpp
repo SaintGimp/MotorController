@@ -19,53 +19,53 @@ namespace servo_controller
 
     void Tmc4671::Reset()
     {
-        // General
-        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x80000000);
-
-        // Motor type &  PWM configuration
-        SetRegisterValue(TMC4671_MOTOR_TYPE_N_POLE_PAIRS, 0x00030004);
-        SetRegisterValue(TMC4671_PWM_POLARITIES, 0x00000000);
-        SetRegisterValue(TMC4671_PWM_MAXCNT, 0x00000F9F);
-        SetRegisterValue(TMC4671_PWM_BBM_H_BBM_L, 0x00000505);
-        SetRegisterValue(TMC4671_PWM_SV_CHOP, 0x00000007);
-
-        // ADC configuration
-        SetRegisterValue(TMC4671_ADC_I_SELECT, 0x18000100);
         SetRegisterValue(TMC4671_dsADC_MCFG_B_MCFG_A, 0x00100010);
         SetRegisterValue(TMC4671_dsADC_MCLK_A, 0x20000000);
         SetRegisterValue(TMC4671_dsADC_MCLK_B, 0x00000000);
         SetRegisterValue(TMC4671_dsADC_MDEC_B_MDEC_A, 0x014E014E);
-        SetRegisterValue(TMC4671_ADC_I0_SCALE_OFFSET, 0x01005CBF);
-        SetRegisterValue(TMC4671_ADC_I1_SCALE_OFFSET, 0x00FD5D91);
-
-        // Digital hall settings
-        SetRegisterValue(TMC4671_HALL_MODE, 0x00000101);
-        SetRegisterValue(TMC4671_HALL_PHI_E_PHI_M_OFFSET, 0xFA240000);
-
-        // Feedback selection
-        SetRegisterValue(TMC4671_PHI_E_SELECTION, 0x00000005);
+        SetRegisterValue(TMC4671_ADC_I1_SCALE_OFFSET, 0x000D5CC6);
+        SetRegisterValue(TMC4671_ADC_I0_SCALE_OFFSET, 0x000D5D96);
+        SetRegisterValue(TMC4671_ADC_I_SELECT, 0x09000001);
+        SetRegisterValue(TMC4671_AENC_0_SCALE_OFFSET, 0x01000000);
+        SetRegisterValue(TMC4671_AENC_1_SCALE_OFFSET, 0x01000000);
+        SetRegisterValue(TMC4671_AENC_2_SCALE_OFFSET, 0x01000000);
+        SetRegisterValue(TMC4671_AENC_SELECT, 0x03020100);
+        SetRegisterValue(TMC4671_PWM_POLARITIES, 0x00000000);
+        SetRegisterValue(TMC4671_PWM_MAXCNT, 0x00000F9F);
+        SetRegisterValue(TMC4671_PWM_BBM_H_BBM_L, 0x00000505);
+        SetRegisterValue(TMC4671_PWM_SV_CHOP, 0x00000007);
+        SetRegisterValue(TMC4671_MOTOR_TYPE_N_POLE_PAIRS, 0x00030004);
+        SetRegisterValue(TMC4671_PHI_E_EXT, 0x00000000);
+        SetRegisterValue(TMC4671_UQ_UD_EXT, 0x00000FA0);
+        SetRegisterValue(TMC4671_ABN_DECODER_MODE, 0x00000000);
+        SetRegisterValue(TMC4671_ABN_DECODER_PPR, 0x00010000);
+        SetRegisterValue(TMC4671_ABN_DECODER_COUNT, 0x00000000);
+        SetRegisterValue(TMC4671_ABN_DECODER_COUNT_N, 0x00000000);
+        SetRegisterValue(TMC4671_ABN_DECODER_PHI_E_PHI_M_OFFSET, 0x00000000);
+        SetRegisterValue(TMC4671_HALL_MODE, 0x00000001);
+        SetRegisterValue(TMC4671_HALL_PHI_E_PHI_M_OFFSET, 0x00000000);
+        SetRegisterValue(TMC4671_AENC_DECODER_MODE, 0x00000000);
+        SetRegisterValue(TMC4671_AENC_DECODER_PHI_A_OFFSET, 0x00000000);
+        SetRegisterValue(TMC4671_AENC_DECODER_PPR, 0x00000001);
         SetRegisterValue(TMC4671_VELOCITY_SELECTION, 0x0000000C);
-
-        // Limits
-        SetRegisterValue(TMC4671_PID_TORQUE_FLUX_LIMITS, 0x00002710);
-        SetRegisterValue(TMC4671_PID_ACCELERATION_LIMIT, 0x000000C8);
-
-        // PI settings
-        SetRegisterValue(TMC4671_PID_TORQUE_P_TORQUE_I, 0x01000100);
+        SetRegisterValue(TMC4671_PHI_E_SELECTION, 0x00000005);
         SetRegisterValue(TMC4671_PID_FLUX_P_FLUX_I, 0x01000100);
-        SetRegisterValue(TMC4671_PID_VELOCITY_P_VELOCITY_I, 0x03E80019);
+        SetRegisterValue(TMC4671_PID_TORQUE_P_TORQUE_I, 0x027603E8);
+        SetRegisterValue(TMC4671_PID_VELOCITY_P_VELOCITY_I, 0x00780064);
+        SetRegisterValue(TMC4671_PID_TORQUE_FLUX_LIMITS, 0x00000320);
+        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x00000000);
+        SetRegisterValue(TMC4671_PID_TORQUE_FLUX_TARGET, 0x00000000);
+        //SetRegisterValue(TMC4671_PID_POSITION_ACTUAL, 0x2129FB50);
     }
 
     void Tmc4671::StartMotor()
     {
-        // TODO: read value and set just the mode bits then write back
-        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x80000002);
+        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x00000002);
     }
 
     void Tmc4671::StopMotor()
     {
-        // TODO: read value and set just the mode bits then write back
-        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x80000000);
+        SetRegisterValue(TMC4671_MODE_RAMP_MODE_MOTION, 0x00000000);
     }
 
     void Tmc4671::SetTargetVelocity(uint32_t rpm)
