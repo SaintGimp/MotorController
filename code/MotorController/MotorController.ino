@@ -12,7 +12,7 @@
 // Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
-const char* versionString = "3.1.2";
+const char* versionString = "3.1.3";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -344,7 +344,7 @@ void UpdateHoursDisplay()
   // Truncate to one decimal place.  If we just let print() round it then it
   // can round up and we display 0.1 after only 3 minutes which is not expected
   float hours = secondsOfOperation / 3600.0;
-  hours = ((int)(hours * 10)) / 10.0;
+  hours = ((uint32_t)(hours * 10)) / 10.0;
 
   lcd.setCursor(1, 0);
   lcd.print(F("HOURS: "));
@@ -442,4 +442,3 @@ void ResetClock()
   nextClockBufferLocation = 0;
   secondsOfOperation = 0;
 }
-
