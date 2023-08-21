@@ -1,18 +1,18 @@
 #include <avr/eeprom.h>
 
 // https://github.com/ivanseidel/ArduinoThread
-// Version 2.0.3 from Library Manager
+// Version 2.1.1 from Library Manager
 #include "Thread.h"
 #include "ThreadController.h"
 
 // https://github.com/thomasfredericks/Bounce2
-// Version 2.2.0 from Library Manager
+// Version 2.71 from Library Manager
 #include "Bounce2.h"
 
 // Based on LCDi2cNHD
 #include "LCDserNHD.h"
 
-const char* versionString = "3.1.3";
+const char* versionString = "4.0.0";
 
 const int CLOCKWISE = 1;
 const int COUNTER_CLOCKWISE = 0;
@@ -32,16 +32,31 @@ const int clockResetInPin = 14;
 const int debugDisplayInPin = 15;
 const int exp1Pin = 18;
 
-// Settings and limits
+// *** Settings and limits
 const int switchDebounceTime = 20;
-const int minimumDelay = 10;
-const int maximumDelay = 46;
-const int minimumSpeed = 26;
-const int startOfStopDamping = 100;
+// Fastest possible speed ramp
+const int minimumDelayBetweenMotorUpdates = 10;
+// Slowest possible speed ramp
+const int maximumDelayBetweenMotorUpdates = 46;
+// Minimum speed outout value we send to the motor
+const int minimumSpeed = 13;
+// The mag brake doesn't work as well below a certain speed
+const int minimumBrakeEffectivenessSpeed = 100;
 // 10K ohm potentiometers probably won't get all the way to 1024
 // and we want to make sure that max feasible input = max motor speed
 const int potentiometerCeiling = 1000;
-const float gearRatio = 2.0;
+// We get this many outut pulses per motor rotation
+const int motorPulsesPerRevolution = 12;
+// The motor tells us how fast it's spinning but the flyer is moving at a different rate
+const float flyerGearRatio = 0.5;
+// We filter noise in the RPM readings by not updating the number if it
+// varies by less than this amount
+const int rpmChangeFilter = 3;
+// To further hide noise and not confuse people with meaningless precision,
+// we round the displayed RPM number by certain amounts based on RPM
+const int lowSpeedRpmRoundingFactor = 5;
+const int highSpeedRpmRoundingFactor = 10;
+const int lowSpeedRpmLimit = 200;
 // ATMega328P has 1024 bytes of EEPROM and we're addressing it as DWORDS
 const uint32_t* eepromSize = (uint32_t*)1024;
 
@@ -65,6 +80,7 @@ unsigned long secondsOfOperation = 0;
 uint32_t* nextClockBufferLocation = 0;
 boolean showDebugDisplay = false;
 unsigned long lastDisplayTime = 0;
+float lastMeasuredRpm = 0.0;
 
 Thread motorUpdateTask = Thread();
 Thread displayUpdateTask = Thread();
@@ -198,15 +214,15 @@ void HandleInputs()
   }
 
   int newDelayBetweenMotorUpdates = analogRead(rateOfSpeedChangeInPin);
-  newDelayBetweenMotorUpdates = map(newDelayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelay, maximumDelay);
+  newDelayBetweenMotorUpdates = map(newDelayBetweenMotorUpdates, 0, potentiometerCeiling, minimumDelayBetweenMotorUpdates, maximumDelayBetweenMotorUpdates);
   int absoluteCurrentSpeed = abs(currentSpeed);
-  if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < startOfStopDamping)
+  if (absoluteCurrentSpeed > abs(targetSpeed) && absoluteCurrentSpeed < minimumBrakeEffectivenessSpeed)
   {
     // We want to feather the lower end of the stop curve because the mag brake
     // doesn't work as well at low speed and we don't the bobbin to run ahead of
     // the flyer. So at the low end we start raising the delay toward max regardless
     // of what it's actually set to.
-    newDelayBetweenMotorUpdates = map(absoluteCurrentSpeed, minimumSpeed, startOfStopDamping, maximumDelay, newDelayBetweenMotorUpdates);
+    newDelayBetweenMotorUpdates = map(absoluteCurrentSpeed, minimumSpeed, minimumBrakeEffectivenessSpeed, maximumDelayBetweenMotorUpdates, newDelayBetweenMotorUpdates);
   }
 
   if (newDelayBetweenMotorUpdates != delayBetweenMotorUpdates)
@@ -312,21 +328,66 @@ void UpdateDisplay()
 
 void UpdateRpmDisplay()
 {
-  unsigned long now = millis();
-  int totalMotorTicks = motorTicks;
+  // These steps need to be done as close to simultaneous as possible,
+  // don't separate them
+  unsigned long now = micros();
+  int motorTicksSinceLastDisplayUpdate = motorTicks;
   motorTicks = 0;
-  unsigned int timeSinceLastDisplay = now - lastDisplayTime;
   
-  // We get one pulse every 90 deg. of rotation
-  float rpm = totalMotorTicks * 60 / 4.0 * (1000.0 / timeSinceLastDisplay);
-  rpm /= gearRatio;
+  if (now < lastDisplayTime) {
+    // We wrapped the micros timer, just skip this update
+    lastDisplayTime = now;
+    return;
+  }
 
-  char buffer[5];
+  unsigned long timeSinceLastDisplayUpdate = now - lastDisplayTime;
+  lastDisplayTime = now;
+  
+  float revolutionsSinceLastDisplayUpdate = motorTicksSinceLastDisplayUpdate / (float)motorPulsesPerRevolution;
+  float revolutionsPerSecond = revolutionsSinceLastDisplayUpdate * (1000.0 * 1000.0 / (float)timeSinceLastDisplayUpdate);
+  float revolutionsPerMinute = revolutionsPerSecond * 60.0;
+  unsigned int flyerRpm = (int)(revolutionsPerMinute * flyerGearRatio);
+
+  // The resolution on motor pulses is actually not that great, so a variance of
+  // only one motor pulse in 1 second can be a change of several percent at low
+  // speeds.  We try to hide noise in the reading by displaying one consistent
+  // value unless the measured value is significantly different enough to
+  // warrant switching to it.
+  unsigned int filteredRpm;
+  int rpmDifference = abs((int)flyerRpm - (int)lastMeasuredRpm);
+  if (lastMeasuredRpm <= rpmChangeFilter || rpmDifference > rpmChangeFilter) {
+    filteredRpm = flyerRpm;
+  }
+  else {
+    filteredRpm = lastMeasuredRpm;
+  }
+  lastMeasuredRpm = filteredRpm;
+
+  unsigned int roundingFactor = filteredRpm < lowSpeedRpmLimit ? lowSpeedRpmRoundingFactor : highSpeedRpmRoundingFactor;
+  unsigned int rpmToDisplay = RoundToNearest(filteredRpm, roundingFactor);
+  
   lcd.home();
   lcd.print(F("RPM: "));
-  lcd.print(rpmToString((int)rpm, buffer));
+  lcd.print(rpmToDisplay);
+
+  char* trailingSpaces = "     ";
+  int numberOfTrailingSpaces = 5 - numberOfDigits(rpmToDisplay);
+  *(trailingSpaces + numberOfTrailingSpaces) = '\0';
+  lcd.print(trailingSpaces);
 
   lastDisplayTime = now;
+}
+
+unsigned int RoundToNearest(unsigned int x, unsigned int roundingFactor) {
+  return (unsigned int)(round((float)x / (float)(roundingFactor)) * roundingFactor);
+}
+
+unsigned int numberOfDigits(unsigned int rpm) {
+  int n = 1;
+  if ( rpm >= 100) { n += 2; rpm /= 100; }
+  if ( rpm >= 10) { n += 1; }
+
+  return n;
 }
 
 void UpdateDirectionDisplay()
@@ -361,35 +422,6 @@ void UpdateDebugDisplay()
   lcd.setCursor(1, 0);
   lcd.print(F("NEXT LOC: "));
   lcd.print((uint32_t)nextClockBufferLocation);
-}
-
-char* rpmToString(int value, char* result)
-{
-  char* ptr = result, *ptr1 = result, tmp_char;
-
-  // TODO: we were doing string conversion ourselves when we were
-  // running on the ATTiny. Is it still necessary?
-  
-  // Build string reversed
-  for (int x = 0; x < 4; x++) {
-    if (x == 0 || value) {
-      *ptr++ = "0123456789" [value % 10];
-      value /= 10;
-    } else {
-      *ptr++ = ' ';
-    }
-  }
-  	
-  *ptr-- = '\0';
-  
-  // reverse string
-  while (ptr1 < ptr) {
-    tmp_char = *ptr;
-    *ptr--= *ptr1;
-    *ptr1++ = tmp_char;
-  }
-  
-  return result;
 }
 
 void ReadClock()
